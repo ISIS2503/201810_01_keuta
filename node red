@@ -1,0 +1,185 @@
+[
+    {
+        "id": "c7f883d5.f3f6c",
+        "type": "serial in",
+        "z": "d7fadd8.627102",
+        "name": "Sensor",
+        "serial": "c08e2848.fb5e38",
+        "x": 161,
+        "y": 398,
+        "wires": [
+            [
+                "eb00f67.5a84008"
+            ]
+        ]
+    },
+    {
+        "id": "e2e3dcc7.fef9b",
+        "type": "function",
+        "z": "d7fadd8.627102",
+        "name": "Mensaje Alto",
+        "func": "var res = {};\n\ntempString = msg.payload;\nres.topic = \"mensaje\";\nres.payload = {};\nres.payload = {\"mensaje\": tempString}\n\nres.payload = JSON.stringify(res.payload)\n\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 660,
+        "y": 444,
+        "wires": [
+            [
+                "1c04b716.87d049"
+            ]
+        ]
+    },
+    {
+        "id": "400cb12.b98345",
+        "type": "mqtt out",
+        "z": "d7fadd8.627102",
+        "name": "",
+        "topic": "baja.puertaabierta",
+        "qos": "0",
+        "retain": "false",
+        "broker": "b661e122.aa18b",
+        "x": 1009,
+        "y": 263,
+        "wires": []
+    },
+    {
+        "id": "c40484b9.de4638",
+        "type": "mqtt out",
+        "z": "d7fadd8.627102",
+        "name": "",
+        "topic": "media.sospechosa",
+        "qos": "0",
+        "retain": "false",
+        "broker": "b661e122.aa18b",
+        "x": 1004.5,
+        "y": 344,
+        "wires": []
+    },
+    {
+        "id": "1c04b716.87d049",
+        "type": "mqtt out",
+        "z": "d7fadd8.627102",
+        "name": "",
+        "topic": "alta.nopermitida",
+        "qos": "",
+        "retain": "",
+        "broker": "b661e122.aa18b",
+        "x": 1009.5,
+        "y": 414,
+        "wires": []
+    },
+    {
+        "id": "eb00f67.5a84008",
+        "type": "switch",
+        "z": "d7fadd8.627102",
+        "name": "switch",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "Door opened!!",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Door opened too much time!!",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Number of attempts exceeded",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "Dos veces Boton",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 4,
+        "x": 378.5,
+        "y": 397,
+        "wires": [
+            [
+                "e55bc445.18b3b8"
+            ],
+            [
+                "e55bc445.18b3b8"
+            ],
+            [
+                "1119b30a.55334d"
+            ],
+            [
+                "e2e3dcc7.fef9b"
+            ]
+        ]
+    },
+    {
+        "id": "1119b30a.55334d",
+        "type": "function",
+        "z": "d7fadd8.627102",
+        "name": "Mensaje Medio",
+        "func": "var res = {};\n\ntempString = msg.payload;\nres.topic = \"mensaje\";\nres.payload = {};\nres.payload = {\"mensaje\": tempString}\n\nres.payload = JSON.stringify(res.payload)\n\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 663,
+        "y": 378,
+        "wires": [
+            [
+                "c40484b9.de4638"
+            ]
+        ]
+    },
+    {
+        "id": "e55bc445.18b3b8",
+        "type": "function",
+        "z": "d7fadd8.627102",
+        "name": "Mensaje Bajo",
+        "func": "var res = {};\n\ntempString = msg.payload;\nres.topic = \"mensaje\";\nres.payload = {};\nres.payload = {\"mensaje\": tempString}\n\nres.payload = JSON.stringify(res.payload)\n\nreturn res;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 679,
+        "y": 306,
+        "wires": [
+            [
+                "400cb12.b98345"
+            ]
+        ]
+    },
+    {
+        "id": "c08e2848.fb5e38",
+        "type": "serial-port",
+        "z": "",
+        "serialport": "COM3",
+        "serialbaud": "9600",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": true
+    },
+    {
+        "id": "b661e122.aa18b",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "",
+        "broker": "localhost",
+        "port": "8083",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": true,
+        "keepalive": "60",
+        "cleansession": true,
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": ""
+    }
+]
