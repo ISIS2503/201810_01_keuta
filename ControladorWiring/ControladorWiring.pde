@@ -4,6 +4,27 @@ const String KEY = "1234";
 const String KEY2 = "5678";
 const String KEY3 = "9012";
 
+
+
+
+boolean bateria=false;
+long currTimeBat;
+
+//Minimum voltage required for an alert
+const double MIN_VOLTAGE = 1.2;
+
+//Battery measure pin
+const int BATTERY_PIN = A0;
+
+//Battery indicator
+const int BATTERY_LED = 15;
+
+//Current battery charge
+double batteryCharge;
+
+
+
+
 //Time in milliseconds which the system is locked
 const int LOCK_TIME = 30000;
 unsigned long CURRENT_TIME=0;
@@ -107,10 +128,43 @@ void setup() {
   pinMode(CONTACT_PIN,INPUT);
   
   setColor(0, 0, 255);
-  
+   currTimeBat=0;
 }
 
 void loop() {
+
+
+ ///////////////////////////////////////Bateria////////////////////////////////////////////////////////
+  
+  batteryCharge = (analogRead(BATTERY_PIN)*5.4)/1024;
+  Serial.println(batteryCharge);
+      digitalWrite(BATTERY_LED,HIGH);    
+  //Measured value comparison with min voltage required
+  if(batteryCharge<=MIN_VOLTAGE) {
+    digitalWrite(BATTERY_LED,HIGH);
+    Serial.println("4");
+    bateria=true;
+
+  }
+  else {
+    digitalWrite(BATTERY_LED,LOW);
+    bateria=false;
+
+  }
+  if(bateria)
+{
+    
+    if(millis()-currTimeBat>=30000)
+  {
+    currTimeBat=millis();
+  setColor(255,0,0);
+  delay(2000);
+  setColor(0,0,255);    
+  }
+  
+}
+///////////////////////////////////////Bateria////////////////////////////////////////////////////////
+
 
   char customKey;
 
