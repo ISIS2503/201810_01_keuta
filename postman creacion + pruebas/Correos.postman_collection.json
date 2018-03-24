@@ -1,0 +1,297 @@
+{
+	"info": {
+		"name": "Correos",
+		"_postman_id": "494be54a-d2e4-4535-9bf4-9ee2ecc0ecf9",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/correoAdministrador",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fe4225ae-6c9e-43cb-8954-ec62a83a3d2d",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"mensaje\": \"123456789\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/correoPropietario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"correoPropietario"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/correoPropietario",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aacfbdda-1dbd-4208-907a-ec48caec6d2d",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"mensaje\": \"123456789\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/correoPropietario",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"correoPropietario"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/correoYale",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5fe1a021-4d29-417f-8f8b-bcb2a6764e51",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"mensaje\": \"123456789\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/correoYale",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"correoYale"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/correoHub",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86d140a4-6450-4b1d-9170-e6d35f2ed872",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"identificador\": \"123456789\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/correoHub",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"correoHub"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/correoCerradura",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5b6f9fd3-18e2-49dc-b249-3bea03951c9f",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"identificador\": \"123456789\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/correoCerradura",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"correoCerradura"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/correoResidencia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6956aec3-8ec3-4c23-850f-5fe7d4b16872",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"direccion\": \"123456789\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/correoResidencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"correoResidencia"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/correoInmueble",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1663531a-46cc-4157-baae-fd0be897a6c4",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"direccion\": \"123456789\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/correoInmueble",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"correoInmueble"
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

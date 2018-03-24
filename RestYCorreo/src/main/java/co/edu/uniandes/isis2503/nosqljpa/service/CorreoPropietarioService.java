@@ -35,6 +35,6 @@ public class CorreoPropietarioService {
     
     @POST
     public void correo(PropietarioDTO dto) {
-        System.out.println("correo propietario");
+        System.out.println("correo del propietario " + dto.getId());
     }
 }

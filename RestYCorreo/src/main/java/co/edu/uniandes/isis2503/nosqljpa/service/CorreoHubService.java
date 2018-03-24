@@ -35,6 +35,6 @@ public class CorreoHubService {
     
     @POST
     public void correo(HubDTO dto) {
-        System.out.println("correo hub");
+        System.out.println("correo del hub " + dto.getId());
     }
 }

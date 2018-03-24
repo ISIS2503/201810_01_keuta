@@ -23,6 +23,7 @@
  */
 package co.edu.uniandes.isis2503.nosqljpa.persistence;
 
+import ch.qos.logback.classic.util.ContextInitializer;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -52,7 +53,6 @@ public class Persistencer<T, PK> {
 
     public T add(T entity) {
         try {
-
             entityManager.getTransaction().begin();
             entityManager.persist(entity);
             entityManager.getTransaction().commit();

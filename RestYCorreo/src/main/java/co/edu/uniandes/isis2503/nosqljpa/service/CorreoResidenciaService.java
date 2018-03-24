@@ -35,6 +35,6 @@ public class CorreoResidenciaService {
     
     @POST
     public void correo(ResidenciaDTO dto) {
-        System.out.println("correo residencia");
+        System.out.println("correo de la residencia " + dto.getId());
     }
 }
