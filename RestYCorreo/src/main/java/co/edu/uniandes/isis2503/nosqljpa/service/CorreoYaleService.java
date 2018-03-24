@@ -35,6 +35,6 @@ public class CorreoYaleService {
     
     @POST
     public void correo(YaleDTO dto) {
-        System.out.println("correo yale");
+        System.out.println("correo de yale " + dto.getId());
     }
 }

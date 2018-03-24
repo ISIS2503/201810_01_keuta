@@ -35,6 +35,6 @@ public class CorreoInmuebleService {
     
     @POST
     public void correo(InmuebleDTO dto) {
-        System.out.println("correo inmueble");
+        System.out.println("correo del inmueble " + dto.getId());
     }
 }

@@ -35,6 +35,6 @@ public class CorreoAdministradorService {
     
     @POST
     public void correo(AdministradorDTO dto) {
-        System.out.println("correo administrador");
+        System.out.println("correo del administrador " + dto.getId());
     }
 }

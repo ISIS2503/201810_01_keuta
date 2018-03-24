@@ -35,6 +35,6 @@ public class CorreoCerraduraService {
     
     @POST
     public void correo(CerraduraDTO dto) {
-        System.out.println("correo cerradura");
+        System.out.println("correo de la cerradura " + dto.getId());
     }
 }
