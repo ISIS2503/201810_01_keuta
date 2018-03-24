@@ -1,13 +1,16 @@
-import java.io.IOException;
-import java.sql.Timestamp;
+package ConsumidorPersistencia;
 
-import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
-import org.eclipse.paho.client.mqttv3.MqttCallback;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.Timestamp;
 
 public class main implements MqttCallback{
 
@@ -16,7 +19,7 @@ public class main implements MqttCallback{
         String topic        = "MQTT Examples";
         int qos             = 0;
         String broker       = "tcp://localhost:8083";
-        String clientId     = "JavaSample";
+        String clientId     = "JavaSample2";
 
         try {
             main sampleClient = new main(broker, clientId);
@@ -132,7 +135,7 @@ public class main implements MqttCallback{
         // delivery without blocking until delivery completes.
         //
         // This client demonstrates asynchronous deliver and
-        // uses the token.waitForCompletion() call in the main thread which
+        // uses the token.waitForCompletion() call in the ConsumidorMensajeria.main thread which
         // blocks until the delivery has completed.
         // Additionally the deliveryComplete method will be called if
         // the callback is set on the client
@@ -154,6 +157,43 @@ public class main implements MqttCallback{
                 "  Topic:\t" + topic +
                 "  Message:\t" + new String(message.getPayload()) +
                 "  QoS:\t" + message.getQos());
+
+        try {
+            URL url = new URL("http://localhost:8080/yale");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
+
+            con.setDoOutput(true);
+            DataOutputStream out = new DataOutputStream(con.getOutputStream());
+            JSONObject tomJsonObj = new JSONObject();
+            tomJsonObj.put("id", "Tom@mail.com");
+            tomJsonObj.put("mensaje", "Cuerpo de prueba.");
+//            tomJsonObj.put("remitente", "Tom@mail.com");
+//            tomJsonObj.put("destinatarios", new String[] { "Tom@mail.com" });
+//            tomJsonObj.put("asunto", "Prueba");
+//            tomJsonObj.put("cuerpo", "Cuerpo de prueba.");
+            out.writeBytes(tomJsonObj.toString());
+            out.flush();
+            out.close();
+
+            int status = con.getResponseCode();
+            System.out.println("Status is: " + status);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer content = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            System.out.println("Response is: " + content);
+            in.close();
+            con.disconnect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     /****************************************************************/

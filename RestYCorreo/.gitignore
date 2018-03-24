@@ -22,3 +22,6 @@
 hs_err_pid*
 /target/
 nb-configuration.xml
+
+.idea
+JPANoSQLThermalComfortApp.iml
