@@ -137,14 +137,11 @@ void loop() {
  ///////////////////////////////////////Bateria////////////////////////////////////////////////////////
   
   batteryCharge = (analogRead(BATTERY_PIN)*5.4)/1024;
-  Serial.println(batteryCharge);
       digitalWrite(BATTERY_LED,HIGH);    
   //Measured value comparison with min voltage required
   if(batteryCharge<=MIN_VOLTAGE) {
     digitalWrite(BATTERY_LED,HIGH);
-    Serial.println("4");
     bateria=true;
-
   }
   else {
     digitalWrite(BATTERY_LED,LOW);
