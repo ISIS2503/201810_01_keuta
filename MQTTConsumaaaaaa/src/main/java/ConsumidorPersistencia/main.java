@@ -159,7 +159,7 @@ public class main implements MqttCallback{
                 "  QoS:\t" + message.getQos());
 
         try {
-            URL url = new URL("http://localhost:8080/yale");
+            URL url = new URL("http://172.24.42.65:80/yale");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json");
