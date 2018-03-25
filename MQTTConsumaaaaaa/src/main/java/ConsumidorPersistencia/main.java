@@ -168,7 +168,7 @@ public class main implements MqttCallback{
             DataOutputStream out = new DataOutputStream(con.getOutputStream());
             JSONObject tomJsonObj = new JSONObject();
             tomJsonObj.put("id", "Tom@mail.com");
-            tomJsonObj.put("mensaje", message.getPayload());
+            tomJsonObj.put("mensaje", new String(message.getPayload()));
 //            tomJsonObj.put("remitente", "Tom@mail.com");
 //            tomJsonObj.put("destinatarios", new String[] { "Tom@mail.com" });
 //            tomJsonObj.put("asunto", "Prueba");
