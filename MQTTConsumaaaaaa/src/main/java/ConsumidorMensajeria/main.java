@@ -23,7 +23,7 @@ public class main implements MqttCallback{
 
     public static void main(String[] args) {
 
-        String topic        = "MQTT Examples";
+        String topic        = "#";
         int qos             = 0;
         String broker       = "tcp://localhost:8083";
         String clientId     = "JavaSample";
@@ -166,20 +166,26 @@ public class main implements MqttCallback{
                 "  QoS:\t" + message.getQos());
 
         try {
-            URL url = new URL("http://172.24.42.65:80/correoYale");
+            String mensajeCrudo = new String(message.getPayload());
+            String[] partesDelMensaje = mensajeCrudo.split(";");
+            String remitente = partesDelMensaje[0];
+            String destinatario = partesDelMensaje[1];
+            String asunto = "Alerta de cerradura";
+            String cuerpo = partesDelMensaje[2];
+
+            URL url = new URL("http://172.24.42.65:80/correo");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json");
-
             con.setDoOutput(true);
             DataOutputStream out = new DataOutputStream(con.getOutputStream());
+
             JSONObject tomJsonObj = new JSONObject();
-            tomJsonObj.put("id", "Tom@mail.com");
-            tomJsonObj.put("mensaje", new String(message.getPayload()));
-//            tomJsonObj.put("remitente", "Tom@mail.com");
-//            tomJsonObj.put("destinatarios", new String[] { "Tom@mail.com" });
-//            tomJsonObj.put("asunto", "Prueba");
-//            tomJsonObj.put("cuerpo", "Cuerpo de prueba.");
+            tomJsonObj.put("remitente", remitente);
+            tomJsonObj.put("destinatarios", new String[] { destinatario });
+            tomJsonObj.put("asunto", asunto);
+            tomJsonObj.put("cuerpo", cuerpo);
+
             out.writeBytes(tomJsonObj.toString());
             out.flush();
             out.close();

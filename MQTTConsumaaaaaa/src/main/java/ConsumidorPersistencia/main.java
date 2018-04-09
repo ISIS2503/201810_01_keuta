@@ -16,7 +16,7 @@ public class main implements MqttCallback{
 
     public static void main(String[] args) {
 
-        String topic        = "MQTT Examples";
+        String topic        = "#";
         int qos             = 0;
         String broker       = "tcp://localhost:8083";
         String clientId     = "JavaSample2";
@@ -159,20 +159,30 @@ public class main implements MqttCallback{
                 "  QoS:\t" + message.getQos());
 
         try {
-            URL url = new URL("http://172.24.42.65:80/yale");
+            String mensajeCrudo = new String(message.getPayload());
+            String[] partesDelMensaje = mensajeCrudo.split(";");
+            String mensaje = partesDelMensaje[2];
+
+            String[] partesTopico = topic.split("/");
+            String prioridad = partesTopico[0];
+            String unidadResidencial = partesTopico[1];
+            String inmueble = partesTopico[2];
+            String dispositivo = partesTopico[3];
+
+            URL url = new URL("http://172.24.42.65:80/alertas");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json");
-
             con.setDoOutput(true);
             DataOutputStream out = new DataOutputStream(con.getOutputStream());
+
             JSONObject tomJsonObj = new JSONObject();
-            tomJsonObj.put("id", "Tom@mail.com");
-            tomJsonObj.put("mensaje", new String(message.getPayload()));
-//            tomJsonObj.put("remitente", "Tom@mail.com");
-//            tomJsonObj.put("destinatarios", new String[] { "Tom@mail.com" });
-//            tomJsonObj.put("asunto", "Prueba");
-//            tomJsonObj.put("cuerpo", "Cuerpo de prueba.");
+            tomJsonObj.put("mensaje", mensaje);
+            tomJsonObj.put("prioridad", prioridad);
+            tomJsonObj.put("unidadResidencial", unidadResidencial);
+            tomJsonObj.put("inmueble", inmueble);
+            tomJsonObj.put("dispositivo", dispositivo);
+
             out.writeBytes(tomJsonObj.toString());
             out.flush();
             out.close();
