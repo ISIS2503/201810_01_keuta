@@ -129,15 +129,23 @@ void setup() {
   
   setColor(0, 0, 255);
    currTimeBat=0;
+   
+  /////PARTE 4 BATERIA SETUP/////
+   // Ouput pin definition for BATTERY_LED
+  pinMode(BATTERY_LED,OUTPUT);
+
+  //Input pin definition for battery measure
+  pinMode(BATTERY_PIN,INPUT);
+}
 }
 
 void loop() {
 
 
- ///////////////////////////////////////Bateria////////////////////////////////////////////////////////
-  
+///////////////////////////////////////Battery Header////////////////////////////////////////////////////////
+
   batteryCharge = (analogRead(BATTERY_PIN)*5.4)/1024;
-      digitalWrite(BATTERY_LED,HIGH);    
+  digitalWrite(BATTERY_LED,HIGH);    
   //Measured value comparison with min voltage required
   if(batteryCharge<=MIN_VOLTAGE) {
     digitalWrite(BATTERY_LED,HIGH);
@@ -146,21 +154,22 @@ void loop() {
   else {
     digitalWrite(BATTERY_LED,LOW);
     bateria=false;
-
   }
   if(bateria)
-{
-    
-    if(millis()-currTimeBat>=30000)
   {
-    currTimeBat=millis();
-  setColor(255,0,0);
-  delay(2000);
-  setColor(0,0,255);    
+
+    if(millis()-currTimeBat>=30000)
+    {
+      Serial.println("Low battery");
+      currTimeBat=millis();
+      digitalWrite(BATTERY_LED,HIGH);
+      setColor(255,0,0);
+      delay(2000);
+      digitalWrite(BATTERY_LED,LOW);
+      setColor(0,0,255);
+    }
   }
-  
-}
-///////////////////////////////////////Bateria////////////////////////////////////////////////////////
+  ///////////////////////////////////////Battery Footer////////////////////////////////////////////////////////
 
 
   char customKey;
