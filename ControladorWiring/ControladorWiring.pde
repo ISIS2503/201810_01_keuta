@@ -4,7 +4,16 @@ const String KEY = "1234";
 const String KEY2 = "5678";
 const String KEY3 = "9012";
 
+//Formato de mensaje "prioridad/idconjunto/#residencia/dispositivoid"
 
+//Id del dispositivo
+const String ID = "c1";
+
+//Número de residencia (casa, apartamento)
+const String RESIDENCIA = "1";
+
+//Identificador del conjunto residencial
+const String CONJUNTO = "conjunto1";
 
 
 boolean bateria=false;
@@ -21,8 +30,6 @@ const int BATTERY_LED = 15;
 
 //Current battery charge
 double batteryCharge;
-
-
 
 
 //Time in milliseconds which the system is locked
@@ -101,7 +108,7 @@ int inputPin = 2;               // choose the input pin (for PIR sensor)
 int pirState = LOW;             // we start, assuming no motion detected
 int val = 0;                    // variable for reading the pin status
  
-
+int unavez; //Este unavez es para que la alerta de puerta abierta mucho tiempo solo se ejecute una vez en lugar de hacerlo cada vez que entra al loop
 
 void setup() {
   //////PARTE 3 SETUP//////
@@ -137,7 +144,7 @@ void setup() {
   //Input pin definition for battery measure
   pinMode(BATTERY_PIN,INPUT);
 }
-}
+
 
 void loop() {
 
@@ -161,6 +168,7 @@ void loop() {
     if(millis()-currTimeBat>=30000)
     {
       Serial.println("Low battery");
+      Serial.println("baja/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID);
       currTimeBat=millis();
       digitalWrite(BATTERY_LED,HIGH);
       setColor(255,0,0);
@@ -213,11 +221,14 @@ void loop() {
         CURRENT_TIME = millis();
       } else {
         //If door is open more than 30 sec xxx
+        
         if((millis()-CURRENT_TIME)>=5000){
+          if(unavez==0){Serial.println("media/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID); unavez=1;}
           Serial.println("Door opened too much time!!");
           setColor(255, 0, 0); // Red Color
         } else { 
           Serial.println("Door opened!!");
+          unavez=0;
         }
       }
     }
@@ -237,6 +248,7 @@ void loop() {
   if(attempts>=maxAttempts) {
     currentKey = "";
     attempts = 0;
+    Serial.println("alta/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID);
     Serial.println("System locked");
     setColor(255, 0, 0); // Red Color
     delay(LOCK_TIME);
@@ -261,6 +273,7 @@ void loop() {
     if(digitalRead(CONTACT_PIN)) {
       if((millis()-CURRENT_TIME)>=5000) {
         setColor(255, 0, 0);
+        Serial.println("media/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID);
         Serial.println("Door opened too much time!!");
       }
     }else{
