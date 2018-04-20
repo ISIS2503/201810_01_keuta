@@ -23,6 +23,8 @@
  */
 package co.edu.uniandes.isis2503.nosqljpa.service;
 
+import co.edu.uniandes.isis2503.nosqljpa.auth.AuthorizationFilter.Role;
+import co.edu.uniandes.isis2503.nosqljpa.auth.Secured;
 import co.edu.uniandes.isis2503.nosqljpa.interfaces.ICerraduraLogic;
 import co.edu.uniandes.isis2503.nosqljpa.logic.CerraduraLogic;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.CerraduraDTO;
@@ -46,6 +48,7 @@ import javax.ws.rs.core.Response;
  * @author ca.mendoza968
  */
 @Path("/cerradura")
+@Secured({Role.administrador, Role.propietario, Role.seguridad, Role.yale})
 @Produces(MediaType.APPLICATION_JSON)
 public class CerraduraService {
     private final ICerraduraLogic sensorLogic;

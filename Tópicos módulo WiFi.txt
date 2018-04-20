@@ -1,2 +1,11 @@
+/////////////OBSOLETO/////////////
 alta/alarmas
 baja/ordenes
+/////////////OBSOLETO/////////////
+
+//////////////////////////15-Abr-2018//////////////////////////
+prioridad/idConjunto/#residencia/idDispositivo
+Ejemplos:
+alta/conjunto1/1/c1     (para clave errada 3 veces)
+media/conjunto1/1/c1    (para puerta abierta demasiado tiempo)
+baja/conjunto1/1/c1     (para bateria baja)

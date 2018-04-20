@@ -1,10 +1,20 @@
 #include <Keypad.h>
+#include <EEPROM.h>
 //Specified password
 const String KEY = "1234";
 const String KEY2 = "5678";
 const String KEY3 = "9012";
 
+//Formato de mensaje "prioridad/idconjunto/#residencia/dispositivoid"
 
+//Id del dispositivo
+const String ID = "c1";
+
+//Número de residencia (casa, apartamento)
+const String RESIDENCIA = "1";
+
+//Identificador del conjunto residencial
+const String CONJUNTO = "conjunto1";
 
 
 boolean bateria=false;
@@ -21,8 +31,6 @@ const int BATTERY_LED = 15;
 
 //Current battery charge
 double batteryCharge;
-
-
 
 
 //Time in milliseconds which the system is locked
@@ -101,7 +109,7 @@ int inputPin = 2;               // choose the input pin (for PIR sensor)
 int pirState = LOW;             // we start, assuming no motion detected
 int val = 0;                    // variable for reading the pin status
  
-
+int unavez; //Este unavez es para que la alerta de puerta abierta mucho tiempo solo se ejecute una vez en lugar de hacerlo cada vez que entra al loop
 
 void setup() {
   //////PARTE 3 SETUP//////
@@ -129,15 +137,23 @@ void setup() {
   
   setColor(0, 0, 255);
    currTimeBat=0;
+   
+  /////PARTE 4 BATERIA SETUP/////
+   // Ouput pin definition for BATTERY_LED
+  pinMode(BATTERY_LED,OUTPUT);
+
+  //Input pin definition for battery measure
+  pinMode(BATTERY_PIN,INPUT);
 }
+
 
 void loop() {
 
 
- ///////////////////////////////////////Bateria////////////////////////////////////////////////////////
-  
+///////////////////////////////////////Battery Header////////////////////////////////////////////////////////
+
   batteryCharge = (analogRead(BATTERY_PIN)*5.4)/1024;
-      digitalWrite(BATTERY_LED,HIGH);    
+  digitalWrite(BATTERY_LED,HIGH);    
   //Measured value comparison with min voltage required
   if(batteryCharge<=MIN_VOLTAGE) {
     digitalWrite(BATTERY_LED,HIGH);
@@ -146,21 +162,23 @@ void loop() {
   else {
     digitalWrite(BATTERY_LED,LOW);
     bateria=false;
-
   }
   if(bateria)
-{
-    
-    if(millis()-currTimeBat>=30000)
   {
-    currTimeBat=millis();
-  setColor(255,0,0);
-  delay(2000);
-  setColor(0,0,255);    
+
+    if(millis()-currTimeBat>=30000)
+    {
+      Serial.println("Low battery");
+      Serial.println("baja/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID);
+      currTimeBat=millis();
+      digitalWrite(BATTERY_LED,HIGH);
+      setColor(255,0,0);
+      delay(2000);
+      digitalWrite(BATTERY_LED,LOW);
+      setColor(0,0,255);
+    }
   }
-  
-}
-///////////////////////////////////////Bateria////////////////////////////////////////////////////////
+  ///////////////////////////////////////Battery Footer////////////////////////////////////////////////////////
 
 
   char customKey;
@@ -204,11 +222,14 @@ void loop() {
         CURRENT_TIME = millis();
       } else {
         //If door is open more than 30 sec xxx
+        
         if((millis()-CURRENT_TIME)>=5000){
+          if(unavez==0){Serial.println("media/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID); unavez=1;}
           Serial.println("Door opened too much time!!");
           setColor(255, 0, 0); // Red Color
         } else { 
           Serial.println("Door opened!!");
+          unavez=0;
         }
       }
     }
@@ -228,6 +249,7 @@ void loop() {
   if(attempts>=maxAttempts) {
     currentKey = "";
     attempts = 0;
+    Serial.println("alta/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID);
     Serial.println("System locked");
     setColor(255, 0, 0); // Red Color
     delay(LOCK_TIME);
@@ -252,6 +274,7 @@ void loop() {
     if(digitalRead(CONTACT_PIN)) {
       if((millis()-CURRENT_TIME)>=5000) {
         setColor(255, 0, 0);
+        Serial.println("media/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID);
         Serial.println("Door opened too much time!!");
       }
     }else{
@@ -291,3 +314,83 @@ void setColor(int redValue, int greenValue, int blueValue) {
   analogWrite(greenPin, greenValue);
   analogWrite(bluePin, blueValue);
 }
+///////////////////////////////////////Gestion de claves Header////////////////////////////////////////////////////////
+// Method that compares a key with stored keys
+boolean compareKey(String key) {
+  int acc = 3;
+  int codif, arg0, arg1; 
+  for(int i=0; i<3; i++) {
+    codif = EEPROM.read(i);
+    while(codif!=0) {
+      if(codif%2==1) {
+        arg0 = EEPROM.read(acc);
+        arg1 = EEPROM.read(acc+1)*256;
+        arg1+= arg0;
+        if(String(arg1)==key) {
+          return true;
+        }
+      }
+      acc+=2;
+      codif>>=1;
+    }
+    acc=(i+1)*16+3;
+  }
+  return false;
+}
+
+// Methods that divides the command by parameters
+void processCommand(String* result, String command) {
+  char buf[sizeof(command)];
+  String vars = "";
+  vars.toCharArray(buf, sizeof(buf));
+  char *p = buf;
+  char *str;
+  int i = 0;
+  while ((str = strtok_r(p, ";", &p)) != NULL) {
+    // delimiter is the semicolon
+    result[i++] = str;
+  }
+}
+
+//Method that adds a password in the specified index
+void addPassword(int val, int index) {
+  byte arg0 = val%256;
+  byte arg1 = val/256;
+  EEPROM.write((index*2)+3,arg0);
+  EEPROM.write((index*2)+4,arg1);
+  byte i = 1;
+  byte location = index/8;
+  byte position = index%8;
+  i<<=position;
+  byte j = EEPROM.read(location);
+  j |= i;
+  EEPROM.write(location,j);
+}
+
+//Method that updates a password in the specified index
+void updatePassword(int val, int index) {
+  byte arg0 = val%256;
+  byte arg1 = val/256;
+  EEPROM.write((index*2)+3,arg0);
+  EEPROM.write((index*2)+4,arg1);
+}
+
+//Method that deletes a password in the specified index
+void deletePassword(int index) {
+  byte i = 1;
+  byte location = index/8;
+  byte position = index%8;
+  i<<=position;
+  byte j = EEPROM.read(location);
+  j ^= i;
+  EEPROM.write(location,j);
+}
+
+//Method that deletes all passwords
+void deleteAllPasswords() {
+  //Password reference to inactive
+  EEPROM.write(0,0);
+  EEPROM.write(1,0);
+  EEPROM.write(2,0);
+}
+///////////////////////////////////////Gestion de claves Footer////////////////////////////////////////////////////////

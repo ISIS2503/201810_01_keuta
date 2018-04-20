@@ -23,6 +23,8 @@
  */
 package co.edu.uniandes.isis2503.nosqljpa.service;
 
+import co.edu.uniandes.isis2503.nosqljpa.auth.AuthorizationFilter.Role;
+import co.edu.uniandes.isis2503.nosqljpa.auth.Secured;
 import co.edu.uniandes.isis2503.nosqljpa.logic.UnidadResidencialLogic;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.UnidadResidencialDTO;
 import com.sun.istack.logging.Logger;
@@ -44,6 +46,7 @@ import co.edu.uniandes.isis2503.nosqljpa.interfaces.IUnidadResidencialLogic;
  * @author ca.mendoza968
  */
 @Path("/residencia")
+@Secured({Role.yale}) 
 @Produces(MediaType.APPLICATION_JSON)
 public class UnidadResidencialService {
     private final IUnidadResidencialLogic sensorLogic;
