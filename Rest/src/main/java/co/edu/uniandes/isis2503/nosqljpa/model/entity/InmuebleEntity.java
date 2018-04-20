@@ -45,6 +45,7 @@ public class InmuebleEntity implements Serializable {
     private String id;
     private Integer numeroInmueble;
     private String idUnidadResidencial;
+    private String nombrePropietario;
 
     public InmuebleEntity()
     {
@@ -77,5 +78,13 @@ public class InmuebleEntity implements Serializable {
 
     public void setIdUnidadResidencial(String idUnidadResidencial) {
         this.idUnidadResidencial = idUnidadResidencial;
+    }
+
+    public String getNombrePropietario() {
+        return nombrePropietario;
+    }
+
+    public void setNombrePropietario(String nombrePropietario) {
+        this.nombrePropietario = nombrePropietario;
     }
 }
