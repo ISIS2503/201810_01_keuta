@@ -23,6 +23,9 @@
  */
 package co.edu.uniandes.isis2503.nosqljpa.service;
 
+import co.edu.uniandes.isis2503.nosqljpa.auth.AuthorizationFilter;
+import co.edu.uniandes.isis2503.nosqljpa.auth.AuthorizationFilter.Role;
+import co.edu.uniandes.isis2503.nosqljpa.auth.Secured;
 import co.edu.uniandes.isis2503.nosqljpa.interfaces.IInmuebleLogic;
 import co.edu.uniandes.isis2503.nosqljpa.logic.InmuebleLogic;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.InmuebleDTO;
@@ -45,6 +48,7 @@ import javax.ws.rs.core.Response;
  * @author ca.mendoza968
  */
 @Path("/inmueble")
+@Secured({Role.administrador, Role.seguridad, Role.yale})
 @Produces(MediaType.APPLICATION_JSON)
 public class InmuebleService {
     private final IInmuebleLogic sensorLogic;
