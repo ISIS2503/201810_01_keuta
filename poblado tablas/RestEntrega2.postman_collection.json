@@ -1,0 +1,410 @@
+{
+	"info": {
+		"_postman_id": "d72f94e3-2f1b-41e5-95b7-a5383df25f79",
+		"name": "RestEntrega2",
+		"description": "RestEntrega2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/residencia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb8faaf5-2add-4e84-a7d9-274b2b67dc2a",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"direccion\": \"cra7#77-77\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/residencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residencia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/inmueble",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "08c883df-a76a-4553-8423-efdaddda63cf",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"numeroInmueble\": \"1\",\n\t\"unidadResidencial\": \"1\",\n\t\"nombrePropietario\": \"fernando\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/inmueble",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inmueble"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/hub",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cd72e9b3-dab0-43f6-8295-583144768187",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"identificador\": \"1\",\n\t\"unidadResidencial\": \"1\",\n\t\"inmueble\": \"1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/hub",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"hub"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/cerradura",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2d7b8144-101b-4d45-bd16-9571904493ca",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"1\",\n\t\"identificador\": \"1\",\n\t\"unidadResidencial\": \"1\",\n\t\"inmueble\": \"1\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cerradura",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cerradura"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/alarma",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0d571d29-eca7-4ec3-951e-d82b6f881134",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"mensaje\": \"1\",\n\t\"prioridad\": \"1\",\n\t\"unidadResidencial\": \"1\",\n\t\"inmueble\": \"1\",\n\t\"dispositivo\": 1\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/alarma",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"alarma"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/residencia",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e0faee93-4d5c-4887-8343-a58f33c255f8",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"2\",\n\t\"direccion\": \"cra8#88-88\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/residencia",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"residencia"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/inmueble",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "29d0a97f-e9a4-49b8-ab43-1004ad17a97b",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"2\",\n\t\"numeroInmueble\": \"2\",\n\t\"unidadResidencial\": \"2\",\n\t\"nombrePropietario\": \"fernando\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/inmueble",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inmueble"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/hub",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a295f53-d1e1-476e-a314-9a42630dd0dd",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"2\",\n\t\"identificador\": \"2\",\n\t\"unidadResidencial\": \"2\",\n\t\"inmueble\": \"2\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/hub",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"hub"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/cerradura",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ae684033-fb3c-4c0c-b6f1-7a4f022cdcc7",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\": \"2\",\n\t\"identificador\": \"2\",\n\t\"unidadResidencial\": \"2\",\n\t\"inmueble\": \"2\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cerradura",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cerradura"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/alarma",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72f34db8-64f7-4918-b541-7ca708526dee",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"mensaje\": \"2\",\n\t\"prioridad\": \"2\",\n\t\"unidadResidencial\": \"2\",\n\t\"inmueble\": \"2\",\n\t\"dispositivo\": \"2\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/alarma",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"alarma"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
