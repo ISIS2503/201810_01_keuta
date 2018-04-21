@@ -49,7 +49,7 @@ import javax.ws.rs.core.Response;
  * @author ca.mendoza968
  */
 @Path("/hub")
-@Secured({Role.administrador, Role.propietario, Role.seguridad, Role.yale})
+@Secured({Role.administrador, Role.seguridad, Role.yale})
 @Produces(MediaType.APPLICATION_JSON)
 public class HubService {
     private final IHubLogic sensorLogic;

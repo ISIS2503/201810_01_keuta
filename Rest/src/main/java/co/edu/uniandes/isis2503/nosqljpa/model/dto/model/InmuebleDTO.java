@@ -36,16 +36,26 @@ public class InmuebleDTO {
     private String id;
     private Integer numeroInmueble;
     private String unidadResidencial;
- 
+    private String nombrePropietario;
+
 
     public InmuebleDTO() {
        
     }
 
-    public InmuebleDTO(String id, Integer numeroInmueble, String idUnidadResidencial) {
+    public InmuebleDTO(String id, Integer numeroInmueble, String idUnidadResidencial, String nombrePropietario) {
         this.id = id;
         this.numeroInmueble = numeroInmueble;
         this.unidadResidencial = idUnidadResidencial;
+        this.nombrePropietario = nombrePropietario;
+    }
+
+    public String getNombrePropietario() {
+        return nombrePropietario;
+    }
+
+    public void setNombrePropietario(String nombrePropietario) {
+        this.nombrePropietario = nombrePropietario;
     }
 
     public String getId() {

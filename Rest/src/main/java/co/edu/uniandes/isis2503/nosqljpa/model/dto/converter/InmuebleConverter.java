@@ -53,6 +53,7 @@ public class InmuebleConverter implements IInmuebleConverter {
         dto.setId(entity.getId());
         dto.setNumeroInmueble(entity.getNumeroInmueble());
         dto.setUnidadResidencial(entity.getIdUnidadResidencial());
+        dto.setNombrePropietario(entity.getNombrePropietario());
         
         return dto;
     }
@@ -64,7 +65,7 @@ public class InmuebleConverter implements IInmuebleConverter {
         entity.setId(dto.getId());
         entity.setNumeroInmueble(dto.getNumeroInmueble());
         entity.setIdUnidadResidencial(dto.getUnidadResidencial());
-        
+        entity.setNombrePropietario(dto.getNombrePropietario());
         return entity;
     }
 
