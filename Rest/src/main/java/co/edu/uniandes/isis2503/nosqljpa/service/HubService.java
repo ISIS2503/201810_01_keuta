@@ -31,7 +31,7 @@ import co.edu.uniandes.isis2503.nosqljpa.logic.HubLogic;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.HubDTO;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.InmuebleYUnidadDTO;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.UnidadDTO;
-import com.sun.istack.logging.Logger;
+import java.util.logging.Logger;
 import java.util.List;
 import java.util.logging.Level;
 import javax.ws.rs.DELETE;
@@ -98,7 +98,7 @@ public class HubService {
             sensorLogic.delete(id);
             return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("Sucessful: Sensor was deleted").build();
         } catch (Exception e) {
-            Logger.getLogger(HubService.class).log(Level.WARNING, e.getMessage());
+            Logger.getLogger(HubService.class.getName()).log(Level.WARNING, e.getMessage());
             return Response.status(500).header("Access-Control-Allow-Origin", "*").entity("We found errors in your query, please contact the Web Admin.").build();
         }
     }    

@@ -1,6 +1,7 @@
 package co.edu.uniandes.isis2503.nosqljpa.logic;
 
 import co.edu.uniandes.isis2503.nosqljpa.interfaces.IConstrasenaLogic;
+import co.edu.uniandes.isis2503.nosqljpa.interfaces.IInmuebleLogic;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.OrdenDTO;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
@@ -11,33 +12,39 @@ public class ContrasenaLogic implements IConstrasenaLogic {
 
     private static final String SEPARADOR_MENSAJE = ";";
 
+    private final IInmuebleLogic inmuebleLogic = new InmuebleLogic();
+
     public ContrasenaLogic() {
     }
 
     @Override
-    public OrdenDTO add(OrdenDTO dto) {
+    public OrdenDTO add(OrdenDTO dto, String usuario) throws Exception{
+        tienePermiso(dto, usuario);
         publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdCerradura()
-        + SEPARADOR_TOPICO + "entrada", "AGREGAR_CLAVE" + SEPARADOR_MENSAJE + dto.getIdClave() + SEPARADOR_MENSAJE + dto.getClave());
+        + SEPARADOR_TOPICO + "entrada", "addPassword" + SEPARADOR_MENSAJE + dto.getClave() + SEPARADOR_MENSAJE + dto.getIdClave());
         return dto;
     }
 
     @Override
-    public OrdenDTO update(OrdenDTO dto) {
+    public OrdenDTO update(OrdenDTO dto, String usuario) throws Exception{
+        tienePermiso(dto, usuario);
         publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdCerradura()
-                + SEPARADOR_TOPICO + "entrada", "CAMBIAR_CLAVE" + SEPARADOR_MENSAJE + dto.getIdClave() + SEPARADOR_MENSAJE + dto.getClave());
+                + SEPARADOR_TOPICO + "entrada", "updatePassword" + SEPARADOR_MENSAJE + dto.getClave() + SEPARADOR_MENSAJE + dto.getIdClave());
         return dto;
     }
 
     @Override
-    public void delete(String idUnidad, String idInmueble, String idDispositivo, String numclave) {
-        publicarOrden(idUnidad + SEPARADOR_TOPICO + idInmueble + SEPARADOR_TOPICO + idDispositivo
-                + SEPARADOR_TOPICO + "entrada", "ELIMINAR_CLAVE" + SEPARADOR_MENSAJE + numclave + SEPARADOR_MENSAJE + "");
+    public void delete(OrdenDTO dto, String usuario) throws Exception{
+        tienePermiso(dto, usuario);
+        publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdCerradura()
+                + SEPARADOR_TOPICO + "entrada", "deletePassword" + SEPARADOR_MENSAJE + "0" + SEPARADOR_MENSAJE + dto.getIdClave());
     }
 
     @Override
-    public void deleteAll(String idUnidad, String idInmueble, String idDispositivo) {
-        publicarOrden(idUnidad + SEPARADOR_TOPICO + idInmueble + SEPARADOR_TOPICO + idDispositivo
-                + SEPARADOR_TOPICO + "entrada", "ELIMINAR_CLAVES" + SEPARADOR_MENSAJE + "" + SEPARADOR_MENSAJE + "");
+    public void deleteAll(OrdenDTO dto, String usuario) throws Exception{
+        tienePermiso(dto, usuario);
+        publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdCerradura()
+                + SEPARADOR_TOPICO + "entrada", "deleteAllPasswords" + SEPARADOR_MENSAJE + "0" + SEPARADOR_MENSAJE + "0");
     }
 
     private void publicarOrden(String topic, String content) {
@@ -67,5 +74,12 @@ public class ContrasenaLogic implements IConstrasenaLogic {
             System.out.println("excep "+me);
             me.printStackTrace();
         }
+    }
+
+    private void tienePermiso(OrdenDTO dto, String usuario) throws Exception {
+        if(!inmuebleLogic.find(dto.getIdInmueble()).getNombrePropietario().equals(usuario)){
+            throw new  Exception("El usuario no es el dueño del inmueble.");
+        }
+        ;
     }
 }

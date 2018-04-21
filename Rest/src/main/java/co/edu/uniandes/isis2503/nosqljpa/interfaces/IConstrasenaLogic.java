@@ -3,11 +3,11 @@ package co.edu.uniandes.isis2503.nosqljpa.interfaces;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.OrdenDTO;
 
 public interface IConstrasenaLogic {
-    OrdenDTO add(OrdenDTO dto);
+    OrdenDTO add(OrdenDTO dto, String usuario) throws Exception;
 
-    OrdenDTO update(OrdenDTO dto);
+    OrdenDTO update(OrdenDTO dto, String usuario) throws Exception;
 
-    void delete(String idUnidad, String idInmueble, String idDispositivo, String numclave);
+    void delete(OrdenDTO dto, String usuario) throws Exception;
 
-    void deleteAll(String idUnidad, String idInmueble, String idDispositivo);
+    void deleteAll(OrdenDTO dto, String usuario) throws Exception;
 }

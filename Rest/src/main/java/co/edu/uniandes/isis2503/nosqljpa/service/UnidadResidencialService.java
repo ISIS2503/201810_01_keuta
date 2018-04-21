@@ -27,7 +27,7 @@ import co.edu.uniandes.isis2503.nosqljpa.auth.AuthorizationFilter.Role;
 import co.edu.uniandes.isis2503.nosqljpa.auth.Secured;
 import co.edu.uniandes.isis2503.nosqljpa.logic.UnidadResidencialLogic;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.UnidadResidencialDTO;
-import com.sun.istack.logging.Logger;
+import java.util.logging.Logger;
 import java.util.List;
 import java.util.logging.Level;
 import javax.ws.rs.DELETE;
@@ -83,7 +83,7 @@ public class UnidadResidencialService {
             sensorLogic.delete(id);
             return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("Sucessful: Sensor was deleted").build();
         } catch (Exception e) {
-            Logger.getLogger(UnidadResidencialService.class).log(Level.WARNING, e.getMessage());
+            Logger.getLogger(UnidadResidencialService.class.getName()).log(Level.WARNING, e.getMessage());
             return Response.status(500).header("Access-Control-Allow-Origin", "*").entity("We found errors in your query, please contact the Web Admin.").build();
         }
     }    
