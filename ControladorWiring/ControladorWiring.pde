@@ -1,5 +1,12 @@
 #include <Keypad.h>
 #include <EEPROM.h>
+
+#define SIZE_BUFFER_DATA       50
+boolean stringComplete = false;
+String inputString = "";
+char bufferData [SIZE_BUFFER_DATA];
+
+
 //Specified password
 const String KEY = "1234";
 const String KEY2 = "5678";
@@ -108,49 +115,49 @@ int ledPin = 14;                // choose the pin for the LED
 int inputPin = 2;               // choose the input pin (for PIR sensor)
 int pirState = LOW;             // we start, assuming no motion detected
 int val = 0;                    // variable for reading the pin status
- 
+
 int unavez; //Este unavez es para que la alerta de puerta abierta mucho tiempo solo se ejecute una vez en lugar de hacerlo cada vez que entra al loop
 
 void setup() {
   //////PARTE 3 SETUP//////
   pinMode(ledPin, OUTPUT);      // declare LED as output
   pinMode(inputPin, INPUT);     // declare sensor as input
-  
+
   //////PARTE 1 SETUP//////
   Serial.begin(9600);
-  
+
   currentKey = "";
   open = false;
   attempts = 0;
   block = false;
-  
+
   pinMode(redPin, OUTPUT);
   pinMode(greenPin, OUTPUT);
   pinMode(bluePin, OUTPUT);
   setColor(0, 0, 255); // Blue Color
-  
+
   /////PARTE 2 SETUP/////
-  
+
   buttonState = false;
 
   pinMode(CONTACT_PIN,INPUT);
-  
+
   setColor(0, 0, 255);
-   currTimeBat=0;
-   
+  currTimeBat=0;
+
   /////PARTE 4 BATERIA SETUP/////
-   // Ouput pin definition for BATTERY_LED
+  // Ouput pin definition for BATTERY_LED
   pinMode(BATTERY_LED,OUTPUT);
 
   //Input pin definition for battery measure
   pinMode(BATTERY_PIN,INPUT);
 }
 
-
+//////////////////////////////////////////////////Loop Header//////////////////////////////////////////////////
 void loop() {
 
 
-///////////////////////////////////////Battery Header////////////////////////////////////////////////////////
+  ///////////////////////////////////////Battery Header////////////////////////////////////////////////////////
 
   batteryCharge = (analogRead(BATTERY_PIN)*5.4)/1024;
   digitalWrite(BATTERY_LED,HIGH);    
@@ -213,21 +220,26 @@ void loop() {
 
   //If current key matches the key length
   if (currentKey.length()== KEY.length()) {
-    if(currentKey == KEY || currentKey == KEY2 || currentKey == KEY3) {
+    if(compareKey(currentKey)) {
       if(!open) {
         setColor(0, 255, 0); // Green Color
         open = true;
         Serial.println("Door opened!!");
         attempts = 0;
         CURRENT_TIME = millis();
-      } else {
+      } 
+      else {
         //If door is open more than 30 sec xxx
-        
-        if((millis()-CURRENT_TIME)>=5000){
-          if(unavez==0){Serial.println("media/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID); unavez=1;}
+
+        if((millis()-CURRENT_TIME)>=5000) {
+          if(unavez==0) {
+            Serial.println("media/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID); 
+            unavez=1;
+          }
           Serial.println("Door opened too much time!!");
           setColor(255, 0, 0); // Red Color
-        } else { 
+        } 
+        else { 
           Serial.println("Door opened!!");
           unavez=0;
         }
@@ -235,7 +247,7 @@ void loop() {
     }
     else {
       attempts++;
-      if(attempts < 3){
+      if(attempts < 3) {
         setColor(255, 0, 0); //Red Color
         delay(1000);
         setColor(0, 0, 255); //Blue Color
@@ -243,8 +255,9 @@ void loop() {
       currentKey = "";
       Serial.println("Number of attempts: "+String(attempts));
     }
-  }else if(currentKey.length()> KEY.length()){
-    Serial.println("Door opened!!"); 
+  }
+  else if(currentKey.length()> KEY.length()) {
+    Serial.println("Door opened!!");
   }
   if(attempts>=maxAttempts) {
     currentKey = "";
@@ -259,7 +272,7 @@ void loop() {
 
   /////PARTE 2 LOOP/////
 
-//Button input read and processing 
+  //Button input read and processing 
   if(!buttonState) {
     if(digitalRead(CONTACT_PIN)) {
       CURRENT_TIME = millis();
@@ -277,7 +290,8 @@ void loop() {
         Serial.println("media/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID);
         Serial.println("Door opened too much time!!");
       }
-    }else{
+    }
+    else {
       setColor(0, 0, 255);
       open = false;
       buttonState = false;
@@ -285,7 +299,7 @@ void loop() {
     }
   }
   delay(100);
-  
+
   ////////PARTE 3 LOOP////////
   val = digitalRead(inputPin);  // read input value
   if (val == HIGH) {            // check if the input is HIGH        
@@ -296,17 +310,20 @@ void loop() {
       // We only want to print on the output change, not state
       pirState = HIGH;
     }
-  } else {
+  } 
+  else {
     digitalWrite(ledPin, LOW); // turn LED OFF
-    if (pirState == HIGH){
+    if (pirState == HIGH) {
       // we have just turned of
       Serial.println("Motion ended!");
       // We only want to print on the output change, not state
       pirState = LOW;
     }
   }
-  
+  receiveData();
+  processData();
 }
+//////////////////////////////////////////Loop Footer/////////////////////////////////////////////////////
 
 //Sets RGB led color.
 void setColor(int redValue, int greenValue, int blueValue) {
@@ -314,6 +331,54 @@ void setColor(int redValue, int greenValue, int blueValue) {
   analogWrite(greenPin, greenValue);
   analogWrite(bluePin, blueValue);
 }
+/////////////////////////////////Metodos de Modulo Wifi Header////////////////////////////////////////////
+void receiveData() {
+  while (Serial.available()) {
+    // get the new byte:
+    char inChar = (char)Serial.read();
+    // add it to the inputString:
+    inputString += inChar;
+    if (inChar == '\n') {
+      inputString.toCharArray(bufferData, SIZE_BUFFER_DATA);
+      stringComplete = true;
+    }
+  }
+}
+
+void processData() {
+  if (stringComplete) {
+    // Implementación...
+    String arreglo [3];
+    int index, val;
+
+    val = arreglo[1].toInt();
+    index = arreglo[2].toInt();
+
+    processCommand(arreglo, inputString);
+
+    if (arreglo[0] == "addPassword")
+    {
+      addPassword(val, index);
+    }
+    else if ( arreglo[0] == "updatePassword")
+    {
+      updatePassword(val, index);
+    }
+    else if ( arreglo[0] == "deletePassword")
+    {
+      deletePassword(index);
+    }
+    else if ( arreglo[0] == "deleteAllPasswords")
+    {
+      deleteAllPasswords();
+    }
+
+    inputString = "";
+    stringComplete = false;
+  }
+}
+/////////////////////////////////Metodos de Modulo Wifi Footer////////////////////////////////////////////
+
 ///////////////////////////////////////Gestion de claves Header////////////////////////////////////////////////////////
 // Method that compares a key with stored keys
 boolean compareKey(String key) {
