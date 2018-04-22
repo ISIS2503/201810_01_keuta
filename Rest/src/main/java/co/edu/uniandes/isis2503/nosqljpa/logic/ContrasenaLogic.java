@@ -60,6 +60,7 @@ public class ContrasenaLogic implements IConstrasenaLogic {
             mqttClient.connect(connOpts);
             System.out.println("Connected");
             System.out.println("Publishing message: "+content);
+            System.out.println("Topic: "+topic);
             MqttMessage message = new MqttMessage(content.getBytes());
             message.setQos(qos);
             mqttClient.publish(topic, message);
@@ -77,9 +78,10 @@ public class ContrasenaLogic implements IConstrasenaLogic {
     }
 
     private void tienePermiso(OrdenDTO dto, String usuario) throws Exception {
+        System.out.println(inmuebleLogic.find(dto.getIdInmueble()).getNombrePropietario() + ":" + usuario);
         if(!inmuebleLogic.find(dto.getIdInmueble()).getNombrePropietario().equals(usuario)){
             throw new  Exception("El usuario no es el dueño del inmueble.");
         }
-        ;
+        System.out.println("Permiso - OK");
     }
 }

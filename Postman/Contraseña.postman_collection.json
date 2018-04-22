@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "16e77b2d-4d67-4f05-ac67-5a6fac460bae",
+		"name": "Contraseña",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obtener token - Yale",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"grant_type\":\"http://auth0.com/oauth/grant-type/password-realm\",\r\n\"username\": \"yale@yale.edu.co\",\r\n\"password\": \"Yale123456789\",\r\n\"audience\": \"uniandes.edu.co/thermalcomfort\", \r\n\"scope\": \"openid\",\r\n\"client_id\": \"6SGnWSj-Us9t63VJHwgJC-S223qCvqSM\", \r\n\"client_secret\": \"m8sfjctqF-w8Y6i7543c6X2yokMRjopiVARfbUNg5C97Zwi1TIjKxJeLgGoRJ61Y\", \r\n\"realm\": \"Username-Password-Authentication\"\r\n}"
+				},
+				"url": {
+					"raw": "https://isis2503-daramirezv.auth0.com/oauth/token",
+					"protocol": "https",
+					"host": [
+						"isis2503-daramirezv",
+						"auth0",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener token - Propietario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"grant_type\":\"http://auth0.com/oauth/grant-type/password-realm\",\r\n\"username\": \"propietario@propietario.edu.co\",\r\n\"password\": \"Propietario123456789\",\r\n\"audience\": \"uniandes.edu.co/thermalcomfort\", \r\n\"scope\": \"openid\",\r\n\"client_id\": \"6SGnWSj-Us9t63VJHwgJC-S223qCvqSM\", \r\n\"client_secret\": \"m8sfjctqF-w8Y6i7543c6X2yokMRjopiVARfbUNg5C97Zwi1TIjKxJeLgGoRJ61Y\", \r\n\"realm\": \"Username-Password-Authentication\"\r\n}"
+				},
+				"url": {
+					"raw": "https://isis2503-daramirezv.auth0.com/oauth/token",
+					"protocol": "https",
+					"host": [
+						"isis2503-daramirezv",
+						"auth0",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear contraseña",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"idUnidad\" : \"unidad1\",\n\t\"idInmueble\" : \"inmueble1\",\n\t\"idCerradura\" : \"cerradura1\",\n\t\"idClave\" : \"01\",\n\t\"clave\" : \"1234\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/contrasena",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contrasena"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear contraseña - Forbidden",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMVQyMTowMTo1Ny41OTBaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQzNDQ1MTksImV4cCI6MTUyNDM4MDUxOX0.iUpAApXyAPPMs2ht6VBm7EPci2OPV4K-XWYtdnmf1jWWTf5GTHu5xuuqcA5RKzyxKj3WCxRsoQa-O-DZC5_ZueLArRkNLliVrUi7rac1eMAubK8rmNTLFnbdf9fKcrL6Zn2_dYg1PhP0h_k3S-MXARLfUKNI2OWsqW1_C5iKHHgu0TgxJIeTEonJmdHsxjBkAr5-OqS6uf0yejvlU_xxNXd9qzizIXtza-QNF2eMLhE4KvpaI6tDq0BrpHrO8bch4NVW3MEbgo3ALtTQHKocIpFJ9mrNfe5LU3hDISeyZchdXHJ1iRmt0vuAnhsS04hs0YX4k4NJlLz9Z_FYm8XaGA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"idUnidad\" : \"1\",\n\t\"idInmueble\" : \"1\",\n\t\"idCerradura\" : \"1\",\n\t\"idClave\" : \"01\",\n\t\"clave\" : \"1234\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/contrasena",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contrasena"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear contraseña - Authorized",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMVQyMTowMTo1Ny41OTBaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQzNDQ1MTksImV4cCI6MTUyNDM4MDUxOX0.iUpAApXyAPPMs2ht6VBm7EPci2OPV4K-XWYtdnmf1jWWTf5GTHu5xuuqcA5RKzyxKj3WCxRsoQa-O-DZC5_ZueLArRkNLliVrUi7rac1eMAubK8rmNTLFnbdf9fKcrL6Zn2_dYg1PhP0h_k3S-MXARLfUKNI2OWsqW1_C5iKHHgu0TgxJIeTEonJmdHsxjBkAr5-OqS6uf0yejvlU_xxNXd9qzizIXtza-QNF2eMLhE4KvpaI6tDq0BrpHrO8bch4NVW3MEbgo3ALtTQHKocIpFJ9mrNfe5LU3hDISeyZchdXHJ1iRmt0vuAnhsS04hs0YX4k4NJlLz9Z_FYm8XaGA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"idUnidad\" : \"2\",\n\t\"idInmueble\" : \"2\",\n\t\"idCerradura\" : \"2\",\n\t\"idClave\" : \"01\",\n\t\"clave\" : \"1234\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/contrasena",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contrasena"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cambiar contrasena - Authorized",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMVQyMTowMTo1Ny41OTBaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQzNDQ1MTksImV4cCI6MTUyNDM4MDUxOX0.iUpAApXyAPPMs2ht6VBm7EPci2OPV4K-XWYtdnmf1jWWTf5GTHu5xuuqcA5RKzyxKj3WCxRsoQa-O-DZC5_ZueLArRkNLliVrUi7rac1eMAubK8rmNTLFnbdf9fKcrL6Zn2_dYg1PhP0h_k3S-MXARLfUKNI2OWsqW1_C5iKHHgu0TgxJIeTEonJmdHsxjBkAr5-OqS6uf0yejvlU_xxNXd9qzizIXtza-QNF2eMLhE4KvpaI6tDq0BrpHrO8bch4NVW3MEbgo3ALtTQHKocIpFJ9mrNfe5LU3hDISeyZchdXHJ1iRmt0vuAnhsS04hs0YX4k4NJlLz9Z_FYm8XaGA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"idUnidad\" : \"2\",\n\t\"idInmueble\" : \"2\",\n\t\"idCerradura\" : \"2\",\n\t\"idClave\" : \"01\",\n\t\"clave\" : \"1234\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/contrasena",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contrasena"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar clave - Authorized",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMVQyMTowMTo1Ny41OTBaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQzNDQ1MTksImV4cCI6MTUyNDM4MDUxOX0.iUpAApXyAPPMs2ht6VBm7EPci2OPV4K-XWYtdnmf1jWWTf5GTHu5xuuqcA5RKzyxKj3WCxRsoQa-O-DZC5_ZueLArRkNLliVrUi7rac1eMAubK8rmNTLFnbdf9fKcrL6Zn2_dYg1PhP0h_k3S-MXARLfUKNI2OWsqW1_C5iKHHgu0TgxJIeTEonJmdHsxjBkAr5-OqS6uf0yejvlU_xxNXd9qzizIXtza-QNF2eMLhE4KvpaI6tDq0BrpHrO8bch4NVW3MEbgo3ALtTQHKocIpFJ9mrNfe5LU3hDISeyZchdXHJ1iRmt0vuAnhsS04hs0YX4k4NJlLz9Z_FYm8XaGA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/contrasena/borrar/2/2/2/01",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contrasena",
+						"borrar",
+						"2",
+						"2",
+						"2",
+						"01"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar claves - Authorized",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMVQyMTowMTo1Ny41OTBaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQzNDQ1MTksImV4cCI6MTUyNDM4MDUxOX0.iUpAApXyAPPMs2ht6VBm7EPci2OPV4K-XWYtdnmf1jWWTf5GTHu5xuuqcA5RKzyxKj3WCxRsoQa-O-DZC5_ZueLArRkNLliVrUi7rac1eMAubK8rmNTLFnbdf9fKcrL6Zn2_dYg1PhP0h_k3S-MXARLfUKNI2OWsqW1_C5iKHHgu0TgxJIeTEonJmdHsxjBkAr5-OqS6uf0yejvlU_xxNXd9qzizIXtza-QNF2eMLhE4KvpaI6tDq0BrpHrO8bch4NVW3MEbgo3ALtTQHKocIpFJ9mrNfe5LU3hDISeyZchdXHJ1iRmt0vuAnhsS04hs0YX4k4NJlLz9Z_FYm8XaGA"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/contrasena/borrar/2/2/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"contrasena",
+						"borrar",
+						"2",
+						"2",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

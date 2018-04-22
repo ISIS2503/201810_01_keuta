@@ -143,7 +143,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        System.out.println("Validando autenticación.");
         // Get the Authorization header from the request
         String authorizationHeader
                 = requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
@@ -165,5 +164,6 @@ public class AuthenticationFilter implements ContainerRequestFilter {
         } catch (Exception e) {
             abortWithUnauthorized(requestContext);
         }
+        System.out.println("Autenticación - OK");
     }
 }

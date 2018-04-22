@@ -64,7 +64,6 @@ public class AuthorizationFilter implements ContainerRequestFilter {
 
     @Override
     public void filter(ContainerRequestContext requestContext) throws IOException {
-        System.out.println("Validando autorización.");
         // Get the resource class which matches with the requested URL
         // Extract the roles declared by it
         Class<?> resourceClass = resourceInfo.getResourceClass();
@@ -89,6 +88,7 @@ public class AuthorizationFilter implements ContainerRequestFilter {
             throw new WebApplicationException(
                     Response.status(Response.Status.FORBIDDEN).build());
         }
+        System.out.println("Autorización - OK");
     }
 
     // Extract the roles from the annotated element
