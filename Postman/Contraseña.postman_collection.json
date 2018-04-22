@@ -6,95 +6,21 @@
 	},
 	"item": [
 		{
-			"name": "Obtener token - Yale",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n\"grant_type\":\"http://auth0.com/oauth/grant-type/password-realm\",\r\n\"username\": \"yale@yale.edu.co\",\r\n\"password\": \"Yale123456789\",\r\n\"audience\": \"uniandes.edu.co/thermalcomfort\", \r\n\"scope\": \"openid\",\r\n\"client_id\": \"6SGnWSj-Us9t63VJHwgJC-S223qCvqSM\", \r\n\"client_secret\": \"m8sfjctqF-w8Y6i7543c6X2yokMRjopiVARfbUNg5C97Zwi1TIjKxJeLgGoRJ61Y\", \r\n\"realm\": \"Username-Password-Authentication\"\r\n}"
-				},
-				"url": {
-					"raw": "https://isis2503-daramirezv.auth0.com/oauth/token",
-					"protocol": "https",
-					"host": [
-						"isis2503-daramirezv",
-						"auth0",
-						"com"
-					],
-					"path": [
-						"oauth",
-						"token"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Obtener token - Propietario",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n\"grant_type\":\"http://auth0.com/oauth/grant-type/password-realm\",\r\n\"username\": \"propietario@propietario.edu.co\",\r\n\"password\": \"Propietario123456789\",\r\n\"audience\": \"uniandes.edu.co/thermalcomfort\", \r\n\"scope\": \"openid\",\r\n\"client_id\": \"6SGnWSj-Us9t63VJHwgJC-S223qCvqSM\", \r\n\"client_secret\": \"m8sfjctqF-w8Y6i7543c6X2yokMRjopiVARfbUNg5C97Zwi1TIjKxJeLgGoRJ61Y\", \r\n\"realm\": \"Username-Password-Authentication\"\r\n}"
-				},
-				"url": {
-					"raw": "https://isis2503-daramirezv.auth0.com/oauth/token",
-					"protocol": "https",
-					"host": [
-						"isis2503-daramirezv",
-						"auth0",
-						"com"
-					],
-					"path": [
-						"oauth",
-						"token"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Crear contraseña",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"idUnidad\" : \"unidad1\",\n\t\"idInmueble\" : \"inmueble1\",\n\t\"idCerradura\" : \"cerradura1\",\n\t\"idClave\" : \"01\",\n\t\"clave\" : \"1234\"\n}"
-				},
-				"url": {
-					"raw": "http://localhost:8080/contrasena",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"contrasena"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Crear contraseña - Forbidden",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a3da30df-3ccc-4632-bc72-acf8374bb9fd",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"    pm.response.to.have.status(401);",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -127,6 +53,20 @@
 		},
 		{
 			"name": "Crear contraseña - Authorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cbc0c8fa-397a-4a61-9303-b1bdf12c810f",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [
@@ -136,12 +76,12 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMVQyMTowMTo1Ny41OTBaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQzNDQ1MTksImV4cCI6MTUyNDM4MDUxOX0.iUpAApXyAPPMs2ht6VBm7EPci2OPV4K-XWYtdnmf1jWWTf5GTHu5xuuqcA5RKzyxKj3WCxRsoQa-O-DZC5_ZueLArRkNLliVrUi7rac1eMAubK8rmNTLFnbdf9fKcrL6Zn2_dYg1PhP0h_k3S-MXARLfUKNI2OWsqW1_C5iKHHgu0TgxJIeTEonJmdHsxjBkAr5-OqS6uf0yejvlU_xxNXd9qzizIXtza-QNF2eMLhE4KvpaI6tDq0BrpHrO8bch4NVW3MEbgo3ALtTQHKocIpFJ9mrNfe5LU3hDISeyZchdXHJ1iRmt0vuAnhsS04hs0YX4k4NJlLz9Z_FYm8XaGA"
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMlQxNTo1MzoxOC44MTdaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQ0MTI0MDAsImV4cCI6MTUyNDQ0ODQwMH0.AwL2Nb9mmC4uTyY1P1fRkrJH0BHpLhD2gDLjgxgzb9LHEXMcLMTZF6yphsQVM-VZlfZQESPy53QrRgsrK4A9kHhF5M1MXJmH5VvyNyaZ0SPMJ5Tg3ldR5vT2jJyda2jOqNNdlpCQuDew2eacWhTTt4lNAbTcgHiIRM6eRtUc8V7j-J2Sny6hBywN5dbcje73ROxWgKQ1JGJzGkPE0dFFHZwQRoIGvIwSAcL9b5G4tof-vUPDkEA2V-CD-EJ9k6r5uU8NR2psuEGX_IdrqO0xZaVVrjnzU5T8LfZM8cFv8YOkoCzZsoVTHeBTfbgi25wBo7E2hPx4gh5IJUH7kWZcRA"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"idUnidad\" : \"2\",\n\t\"idInmueble\" : \"2\",\n\t\"idCerradura\" : \"2\",\n\t\"idClave\" : \"01\",\n\t\"clave\" : \"1234\"\n}"
+					"raw": "{\n\t\"idUnidad\" : \"conjunto\",\n\t\"idInmueble\" : \"nroresidencia\",\n\t\"idCerradura\" : \"dispositivo\",\n\t\"idClave\" : \"01\",\n\t\"clave\" : \"1234\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/contrasena",
@@ -159,6 +99,20 @@
 		},
 		{
 			"name": "Cambiar contrasena - Authorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fc7dd9a2-2c79-49ec-8bc7-681fe866df49",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -168,12 +122,12 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMVQyMTowMTo1Ny41OTBaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQzNDQ1MTksImV4cCI6MTUyNDM4MDUxOX0.iUpAApXyAPPMs2ht6VBm7EPci2OPV4K-XWYtdnmf1jWWTf5GTHu5xuuqcA5RKzyxKj3WCxRsoQa-O-DZC5_ZueLArRkNLliVrUi7rac1eMAubK8rmNTLFnbdf9fKcrL6Zn2_dYg1PhP0h_k3S-MXARLfUKNI2OWsqW1_C5iKHHgu0TgxJIeTEonJmdHsxjBkAr5-OqS6uf0yejvlU_xxNXd9qzizIXtza-QNF2eMLhE4KvpaI6tDq0BrpHrO8bch4NVW3MEbgo3ALtTQHKocIpFJ9mrNfe5LU3hDISeyZchdXHJ1iRmt0vuAnhsS04hs0YX4k4NJlLz9Z_FYm8XaGA"
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMlQxNTo1MzoxOC44MTdaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQ0MTI0MDAsImV4cCI6MTUyNDQ0ODQwMH0.AwL2Nb9mmC4uTyY1P1fRkrJH0BHpLhD2gDLjgxgzb9LHEXMcLMTZF6yphsQVM-VZlfZQESPy53QrRgsrK4A9kHhF5M1MXJmH5VvyNyaZ0SPMJ5Tg3ldR5vT2jJyda2jOqNNdlpCQuDew2eacWhTTt4lNAbTcgHiIRM6eRtUc8V7j-J2Sny6hBywN5dbcje73ROxWgKQ1JGJzGkPE0dFFHZwQRoIGvIwSAcL9b5G4tof-vUPDkEA2V-CD-EJ9k6r5uU8NR2psuEGX_IdrqO0xZaVVrjnzU5T8LfZM8cFv8YOkoCzZsoVTHeBTfbgi25wBo7E2hPx4gh5IJUH7kWZcRA"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"idUnidad\" : \"2\",\n\t\"idInmueble\" : \"2\",\n\t\"idCerradura\" : \"2\",\n\t\"idClave\" : \"01\",\n\t\"clave\" : \"1234\"\n}"
+					"raw": "{\n\t\"idUnidad\" : \"conjunto\",\n\t\"idInmueble\" : \"nroresidencia\",\n\t\"idCerradura\" : \"dispositivo\",\n\t\"idClave\" : \"01\",\n\t\"clave\" : \"1234\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/contrasena",
@@ -191,6 +145,20 @@
 		},
 		{
 			"name": "Borrar clave - Authorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b4d0f650-de43-42bf-8bb2-8442c59e3465",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -200,7 +168,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMVQyMTowMTo1Ny41OTBaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQzNDQ1MTksImV4cCI6MTUyNDM4MDUxOX0.iUpAApXyAPPMs2ht6VBm7EPci2OPV4K-XWYtdnmf1jWWTf5GTHu5xuuqcA5RKzyxKj3WCxRsoQa-O-DZC5_ZueLArRkNLliVrUi7rac1eMAubK8rmNTLFnbdf9fKcrL6Zn2_dYg1PhP0h_k3S-MXARLfUKNI2OWsqW1_C5iKHHgu0TgxJIeTEonJmdHsxjBkAr5-OqS6uf0yejvlU_xxNXd9qzizIXtza-QNF2eMLhE4KvpaI6tDq0BrpHrO8bch4NVW3MEbgo3ALtTQHKocIpFJ9mrNfe5LU3hDISeyZchdXHJ1iRmt0vuAnhsS04hs0YX4k4NJlLz9Z_FYm8XaGA"
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMlQxNTo1MzoxOC44MTdaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQ0MTI0MDAsImV4cCI6MTUyNDQ0ODQwMH0.AwL2Nb9mmC4uTyY1P1fRkrJH0BHpLhD2gDLjgxgzb9LHEXMcLMTZF6yphsQVM-VZlfZQESPy53QrRgsrK4A9kHhF5M1MXJmH5VvyNyaZ0SPMJ5Tg3ldR5vT2jJyda2jOqNNdlpCQuDew2eacWhTTt4lNAbTcgHiIRM6eRtUc8V7j-J2Sny6hBywN5dbcje73ROxWgKQ1JGJzGkPE0dFFHZwQRoIGvIwSAcL9b5G4tof-vUPDkEA2V-CD-EJ9k6r5uU8NR2psuEGX_IdrqO0xZaVVrjnzU5T8LfZM8cFv8YOkoCzZsoVTHeBTfbgi25wBo7E2hPx4gh5IJUH7kWZcRA"
 					}
 				],
 				"body": {
@@ -208,7 +176,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/contrasena/borrar/2/2/2/01",
+					"raw": "http://localhost:8080/contrasena/borrar/conjunto/nroresidencia/dispositivo/01",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -217,9 +185,9 @@
 					"path": [
 						"contrasena",
 						"borrar",
-						"2",
-						"2",
-						"2",
+						"conjunto",
+						"nroresidencia",
+						"dispositivo",
 						"01"
 					]
 				}
@@ -228,6 +196,20 @@
 		},
 		{
 			"name": "Borrar claves - Authorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "37584d29-0b80-4e95-b494-2096fbce0765",
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						]
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -237,7 +219,7 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMVQyMTowMTo1Ny41OTBaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQzNDQ1MTksImV4cCI6MTUyNDM4MDUxOX0.iUpAApXyAPPMs2ht6VBm7EPci2OPV4K-XWYtdnmf1jWWTf5GTHu5xuuqcA5RKzyxKj3WCxRsoQa-O-DZC5_ZueLArRkNLliVrUi7rac1eMAubK8rmNTLFnbdf9fKcrL6Zn2_dYg1PhP0h_k3S-MXARLfUKNI2OWsqW1_C5iKHHgu0TgxJIeTEonJmdHsxjBkAr5-OqS6uf0yejvlU_xxNXd9qzizIXtza-QNF2eMLhE4KvpaI6tDq0BrpHrO8bch4NVW3MEbgo3ALtTQHKocIpFJ9mrNfe5LU3hDISeyZchdXHJ1iRmt0vuAnhsS04hs0YX4k4NJlLz9Z_FYm8XaGA"
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJodHRwOi8vdGhlcm1hbGNvbWZvcnQvcm9sZXMiOlsicHJvcGlldGFyaW8iXSwibmlja25hbWUiOiJwcm9waWV0YXJpbyIsIm5hbWUiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJwaWN0dXJlIjoiaHR0cHM6Ly9zLmdyYXZhdGFyLmNvbS9hdmF0YXIvOWFkYjI1NDRiMDQ1MDlkYjY0YWYxNTlkZDAzODI0YjU_cz00ODAmcj1wZyZkPWh0dHBzJTNBJTJGJTJGY2RuLmF1dGgwLmNvbSUyRmF2YXRhcnMlMkZwci5wbmciLCJ1cGRhdGVkX2F0IjoiMjAxOC0wNC0yMlQxNTo1MzoxOC44MTdaIiwiZW1haWwiOiJwcm9waWV0YXJpb0Bwcm9waWV0YXJpby5lZHUuY28iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImlzcyI6Imh0dHBzOi8vaXNpczI1MDMtZGFyYW1pcmV6di5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NWFkYTYyYWM0MWFhY2QxZGFhODk2MzIzIiwiYXVkIjoiNlNHbldTai1Vczl0NjNWSkh3Z0pDLVMyMjNxQ3ZxU00iLCJpYXQiOjE1MjQ0MTI0MDAsImV4cCI6MTUyNDQ0ODQwMH0.AwL2Nb9mmC4uTyY1P1fRkrJH0BHpLhD2gDLjgxgzb9LHEXMcLMTZF6yphsQVM-VZlfZQESPy53QrRgsrK4A9kHhF5M1MXJmH5VvyNyaZ0SPMJ5Tg3ldR5vT2jJyda2jOqNNdlpCQuDew2eacWhTTt4lNAbTcgHiIRM6eRtUc8V7j-J2Sny6hBywN5dbcje73ROxWgKQ1JGJzGkPE0dFFHZwQRoIGvIwSAcL9b5G4tof-vUPDkEA2V-CD-EJ9k6r5uU8NR2psuEGX_IdrqO0xZaVVrjnzU5T8LfZM8cFv8YOkoCzZsoVTHeBTfbgi25wBo7E2hPx4gh5IJUH7kWZcRA"
 					}
 				],
 				"body": {
@@ -245,7 +227,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/contrasena/borrar/2/2/2",
+					"raw": "http://localhost:8080/contrasena/borrar/conjunto/nroresidencia/dispositivo",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -254,9 +236,9 @@
 					"path": [
 						"contrasena",
 						"borrar",
-						"2",
-						"2",
-						"2"
+						"conjunto",
+						"nroresidencia",
+						"dispositivo"
 					]
 				}
 			},
