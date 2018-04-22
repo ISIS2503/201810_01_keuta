@@ -1,0 +1,69 @@
+{
+	"info": {
+		"_postman_id": "6c210420-a34d-4d04-abf5-d91db95bd34f",
+		"name": "Token",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Obtener token - Propietario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"grant_type\":\"http://auth0.com/oauth/grant-type/password-realm\",\r\n\"username\": \"propietario@propietario.edu.co\",\r\n\"password\": \"Propietario123456789\",\r\n\"audience\": \"uniandes.edu.co/thermalcomfort\", \r\n\"scope\": \"openid\",\r\n\"client_id\": \"6SGnWSj-Us9t63VJHwgJC-S223qCvqSM\", \r\n\"client_secret\": \"m8sfjctqF-w8Y6i7543c6X2yokMRjopiVARfbUNg5C97Zwi1TIjKxJeLgGoRJ61Y\", \r\n\"realm\": \"Username-Password-Authentication\"\r\n}"
+				},
+				"url": {
+					"raw": "https://isis2503-daramirezv.auth0.com/oauth/token",
+					"protocol": "https",
+					"host": [
+						"isis2503-daramirezv",
+						"auth0",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obtener token - Yale",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"grant_type\":\"http://auth0.com/oauth/grant-type/password-realm\",\r\n\"username\": \"yale@yale.edu.co\",\r\n\"password\": \"Yale123456789\",\r\n\"audience\": \"uniandes.edu.co/thermalcomfort\", \r\n\"scope\": \"openid\",\r\n\"client_id\": \"6SGnWSj-Us9t63VJHwgJC-S223qCvqSM\", \r\n\"client_secret\": \"m8sfjctqF-w8Y6i7543c6X2yokMRjopiVARfbUNg5C97Zwi1TIjKxJeLgGoRJ61Y\", \r\n\"realm\": \"Username-Password-Authentication\"\r\n}"
+				},
+				"url": {
+					"raw": "https://isis2503-daramirezv.auth0.com/oauth/token",
+					"protocol": "https",
+					"host": [
+						"isis2503-daramirezv",
+						"auth0",
+						"com"
+					],
+					"path": [
+						"oauth",
+						"token"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
