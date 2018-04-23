@@ -17,17 +17,17 @@ public class CuentaDTO {
     private String user_id;
     private String email;
     private String password;
-    private boolean verify_email;
+    private boolean email_verified;
     private String connection = "Username-Password-Authentication";
 
     public CuentaDTO() {
     }
 
-    public CuentaDTO(String user_id, String email, String password, boolean verify_email) {
+    public CuentaDTO(String user_id, String email, String password, boolean email_verified) {
         this.user_id = user_id;
         this.email = email;
         this.password = password;
-        this.verify_email = verify_email;
+        this.email_verified = email_verified;
     }
 
     public String getUser_id() {
@@ -54,12 +54,12 @@ public class CuentaDTO {
         this.password = password;
     }
 
-    public boolean isVerify_email() {
-        return verify_email;
+    public boolean isEmail_verified() {
+        return email_verified;
     }
 
-    public void setVerify_email(boolean verify_email) {
-        this.verify_email = verify_email;
+    public void setEmail_verified(boolean email_verified) {
+        this.email_verified = email_verified;
     }
 
     public String getConnection() {

@@ -14,24 +14,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class UpdateCuentaDTO {
     
-    private String password;
     private boolean email_verified;
 
     public UpdateCuentaDTO() {
         
     }
 
-    public UpdateCuentaDTO(String password, boolean email_verified) {
-        this.password = password;
+    public UpdateCuentaDTO(boolean email_verified) {
         this.email_verified = email_verified;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public boolean isEmail_verified() {
