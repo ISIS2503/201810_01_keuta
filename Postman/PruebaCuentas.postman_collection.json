@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "49518a3b-e956-4aea-8ec5-8731c9b66b0f",
+		"name": "PruebaCuentas",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://localhost:8080/cuenta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb8faaf5-2add-4e84-a7d9-274b2b67dc2a",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user_id\": \"idprueba\",\r\n  \"email\":\"pruebaprueba@yale.edu.co\",\r\n  \"password\":\"HolaArquisoft123\",\r\n  \"email_verified\":false\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cuenta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cuenta"
+					]
+				},
+				"description": "post de una cuenta"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/cuenta/auth0|idprueba",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb8faaf5-2add-4e84-a7d9-274b2b67dc2a",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email_verified\":true\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cuenta/auth0|idprueba",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cuenta",
+						"auth0|idprueba"
+					]
+				},
+				"description": "put de una cuenta"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/cuenta/auth0|idprueba",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb8faaf5-2add-4e84-a7d9-274b2b67dc2a",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email_verified\":true\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cuenta/auth0|idprueba",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cuenta",
+						"auth0|idprueba"
+					]
+				},
+				"description": "get de una cuenta"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/cuenta",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bb8faaf5-2add-4e84-a7d9-274b2b67dc2a",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email_verified\":true\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cuenta",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cuenta"
+					]
+				},
+				"description": "get de todas las cuentas"
+			},
+			"response": []
+		},
+		{
+			"name": "http://localhost:8080/cuenta/auth0|idprueba",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2d19b23b-1ee5-4108-98e1-d7f5f48fbc82",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 204\"] = responseCode.code === 204;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email_verified\":true\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/cuenta/auth0|idprueba",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cuenta",
+						"auth0|idprueba"
+					]
+				},
+				"description": "delete de una cuenta"
+			},
+			"response": []
+		}
+	]
+}
