@@ -3,7 +3,7 @@
   <persistence-unit name="cassandra_db" transaction-type="RESOURCE_LOCAL">
     <provider>com.impetus.kundera.KunderaPersistence</provider>
     <class>co.edu.uniandes.isis2503.nosqljpa.model.entity.AlarmaEntity</class>
-    <class>co.edu.uniandes.isis2503.nosqljpa.model.entity.CerraduraEntity</class>
+    <class>co.edu.uniandes.isis2503.nosqljpa.model.entity.OrdenEntity</class>
     <class>co.edu.uniandes.isis2503.nosqljpa.model.entity.HubEntity</class>
     <class>co.edu.uniandes.isis2503.nosqljpa.model.entity.InmuebleEntity</class>
     <class>co.edu.uniandes.isis2503.nosqljpa.model.entity.UnidadResidencialEntity</class>

@@ -25,11 +25,11 @@ package co.edu.uniandes.isis2503.nosqljpa.model.dto.converter;
 
 import co.edu.uniandes.isis2503.nosqljpa.interfaces.IInmuebleConverter;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.AlarmaDTO;
-import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.CerraduraDTO;
+import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.OrdenDTO;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.HubDTO;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.InmuebleDTO;
 import co.edu.uniandes.isis2503.nosqljpa.model.entity.AlarmaEntity;
-import co.edu.uniandes.isis2503.nosqljpa.model.entity.CerraduraEntity;
+import co.edu.uniandes.isis2503.nosqljpa.model.entity.OrdenEntity;
 import co.edu.uniandes.isis2503.nosqljpa.model.entity.HubEntity;
 import co.edu.uniandes.isis2503.nosqljpa.model.entity.InmuebleEntity;
 import java.util.ArrayList;

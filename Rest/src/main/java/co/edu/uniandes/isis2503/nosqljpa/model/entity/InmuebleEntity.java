@@ -24,7 +24,7 @@
 package co.edu.uniandes.isis2503.nosqljpa.model.entity;
 
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.AlarmaDTO;
-import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.CerraduraDTO;
+import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.OrdenDTO;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.HubDTO;
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -13,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Date;
 
 @Path("contrasena")
 @Produces(MediaType.APPLICATION_JSON)
@@ -67,7 +68,8 @@ public class ContrasenaService {
         try {
             String usuario = Utils.getUsernameFromToken(token);
             if (usuario != "") {
-                contrasenaLogic.delete(new OrdenDTO(idUnidad, idInmueble, idDispositivo, new Integer(numclave), 0), usuario);
+                Date date = new Date();
+                contrasenaLogic.delete(new OrdenDTO(idUnidad, idInmueble, idDispositivo, new Integer(numclave), 0, date, date), usuario);
                 return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("Sucessful: Password was deleted").build();
             } else {
                 throw new Exception();
@@ -86,7 +88,8 @@ public class ContrasenaService {
         try {
             String usuario = Utils.getUsernameFromToken(token);
             if (usuario != "") {
-                contrasenaLogic.deleteAll(new OrdenDTO(idUnidad, idInmueble, idDispositivo, 0, 0), usuario);
+                Date date = new Date();
+                contrasenaLogic.deleteAll(new OrdenDTO(idUnidad, idInmueble, idDispositivo, 0, 0, date,date), usuario);
                 return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("Sucessful: Passwords were deleted").build();
             } else {
                 throw new Exception();
