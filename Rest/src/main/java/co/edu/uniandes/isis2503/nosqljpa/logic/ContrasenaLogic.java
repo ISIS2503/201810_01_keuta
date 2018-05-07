@@ -51,6 +51,8 @@ public class ContrasenaLogic implements IConstrasenaLogic {
             //el estado ahora es activo
             dto.estaActivo = true;
         }
+        funcionProgramada();
+        
         return result;
     }
 
