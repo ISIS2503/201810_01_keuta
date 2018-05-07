@@ -2,12 +2,8 @@ package ConsumidorMensajeria;
 
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.eclipse.paho.client.mqttv3.IMqttDeliveryToken;
 import org.eclipse.paho.client.mqttv3.MqttCallback;
@@ -17,19 +13,19 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 import org.json.JSONObject;
-import org.json.JSONWriter;
+import Utils.SslUtil;
 
-public class main implements MqttCallback{
+public class ConsumidorMensajeria implements MqttCallback{
 
     public static void main(String[] args) {
 
-        String topic        = "#";
+        String topic        = "prioridad/idconjunto/nroresidencia/dispositivo";
         int qos             = 0;
-        String broker       = "tcp://localhost:8083";
+        String broker       = "ssl://172.24.41.162:8083";
         String clientId     = "JavaSample";
 
         try {
-            main sampleClient = new main(broker, clientId);
+            ConsumidorMensajeria sampleClient = new ConsumidorMensajeria(broker, clientId);
             sampleClient.subscribe(topic,qos);
         } catch (MqttException me) {
             // Display full details of any exception that occurs
@@ -53,7 +49,7 @@ public class main implements MqttCallback{
      * @param brokerUrl the url of the server to connect to
      * @param clientId the client id to connect with
      */
-    public main(String brokerUrl, String clientId) {
+    public ConsumidorMensajeria(String brokerUrl, String clientId) {
         this.brokerUrl = brokerUrl;
         //This client stores in a temporary directory... where messages temporarily
         // stored until the message has been delivered to the server.
@@ -66,6 +62,9 @@ public class main implements MqttCallback{
             // Construct the connection options object that contains connection parameters
             // such as cleanSession and LWT
             conOpt = new MqttConnectOptions();
+            conOpt.setUserName("microcontrolador");
+            conOpt.setPassword("Isis2503.".toCharArray());
+            conOpt.setSocketFactory(SslUtil.getSocketFactory("C:\\Users\\f.reyes948\\git\\201810_01_keuta\\ssl\\m2mqtt_ca.crt", "C:\\Users\\f.reyes948\\git\\201810_01_keuta\\ssl\\m2mqtt_cli.crt", "C:\\Users\\f.reyes948\\git\\201810_01_keuta\\ssl\\m2mqtt_cli.key", "Isis2503."));
 
             // Construct an MQTT blocking mode client
             client = new MqttClient(this.brokerUrl,clientId, dataStore);
@@ -74,6 +73,10 @@ public class main implements MqttCallback{
             client.setCallback(this);
 
         } catch (MqttException e) {
+            e.printStackTrace();
+            System.out.println("Unable to set up client: "+e.toString());
+            System.exit(1);
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Unable to set up client: "+e.toString());
             System.exit(1);
@@ -142,7 +145,7 @@ public class main implements MqttCallback{
         // delivery without blocking until delivery completes.
         //
         // This client demonstrates asynchronous deliver and
-        // uses the token.waitForCompletion() call in the ConsumidorMensajeria.main thread which
+        // uses the token.waitForCompletion() call in the ConsumidorMensajeria.consumidorMensajeria thread which
         // blocks until the delivery has completed.
         // Additionally the deliveryComplete method will be called if
         // the callback is set on the client
@@ -173,7 +176,7 @@ public class main implements MqttCallback{
             String asunto = "Alerta de cerradura";
             String cuerpo = partesDelMensaje[2];
 
-            URL url = new URL("http://172.24.42.65:80/correo");
+            URL url = new URL("http://localhost:9090/correo");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json");
@@ -185,6 +188,7 @@ public class main implements MqttCallback{
             tomJsonObj.put("destinatarios", new String[] { destinatario });
             tomJsonObj.put("asunto", asunto);
             tomJsonObj.put("cuerpo", cuerpo);
+            System.out.println(tomJsonObj);
 
             out.writeBytes(tomJsonObj.toString());
             out.flush();

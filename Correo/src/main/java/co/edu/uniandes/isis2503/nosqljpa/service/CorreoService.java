@@ -1,3 +1,4 @@
+package co.edu.uniandes.isis2503.nosqljpa.service;
 
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.CorreoDTO;
 import javax.ws.rs.POST;
