@@ -57,14 +57,16 @@ public class ContrasenaLogic implements IConstrasenaLogic {
     @Override
     public OrdenDTO update(OrdenDTO dto, String usuario) throws Exception {
         tienePermiso(dto, usuario);
+        OrdenDTO result = CONVERTER.entityToDto(persistence.update(CONVERTER.dtoToEntity(dto)));
         publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdOrden()
                 + SEPARADOR_TOPICO + "entrada", "updatePassword" + SEPARADOR_MENSAJE + dto.getClave() + SEPARADOR_MENSAJE + dto.getIdClave());
-        return dto;
+        return result;
     }
 
     @Override
     public void delete(OrdenDTO dto, String usuario) throws Exception {
         tienePermiso(dto, usuario);
+        persistence.delete(String.valueOf(dto.getIdClave()));
         publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdOrden()
                 + SEPARADOR_TOPICO + "entrada", "deletePassword" + SEPARADOR_MENSAJE + "0" + SEPARADOR_MENSAJE + dto.getIdClave());
     }
