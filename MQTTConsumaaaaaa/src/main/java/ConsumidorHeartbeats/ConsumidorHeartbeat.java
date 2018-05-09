@@ -1,5 +1,6 @@
 package ConsumidorHeartbeats;
 
+import EnvioHeartbeatHub.ThreadHubHeartbeat;
 import java.io.*;
 
 import java.sql.Timestamp;
@@ -98,10 +99,13 @@ public class ConsumidorHeartbeat implements MqttCallback {
         
         ThreadHeartbeat th = new ThreadHeartbeat();
         ThreadSumador ts = new ThreadSumador();
+        ThreadHubHeartbeat thh = new ThreadHubHeartbeat();
         Thread t1 = new Thread(th);
         Thread t2 = new Thread(ts);
+        Thread t3 = new Thread(thh);
         t1.start();
         t2.start();
+        t3.start();
         
         // Connect to the MQTT server
         client.connect(conOpt);
