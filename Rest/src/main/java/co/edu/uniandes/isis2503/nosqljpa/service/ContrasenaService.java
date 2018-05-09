@@ -30,12 +30,13 @@ public class ContrasenaService {
     public OrdenDTO add(OrdenDTO dto, @HeaderParam(HttpHeaders.AUTHORIZATION) String token) {
         try {
             String usuario = Utils.getUsernameFromToken(token);
-            if (usuario != ""){
+            if (usuario != "") {
                 return contrasenaLogic.add(dto, usuario);
             } else {
                 throw new WebApplicationException(
                         Response.status(Response.Status.FORBIDDEN).build());
             }
+
         } catch (Exception e) {
             throw new WebApplicationException(
                     Response.status(Response.Status.FORBIDDEN).build());
@@ -47,7 +48,7 @@ public class ContrasenaService {
     public OrdenDTO update(OrdenDTO dto, @HeaderParam(HttpHeaders.AUTHORIZATION) String token) {
         try {
             String usuario = Utils.getUsernameFromToken(token);
-            if (usuario != ""){
+            if (usuario != "") {
                 return contrasenaLogic.update(dto, usuario);
             } else {
                 throw new WebApplicationException(
@@ -63,13 +64,12 @@ public class ContrasenaService {
     @Secured({Role.propietario})
     @Path("/borrar/{idUnidad}/{idInmueble}/{idDispositivo}/{numclave}")
     public Response delete(@PathParam("idUnidad") String idUnidad, @PathParam("idInmueble") String idInmueble,
-                           @PathParam("idDispositivo") String idDispositivo, @PathParam("numclave") String numclave
-            , @HeaderParam(HttpHeaders.AUTHORIZATION) String token) {
+            @PathParam("idDispositivo") String idDispositivo, @PathParam("numclave") String numclave,
+             @HeaderParam(HttpHeaders.AUTHORIZATION) String token) {
         try {
             String usuario = Utils.getUsernameFromToken(token);
             if (usuario != "") {
-                Date date = new Date();
-                contrasenaLogic.delete(new OrdenDTO(idUnidad, idInmueble, idDispositivo, new Integer(numclave), 0, date, date), usuario);
+                contrasenaLogic.delete(new OrdenDTO(idUnidad, idInmueble, idDispositivo, new Integer(numclave), 0, "", ""), usuario);
                 return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("Sucessful: Password was deleted").build();
             } else {
                 throw new Exception();
@@ -84,12 +84,11 @@ public class ContrasenaService {
     @Secured({Role.propietario})
     @Path("/borrar/{idUnidad}/{idInmueble}/{idDispositivo}/")
     public Response delete(@PathParam("idUnidad") String idUnidad, @PathParam("idInmueble") String idInmueble,
-                           @PathParam("idDispositivo") String idDispositivo, @HeaderParam(HttpHeaders.AUTHORIZATION) String token) {
+            @PathParam("idDispositivo") String idDispositivo, @HeaderParam(HttpHeaders.AUTHORIZATION) String token) {
         try {
             String usuario = Utils.getUsernameFromToken(token);
             if (usuario != "") {
-                Date date = new Date();
-                contrasenaLogic.deleteAll(new OrdenDTO(idUnidad, idInmueble, idDispositivo, 0, 0, date,date), usuario);
+                contrasenaLogic.deleteAll(new OrdenDTO(idUnidad, idInmueble, idDispositivo, 0, 0, "", ""), usuario);
                 return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("Sucessful: Passwords were deleted").build();
             } else {
                 throw new Exception();

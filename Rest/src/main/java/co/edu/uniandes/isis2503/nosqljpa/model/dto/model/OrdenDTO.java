@@ -11,15 +11,15 @@ public class OrdenDTO {
     private String idOrden;
     private int idClave;
     private int clave;
-    private Date fechaYhoraInicial;
-    private Date fechaYhoraFinal;
+    private String fechaYhoraInicial;
+    private String fechaYhoraFinal;
     public boolean estaActivo;
 
-    public OrdenDTO() {
+    public OrdenDTO() { 
 
     }
 
-    public OrdenDTO(String idUnidad, String idInmueble, String idOrden, int idClave, int clave, Date fechaYhoraInicial, Date fechaYhoraFinal) {
+    public OrdenDTO(String idUnidad, String idInmueble, String idOrden, int idClave, int clave, String fechaYhoraInicial, String fechaYhoraFinal) {
         this.idUnidad = idUnidad;
         this.idInmueble = idInmueble;
         this.idOrden = idOrden;
@@ -70,19 +70,19 @@ public class OrdenDTO {
         this.clave = clave;
     }
 
-    public Date getFechaYhoraInicial() {
+    public String getFechaYhoraInicial() {
         return fechaYhoraInicial;
     }
 
-    public void setFechaYhoraInicial(Date fechaYhoraInicial) {
+    public void setFechaYhoraInicial(String fechaYhoraInicial) {
         this.fechaYhoraInicial = fechaYhoraInicial;
     }
 
-    public Date getFechaYhoraFinal() {
+    public String getFechaYhoraFinal() {
         return fechaYhoraFinal;
     }
 
-    public void setFechaYhoraFinal(Date fechaYhoraFinal) {
+    public void setFechaYhoraFinal(String fechaYhoraFinal) {
         this.fechaYhoraFinal = fechaYhoraFinal;
     }
 
@@ -94,4 +94,5 @@ public class OrdenDTO {
         this.estaActivo = estaActivo;
     }
 
+  
 }

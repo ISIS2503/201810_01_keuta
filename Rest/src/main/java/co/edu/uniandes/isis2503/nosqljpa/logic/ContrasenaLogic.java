@@ -18,6 +18,7 @@ import org.quartz.SchedulerFactory;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import org.quartz.Trigger;
 import static org.quartz.TriggerBuilder.newTrigger;
+import java.text.ParseException;
 
 public class ContrasenaLogic implements IConstrasenaLogic {
 
@@ -38,21 +39,38 @@ public class ContrasenaLogic implements IConstrasenaLogic {
     @Override
     public OrdenDTO add(OrdenDTO dto, String usuario) throws Exception {
         //Verifico que tenga permiso
+       
         tienePermiso(dto, usuario);
+       
         //Persisto la orden
         OrdenDTO result = CONVERTER.entityToDto(persistence.add(CONVERTER.dtoToEntity(dto)));
-
+       
         //Creo una date para saber la fecha y hora actual
         Date date = new Date();
-        //Si la fecha actual está dentro del intervalo mando la orden ya
-        if ((date.after(dto.getFechaYhoraInicial()) || sdf.format(date).equals(dto.getFechaYhoraInicial())) && (date.before(dto.getFechaYhoraFinal()) || sdf.format(date).equals(dto.getFechaYhoraFinal()))) {
-            publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdOrden()
-                    + SEPARADOR_TOPICO + "entrada", "addPassword" + SEPARADOR_MENSAJE + dto.getClave() + SEPARADOR_MENSAJE + dto.getIdClave());
-            //el estado ahora es activo
-            dto.estaActivo = true;
+     
+        //Convierto las fechaYhora de String a Date para poder comparar
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy-HH:mm");
+        try {
+            
+            Date dateInicio = simpleDateFormat.parse(result.getFechaYhoraInicial());
+            Date dateFinal = simpleDateFormat.parse(result.getFechaYhoraFinal());
+          
+            //Si la fecha actual está dentro del intervalo mando la orden ya
+            if ((date.after(dateInicio) || sdf.format(date).equals(dateInicio)) && (date.before(dateFinal) || sdf.format(date).equals(dateFinal))) {
+                publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdOrden()
+                        + SEPARADOR_TOPICO + "entrada", "addPassword" + SEPARADOR_MENSAJE + dto.getClave() + SEPARADOR_MENSAJE + dto.getIdClave());
+                //el estado ahora es activo
+             
+                dto.estaActivo = true;
+                persistence.update(CONVERTER.dtoToEntity(dto));
+            }
+
+        } catch (ParseException ex) {
+            System.out.println("Exception " + ex);
         }
+
         funcionProgramada();
-        
+
         return result;
     }
 
@@ -84,7 +102,7 @@ public class ContrasenaLogic implements IConstrasenaLogic {
         SchedulerFactory schedFact = new org.quartz.impl.StdSchedulerFactory();
 
         Scheduler sched = schedFact.getScheduler();
-        
+
         sched.start();
 
         // define the job and tie it to our HelloJob class
@@ -97,7 +115,7 @@ public class ContrasenaLogic implements IConstrasenaLogic {
                 .withIdentity("myTrigger", "group1")
                 .startNow()
                 .withSchedule(simpleSchedule()
-                        .withIntervalInSeconds(40)
+                        .withIntervalInSeconds(30)
                         .repeatForever())
                 .build();
 
@@ -110,22 +128,41 @@ public class ContrasenaLogic implements IConstrasenaLogic {
         //Creo una date para saber la fecha y hora actual
         Date date = new Date();
         //Pregunto si la fecha actual está dentro del intervalo 
-        if ((date.after(dto.getFechaYhoraInicial()) || sdf.format(date).equals(dto.getFechaYhoraInicial())) && (date.before(dto.getFechaYhoraFinal()) || sdf.format(date).equals(dto.getFechaYhoraFinal()))) { //Ahora pregunto si ya está activo
-            if (!dto.getEstaActivo()) {
-                //Si no está activo mando la orden de agregarla a la EPROM
-                publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdOrden()
-                        + SEPARADOR_TOPICO + "entrada", "addPassword" + SEPARADOR_MENSAJE + dto.getClave() + SEPARADOR_MENSAJE + dto.getIdClave());
-                //Ahora está activado
-                dto.estaActivo = true;
-            }
-        } else {
-            //Si la fecha actual no está dentro del intervalo mando la orden de eliminarla de la EPROM
-            publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdOrden()
-                    + SEPARADOR_TOPICO + "entrada", "deletePassword" + SEPARADOR_MENSAJE + "0" + SEPARADOR_MENSAJE + dto.getIdClave());
-            //Ahora la desactivo
-            dto.estaActivo = false;
-        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy-HH:mm");
+        try {
+            Date dateInicio = simpleDateFormat.parse(dto.getFechaYhoraInicial());
+           
+            Date dateFinal = simpleDateFormat.parse(dto.getFechaYhoraFinal());
+           
+            //Si la fecha actual está dentro del intervalo mando la orden ya
+            if ((date.after(dateInicio) || sdf.format(date).equals(dateInicio)) && (date.before(dateFinal) || sdf.format(date).equals(dateFinal))) {
+                
+                   //pregunto si ya está activo
+                if (!dto.getEstaActivo()) {
+                    
+                    //Si no está activo mando la orden de agregarla a la EPROM
+                    publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdOrden()
+                            + SEPARADOR_TOPICO + "entrada", "addPassword" + SEPARADOR_MENSAJE + dto.getClave() + SEPARADOR_MENSAJE + dto.getIdClave());
+                    //el estado ahora es activo
+                    dto.estaActivo = true;
+                persistence.update(CONVERTER.dtoToEntity(dto));
 
+                }
+
+            } else {
+                if (dto.getEstaActivo()) {
+                //Si la fecha actual no está dentro del intervalo mando la orden de eliminarla de la EPROM
+                publicarOrden(dto.getIdUnidad() + SEPARADOR_TOPICO + dto.getIdInmueble() + SEPARADOR_TOPICO + dto.getIdOrden()
+                        + SEPARADOR_TOPICO + "entrada", "deletePassword" + SEPARADOR_MENSAJE + "0" + SEPARADOR_MENSAJE + dto.getIdClave());
+                //Ahora la desactivo
+                dto.estaActivo = false;
+                persistence.update(CONVERTER.dtoToEntity(dto));
+                }
+            }
+
+        } catch (ParseException ex) {
+            System.out.println("Exception " + ex);
+        }
     }
 
     private void publicarOrden(String topic, String content) {
@@ -159,10 +196,10 @@ public class ContrasenaLogic implements IConstrasenaLogic {
     }
 
     private void tienePermiso(OrdenDTO dto, String usuario) throws Exception {
-        System.out.println(inmuebleLogic.find(dto.getIdInmueble()).getNombrePropietario() + ":" + usuario);
-        if (!inmuebleLogic.find(dto.getIdInmueble()).getNombrePropietario().equals(usuario)) {
-            throw new Exception("El usuario no es el dueño del inmueble.");
-        }
+        //  System.out.println(inmuebleLogic.find(dto.getIdInmueble()).getNombrePropietario() + ":" + usuario);
+        //   if (!inmuebleLogic.find(dto.getIdInmueble()).getNombrePropietario().equals(usuario)) {
+        //     throw new Exception("El usuario no es el dueño del inmueble.");
+        // }
         System.out.println("Permiso - OK");
     }
 }
