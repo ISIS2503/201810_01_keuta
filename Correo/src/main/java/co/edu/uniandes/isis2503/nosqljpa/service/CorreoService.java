@@ -1,6 +1,8 @@
 package co.edu.uniandes.isis2503.nosqljpa.service;
 
+import co.edu.uniandes.isis2503.nosqljpa.main.Main;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.CorreoDTO;
+import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.HeartbeatDTO;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
@@ -33,5 +35,12 @@ public class CorreoService {
     @POST
     public void correo(CorreoDTO dto) {
         System.out.println("correo con asunto " + dto.getAsunto());
+    }
+    
+    @POST
+    @Path("/heartbeat")
+    public void heartbeat(HeartbeatDTO dto) {
+        Main.heartbeats.add(dto);
+        Main.TIEMPO = 0;
     }
 }
