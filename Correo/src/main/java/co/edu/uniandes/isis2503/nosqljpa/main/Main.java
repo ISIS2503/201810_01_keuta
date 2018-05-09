@@ -23,6 +23,9 @@
  */
 package co.edu.uniandes.isis2503.nosqljpa.main;
 
+import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.HeartbeatDTO;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.eclipse.jetty.server.Server;
@@ -33,10 +36,22 @@ import org.eclipse.jetty.webapp.WebAppContext;
  * @author Luis Felipe Mendivelso Osorio <lf.mendivelso10@uniandes.edu.co>
  */
 public class Main {
+
+    public static int TIEMPO = 0;
+    public static List<HeartbeatDTO> heartbeats = new ArrayList<>();
+
     private static final Logger LOG = Logger.getLogger(Main.class.getName());
 
     public static void main(String agrs[]) {
         try {
+
+            ThreadSumador ts = new ThreadSumador();
+            ThreadCorreo td = new ThreadCorreo();
+            Thread t1 = new Thread(ts);
+            Thread t2 = new Thread(td);
+            t1.start();
+            t2.start();
+
             String webappDirLocation = "src/main/webapp/";
             String webPort = System.getenv("PORT");
             if (webPort == null || webPort.isEmpty()) {

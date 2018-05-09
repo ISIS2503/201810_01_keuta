@@ -34,7 +34,7 @@ import javax.persistence.Table;
  * @author ca.mendoza968
  */
 @Entity
-@Table(name = "ORDEN")
+@Table(name = "ORDENN")
 public class OrdenEntity implements Serializable {
 
     @Id
@@ -43,15 +43,15 @@ public class OrdenEntity implements Serializable {
     private String idInmueble;
     private String idOrden;
     private int clave;
-    private Date fechaYhoraInicial;
-    private Date fechaYhoraFinal;
+    private String fechaYhoraInicial;
+    private String fechaYhoraFinal;
     public boolean estaActivo;
     
     public OrdenEntity() {
         
     }
 
-    public OrdenEntity(String idUnidad, String idInmueble, String idOrden, int idClave, int clave, Date fechaYhoraInicial, Date fechaYhoraFinal, boolean estaActivo) {
+    public OrdenEntity(String idUnidad, String idInmueble, String idOrden, int idClave, int clave, String fechaYhoraInicial, String fechaYhoraFinal, boolean estaActivo) {
         this.idClave=idClave;
         this.idUnidad = idUnidad;
         this.idInmueble = idInmueble;
@@ -101,19 +101,19 @@ public String getIdUnidad() {
         this.clave = clave;
     }
 
-    public Date getFechaYhoraInicial() {
+    public String getFechaYhoraInicial() {
         return fechaYhoraInicial;
     }
 
-    public void setFechaYhoraInicial(Date fechaYhoraInicial) {
+    public void setFechaYhoraInicial(String fechaYhoraInicial) {
         this.fechaYhoraInicial = fechaYhoraInicial;
     }
 
-    public Date getFechaYhoraFinal() {
+    public String getFechaYhoraFinal() {
         return fechaYhoraFinal;
     }
 
-    public void setFechaYhoraFinal(Date fechaYhoraFinal) {
+    public void setFechaYhoraFinal(String fechaYhoraFinal) {
         this.fechaYhoraFinal = fechaYhoraFinal;
     }
     
