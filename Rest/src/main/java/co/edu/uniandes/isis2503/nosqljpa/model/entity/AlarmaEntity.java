@@ -46,21 +46,29 @@ public class AlarmaEntity implements Serializable {
     private String unidadResidencial;
     private String inmueble;
     private String dispositivo;
+    private String fecha;
 
     public AlarmaEntity()
     {
         
     }
     
-    public AlarmaEntity(String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo) {
+    public AlarmaEntity(String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo,String fecha) {
         
         this.mensaje = mensaje;
         this.prioridad = prioridad;
         this.unidadResidencial = unidadResidencial;
         this.inmueble = inmueble;
         this.dispositivo = dispositivo;
+        this.fecha= fecha;
+    }
+ public String getFecha() {
+        return fecha;
     }
 
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
     public String getMensaje() {
         return mensaje;
     }

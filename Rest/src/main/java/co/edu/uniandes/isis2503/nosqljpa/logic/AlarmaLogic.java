@@ -79,4 +79,14 @@ public class AlarmaLogic implements IAlarmaLogic{
     public List<AlarmaDTO> findUnidad(String unidad) {
         return CONVERTER.listEntitiesToListDTOs(persistence.darUnidad(unidad));
     }
+
+    @Override
+    public List<AlarmaDTO> getAlarmasInmueble(Integer fecha) {
+        return CONVERTER.listEntitiesToListDTOs(persistence.darAlarmasInmueble(fecha));
+    }
+
+    @Override
+    public List<AlarmaDTO> getAlarmasUnidad(Integer fecha) {
+        return CONVERTER.listEntitiesToListDTOs(persistence.darAlarmasUnidad(fecha));
+    }
 }

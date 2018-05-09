@@ -77,7 +77,16 @@ public class AlarmaService {
     public List<AlarmaDTO> all() {
         return sensorLogic.all();
     }
-    
+     @GET
+      @Path("/inmueble/{fecha}")
+    public List<AlarmaDTO> getAlarmasInmueble(@PathParam("fecha") Integer fecha) {
+        return sensorLogic.getAlarmasInmueble(fecha);
+    }
+    @GET
+      @Path("/unidad/{fecha}")
+    public List<AlarmaDTO> getAlarmasUnidad(@PathParam("fecha") Integer fecha) {
+        return sensorLogic.getAlarmasUnidad(fecha);
+    }
     @POST
     @Path("/unidad")
     public List<AlarmaDTO> unidad(UnidadDTO dto) {

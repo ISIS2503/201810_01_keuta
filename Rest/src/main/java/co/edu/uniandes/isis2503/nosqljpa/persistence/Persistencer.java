@@ -134,4 +134,28 @@ public class Persistencer<T, PK> {
         }
         return entities;
     }
+    public List<T> darAlarmasInmueble(Integer fecha) {
+        List<T> entities;
+        String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.fecha = :" + fecha;
+        Query query = entityManager.createQuery(queryString);
+        try {
+            entities = query.getResultList();
+        } catch (NoResultException | NonUniqueResultException e) {
+            entities = null;
+            LOG.log(Level.WARNING, e.getMessage());
+        }
+        return entities;
+    }
+     public List<T> darAlarmasUnidad(Integer fecha) {
+        List<T> entities;
+        String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.fecha = :" + fecha;
+        Query query = entityManager.createQuery(queryString);
+        try {
+            entities = query.getResultList();
+        } catch (NoResultException | NonUniqueResultException e) {
+            entities = null;
+            LOG.log(Level.WARNING, e.getMessage());
+        }
+        return entities;
+    }
 }
