@@ -1,5 +1,6 @@
 #include <Keypad.h>
 #include <EEPROM.h>
+#include <String.h>
 
 #define SIZE_BUFFER_DATA       50
 boolean stringComplete = false;
@@ -118,6 +119,12 @@ int val = 0;                    // variable for reading the pin status
 
 int unavez; //Este unavez es para que la alerta de puerta abierta mucho tiempo solo se ejecute una vez en lugar de hacerlo cada vez que entra al loop
 
+
+//manejo de hearthbeat
+long timeHearth1=0;
+//5 segundos cada pulso, se puede alterar
+long intervalHearth=5000;
+
 void setup() {
   //////PARTE 3 SETUP//////
   pinMode(ledPin, OUTPUT);      // declare LED as output
@@ -151,12 +158,16 @@ void setup() {
 
   //Input pin definition for battery measure
   pinMode(BATTERY_PIN,INPUT);
+  
+  timeHearth1=millis();
 }
 
 //////////////////////////////////////////////////Loop Header//////////////////////////////////////////////////
 void loop() {
 
-
+  
+  
+  
   ///////////////////////////////////////Battery Header////////////////////////////////////////////////////////
 
   batteryCharge = (analogRead(BATTERY_PIN)*5.4)/1024;
@@ -322,6 +333,18 @@ void loop() {
   }
   receiveData();
   processData();
+  
+  
+  ///////////////////////////////////////HearthBeat Header////////////////////////////////////////////////////////
+  if((millis()-timeHearth1)>intervalHearth)
+  {
+  Serial.println("HearthBeat");
+      Serial.println("hearthbeat/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID);
+      timeHearth1=millis();
+  }
+  
+  ///////////////////////////////////////HearthBeat Footer////////////////////////////////////////////////////////
+  
 }
 //////////////////////////////////////////Loop Footer/////////////////////////////////////////////////////
 
@@ -333,19 +356,30 @@ void setColor(int redValue, int greenValue, int blueValue) {
 }
 /////////////////////////////////Metodos de Modulo Wifi Header////////////////////////////////////////////
 void receiveData() {
+
   while (Serial.available()) {
+
     // get the new byte:
     char inChar = (char)Serial.read();
     // add it to the inputString:
     inputString += inChar;
-    if (inChar == '\n') {
+    if ((inChar == '\n')||(inChar == ';')) {
       inputString.toCharArray(bufferData, SIZE_BUFFER_DATA);
       stringComplete = true;
+      
     }
   }
 }
 
 void processData() {
+
+  
+  if(inputString.startsWith("healthcheck"))
+{
+String newkey=inputString.substring(12);
+intervalHearth=newkey.toInt()*1000;
+}
+  
   if (stringComplete) {
     // Implementación...
     String arreglo [3];
@@ -355,7 +389,10 @@ void processData() {
     index = arreglo[2].toInt();
 
     processCommand(arreglo, inputString);
-
+  Serial.print("process show, Val:");
+  Serial.println(val);
+    Serial.print("Array0:");
+    Serial.println(arreglo[0]);
     if (arreglo[0] == "addPassword")
     {
       addPassword(val, index);
@@ -372,6 +409,11 @@ void processData() {
     {
       deleteAllPasswords();
     }
+    else if( arreglo[0] == "healthcheck")
+    {
+      intervalHearth=val*1000;
+    }  
+    
 
     inputString = "";
     stringComplete = false;

@@ -48,7 +48,7 @@ import javax.ws.rs.core.Response;
  * @author ca.mendoza968
  */
 @Path("/alarma")
-@Secured({Role.administrador, Role.propietario, Role.seguridad, Role.yale})
+@Secured
 @Produces(MediaType.APPLICATION_JSON)
 public class AlarmaService {
     private final IAlarmaLogic sensorLogic;

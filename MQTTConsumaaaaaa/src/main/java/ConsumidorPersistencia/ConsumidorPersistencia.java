@@ -42,6 +42,9 @@ public class ConsumidorPersistencia implements MqttCallback{
     private String 				brokerUrl;
     private MqttConnectOptions 	conOpt;
 
+    //Auth0 Token
+    private String token;
+
     /**
      * Constructs an instance of the client wrapper
      * @param brokerUrl the url of the server to connect to
@@ -70,6 +73,40 @@ public class ConsumidorPersistencia implements MqttCallback{
 
             // Set this wrapper as the callback handler
             client.setCallback(this);
+
+            //Get auth0 token.
+            URL url = new URL("https://isis2503-daramirezv.auth0.com/oauth/token");
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setDoOutput(true);
+            DataOutputStream out = new DataOutputStream(con.getOutputStream());
+
+            JSONObject tomJsonObj = new JSONObject();
+            tomJsonObj.put("grant_type", "client_credentials");
+            tomJsonObj.put("client_id", "6SGnWSj-Us9t63VJHwgJC-S223qCvqSM");
+            tomJsonObj.put("client_secret", "m8sfjctqF-w8Y6i7543c6X2yokMRjopiVARfbUNg5C97Zwi1TIjKxJeLgGoRJ61Y");
+            tomJsonObj.put("audience", "uniandes.edu.co/thermalcomfort");
+
+            out.writeBytes(tomJsonObj.toString());
+            out.flush();
+            out.close();
+
+            int status = con.getResponseCode();
+            System.out.println("Status is: " + status);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer content = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            System.out.println("Response is: " + content);
+            in.close();
+            con.disconnect();
+
+            tomJsonObj = new JSONObject(content.toString());
+            token = tomJsonObj.getString("access_token");
 
         } catch (MqttException e) {
             e.printStackTrace();
@@ -178,10 +215,11 @@ public class ConsumidorPersistencia implements MqttCallback{
             String inmueble = partesTopico[2];
             String dispositivo = partesTopico[3];
 
-            URL url = new URL("http://localhost:8080/alertas");
+            URL url = new URL("http://localhost:8080/alarma");
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json");
+            con.setRequestProperty("Authorization", "Bearer " + token);
             con.setDoOutput(true);
             DataOutputStream out = new DataOutputStream(con.getOutputStream());
 
