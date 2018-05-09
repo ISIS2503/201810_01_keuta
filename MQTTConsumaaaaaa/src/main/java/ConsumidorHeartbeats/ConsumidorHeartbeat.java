@@ -20,7 +20,7 @@ public class ConsumidorHeartbeat implements MqttCallback {
 
     public static void main(String[] args) {
 
-        String topic = "heartbeat";
+        String topic = "healthcheck/conjunto1/1/c1";
         int qos = 0;
         String broker = "ssl://172.24.41.162:8083";
         String clientId = "JavaSample";
