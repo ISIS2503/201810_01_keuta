@@ -44,53 +44,18 @@ public class CerraduraEntity implements Serializable {
     private String unidadResidencial;
     
     private String inmueble;
-    private String clave1;
-    private String clave2;
-    private String clave3;
-    private String clave4;
     
     public CerraduraEntity() {
         
     }
 
-    public CerraduraEntity(String id, String identificador, String idUnidadResidencial, String idInmueble, String clave1, String clave2, String clave3, String clave4) {
+    public CerraduraEntity(String id, String identificador, String idUnidadResidencial, String idInmueble) {
         this.id = id;
         this.identificador = identificador;
         this.unidadResidencial = idUnidadResidencial;
         this.inmueble = idInmueble;
-        this.clave1=clave1;
-        this.clave2=clave2;
-        this.clave3=clave3;
-        this.clave4=clave4;
-    }
-     public String getClave4() {
-        return clave4;
     }
 
-    public void setClave4(String clave4) {
-        this.clave4 = clave4;
-    }
-     public String getClave3() {
-        return clave3;
-    }
-
-    public void setClave3(String clave3) {
-        this.clave3 = clave3;
-    }
- public String getClave2() {
-        return clave2;
-    }
-
-    public void setClave2(String clave2) {
-        this.clave2 = clave2;
-    }
-     public String getClave1() {
-        return clave1;
-    }
-
-    public void setClave1(String clave1) {
-        this.clave1 = clave1;
-    }
     public String getId() {
         return id;
     }

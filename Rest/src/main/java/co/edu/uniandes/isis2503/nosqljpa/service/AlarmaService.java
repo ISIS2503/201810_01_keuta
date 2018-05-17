@@ -30,7 +30,9 @@ import co.edu.uniandes.isis2503.nosqljpa.logic.AlarmaLogic;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.AlarmaDTO;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.InmuebleYUnidadDTO;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.UnidadDTO;
+import java.util.logging.Logger;
 import java.util.List;
+import java.util.logging.Level;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -39,12 +41,14 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
  * @author ca.mendoza968
  */
 @Path("/alarma")
+@Secured
 @Produces(MediaType.APPLICATION_JSON)
 public class AlarmaService {
     private final IAlarmaLogic sensorLogic;
@@ -73,32 +77,22 @@ public class AlarmaService {
     public List<AlarmaDTO> all() {
         return sensorLogic.all();
     }
-    
      @GET
-      @Path("/{inmueble}/{mes}")
-    public List<AlarmaDTO> getAlarmasInmueble(@PathParam("mes") String mes, @PathParam("inmueble") String inmueble) {
-        
-        return sensorLogic.getAlarmasInmueble(mes, inmueble);
+      @Path("/inmueble/{fecha}")
+    public List<AlarmaDTO> getAlarmasInmueble(@PathParam("fecha") Integer fecha) {
+        return sensorLogic.getAlarmasInmueble(fecha);
     }
-
     @GET
-      @Path("alam_unidad/{unidad}/{mes}")
-    public List<AlarmaDTO> getAlarmasUnidad(@PathParam("mes") String mes, @PathParam("unidad") String unidad) {
-        return sensorLogic.getAlarmasUnidad(mes, unidad);
+      @Path("/unidad/{fecha}")
+    public List<AlarmaDTO> getAlarmasUnidad(@PathParam("fecha") Integer fecha) {
+        return sensorLogic.getAlarmasUnidad(fecha);
     }
-    
-    
     @POST
     @Path("/unidad")
     public List<AlarmaDTO> unidad(UnidadDTO dto) {
         return sensorLogic.findUnidad(dto.getUnidadResidencial());
     }
-
-     @GET
-      @Path("alam_barrio/{barrio}/{mes}")
-    public List<AlarmaDTO> getAlarmasBarrio(@PathParam("mes") String mes,@PathParam("barrio")String barrio) {
-        return sensorLogic.getAlarmasBarrio(mes, barrio);
-    }
+    
     @POST
     @Path("/inmuebleyunidad")
     public List<AlarmaDTO> unidad(InmuebleYUnidadDTO dto) {
@@ -107,10 +101,14 @@ public class AlarmaService {
     
     @DELETE
     @Path("/{id}")
-    public void delete(@PathParam("id") String id) {
-     
+    public Response delete(@PathParam("id") String id) {
+        try {
             sensorLogic.delete(id);
-           
+            return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("Sucessful: Sensor was deleted").build();
+        } catch (Exception e) {
+            Logger.getLogger(CerraduraService.class.getName()).log(Level.WARNING, e.getMessage());
+            return Response.status(500).header("Access-Control-Allow-Origin", "*").entity("We found errors in your query, please contact the Web Admin.").build();
+        }
     }
 }
 

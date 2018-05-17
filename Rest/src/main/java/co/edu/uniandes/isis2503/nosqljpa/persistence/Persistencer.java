@@ -71,8 +71,6 @@ public class Persistencer<T, PK> {
         }
         return entity;
     }
-     
-    
 
     public T find(PK id) {
         T entity;
@@ -136,21 +134,9 @@ public class Persistencer<T, PK> {
         }
         return entities;
     }
-    public List<T> darAlarmasInmueble(String mes, String inmueble) {
-        List<T> entities;      
-       String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.mes = " + mes +" and c.inmueble = " + inmueble;
-        Query query = entityManager.createQuery(queryString);
-        try {
-            entities = query.getResultList();           
-        } catch (NoResultException | NonUniqueResultException e) {
-            entities = null;
-            LOG.log(Level.WARNING, e.getMessage());
-        }
-        return entities;
-    }
-     public List<T> darAlarmasUnidad(String mes, String unidad) {
+    public List<T> darAlarmasInmueble(Integer fecha) {
         List<T> entities;
-        String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.mes =" + mes + " and c.unidadResidencial = " + unidad;
+        String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.fecha = :" + fecha;
         Query query = entityManager.createQuery(queryString);
         try {
             entities = query.getResultList();
@@ -160,9 +146,9 @@ public class Persistencer<T, PK> {
         }
         return entities;
     }
-      public List<T> darAlarmasBarrio( String mes, String barrio) {
+     public List<T> darAlarmasUnidad(Integer fecha) {
         List<T> entities;
-        String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.barrio =" + barrio + " and c.mes = "+mes;
+        String queryString = "Select c FROM " + entityClass.getSimpleName() + " c where c.fecha = :" + fecha;
         Query query = entityManager.createQuery(queryString);
         try {
             entities = query.getResultList();
@@ -172,5 +158,4 @@ public class Persistencer<T, PK> {
         }
         return entities;
     }
-       
 }

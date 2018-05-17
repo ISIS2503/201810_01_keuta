@@ -31,56 +31,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class AlarmaDTO {
-    
-     private Long idMensaje;
     private String mensaje;
     private String prioridad;
     private String unidadResidencial;
     private String inmueble;
     private String dispositivo;
     private String fecha;
-    private String barrio;
-    private String mes;
 
     public AlarmaDTO() {
         
     }
 
-    public AlarmaDTO(Long idMensaje,String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo, String fecha, String barrio) {
-        this.idMensaje=idMensaje;
+    public AlarmaDTO(String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo, String fecha) {
         this.mensaje = mensaje;
         this.prioridad = prioridad;
         this.unidadResidencial = unidadResidencial;
         this.inmueble = inmueble;
         this.dispositivo = dispositivo;
         this.fecha= fecha;
-        this.mes = fecha.substring(3, 4);
-        System.out.println("MESSSSSSSSSS: "+mes);
-        this.barrio = barrio;
-        
-    }
-     public String getMes() {
-        return mes;
     }
 
-    public void setMes(String mes) {
-        this.mes = mes
-                ;
-    }
- public String getBarrio() {
-        return barrio;
-    }
-
-    public void setBarrio(String barrio) {
-        this.barrio = barrio;
-    }
-     public Long getIdMensaje() {
-        return idMensaje;
-    }
-
-    public void setIdMensaje(Long idMensaje) {
-        this.idMensaje = idMensaje;
-    }
     public String getMensaje() {
         return mensaje;
     }

@@ -5,11 +5,9 @@
  */
 package co.edu.uniandes.isis2503.nosqljpa.logic;
 
-import co.edu.uniandes.isis2503.nosqljpa.interfaces.IUsuarioLogic;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.UsuarioDTO;
 import co.edu.uniandes.isis2503.nosqljpa.persistence.UsuarioPersistence;
 import static co.edu.uniandes.isis2503.nosqljpa.model.dto.converter.UsuarioConverter.CONVERTER;
-import co.edu.uniandes.isis2503.nosqljpa.model.entity.UsuarioEntity;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +17,7 @@ import java.util.UUID;
  *
  * @author sp.joven
  */
-public class UsuarioLogic implements IUsuarioLogic {
+public class UsuarioLogic {
      private final UsuarioPersistence persistence;
 
     public UsuarioLogic() {
@@ -28,28 +26,21 @@ public class UsuarioLogic implements IUsuarioLogic {
 
    
     
-     @Override
     public UsuarioDTO add(UsuarioDTO dto) {
-        
         if (dto.getId() == null) {
             dto.setId(UUID.randomUUID().toString());
         }
-         
-      
-     
         UsuarioDTO result = CONVERTER.entityToDto(persistence.add(CONVERTER.dtoToEntity(dto)));
         return result;
     }
 
     
-     @Override
     public UsuarioDTO update(UsuarioDTO dto) {
        UsuarioDTO result = CONVERTER.entityToDto(persistence.update(CONVERTER.dtoToEntity(dto)));
         return result;
     }
 
     
-     @Override
     public UsuarioDTO find(String id) {
         return CONVERTER.entityToDto(persistence.find(id));
     }

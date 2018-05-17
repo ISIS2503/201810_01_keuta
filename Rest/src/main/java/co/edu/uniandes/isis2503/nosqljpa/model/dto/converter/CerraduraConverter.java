@@ -47,14 +47,6 @@ public class CerraduraConverter implements ICerraduraConverter {
         dto.setIdentificador(entity.getIdentificador());
         dto.setInmueble(entity.getInmueble());
         dto.setUnidadResidencial(entity.getUnidadResidencial());
-        if(entity.getClave1()!=null){
-        dto.setClave1(entity.getClave1());}
-        if(entity.getClave2()!=null){
-        dto.setClave2(entity.getClave2());}
-        if(entity.getClave3()!=null){
-        dto.setClave3(entity.getClave3());}
-        if(entity.getClave4()!=null){
-        dto.setClave4(entity.getClave4());}
         return dto;
     }
 
@@ -65,14 +57,6 @@ public class CerraduraConverter implements ICerraduraConverter {
         entity.setIdentificador(dto.getIdentificador());
         entity.setInmueble(dto.getInmueble());
         entity.setUnidadResidencial(dto.getUnidadResidencial());
-        if(dto.getClave1()!=null){
-        entity.setClave1(dto.getClave1());}
-        if(dto.getClave2()!=null){
-        entity.setClave2(dto.getClave2());}   
-        if(dto.getClave3()!=null){
-        entity.setClave3(dto.getClave3());}
-        if(dto.getClave4()!=null){
-        entity.setClave4(dto.getClave4());}
         return entity;
     }
 

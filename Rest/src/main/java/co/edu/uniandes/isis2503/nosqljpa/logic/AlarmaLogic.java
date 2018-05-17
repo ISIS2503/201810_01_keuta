@@ -81,18 +81,12 @@ public class AlarmaLogic implements IAlarmaLogic{
     }
 
     @Override
-    public List<AlarmaDTO> getAlarmasInmueble(String fecha, String inmueble) {
-        return CONVERTER.listEntitiesToListDTOs(persistence.darAlarmasInmueble(fecha, inmueble));
+    public List<AlarmaDTO> getAlarmasInmueble(Integer fecha) {
+        return CONVERTER.listEntitiesToListDTOs(persistence.darAlarmasInmueble(fecha));
     }
 
     @Override
-    public List<AlarmaDTO> getAlarmasUnidad(String mes, String unidad) {
-        return CONVERTER.listEntitiesToListDTOs(persistence.darAlarmasUnidad(mes, unidad));
+    public List<AlarmaDTO> getAlarmasUnidad(Integer fecha) {
+        return CONVERTER.listEntitiesToListDTOs(persistence.darAlarmasUnidad(fecha));
     }
-
-     @Override
-    public List<AlarmaDTO> getAlarmasBarrio(String fecha, String barrio) {
-        return CONVERTER.listEntitiesToListDTOs(persistence.darAlarmasBarrio(fecha, barrio));
-    }
-
 }
