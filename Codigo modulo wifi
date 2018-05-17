@@ -4,7 +4,6 @@
 //DEFINES
 #define TOPIC_SUBSCRIBE        "conjunto/nroresidencia/dispositivo/entrada"
 #define TOPIC_PUBLISH          "prioridad/idconjunto/nroresidencia/dispositivo"
-#define TOPIC_HEARTHBEAT          "healthcheck/idconjunto/nroresidencia/dispositivo"
 #define SIZE_BUFFER_DATA       50
 
 //VARIABLES
@@ -98,23 +97,11 @@ void processData() {
     }
 
     if (stringComplete && clientMQTT.connected()) {
-      if(inputString == "HearthBeat") {
-      if(clientMQTT.publish(TOPIC_HEARTHBEAT, bufferData)) {
-          inputString = "";
-          stringComplete = false;
-        }
-      init_flag = false;
-      
+      if(clientMQTT.publish(TOPIC_PUBLISH, bufferData)) {
+        inputString = "";
+        stringComplete = false;
       }
-      else
-      {
-      
-        if(clientMQTT.publish(TOPIC_PUBLISH, bufferData)) {
-          inputString = "";
-          stringComplete = false;
-        }
       init_flag = false;
-      }
     }
   }
   else {
