@@ -28,7 +28,7 @@ public class UsuarioConverter implements IUsuarioConverter{
         dto.setCorreo(entity.getCorreo());
         dto.setTelefono(entity.getTelefono());
         dto.setNombre(entity.getNombre());
-        
+        dto.setContrasena(entity.getContrasena());
         return dto;
     }
 
@@ -36,9 +36,10 @@ public class UsuarioConverter implements IUsuarioConverter{
     public UsuarioEntity dtoToEntity(UsuarioDTO dto) {
         UsuarioEntity entity = new UsuarioEntity();
         entity.setId(dto.getId());
-       dto.setCorreo(entity.getCorreo());
-        dto.setTelefono(entity.getTelefono());
-        dto.setNombre(entity.getNombre());
+       entity.setCorreo(dto.getCorreo());
+        entity.setTelefono(dto.getTelefono());
+        entity.setNombre(dto.getNombre());
+         entity.setContrasena(dto.getContrasena());
        
         return entity;
     }

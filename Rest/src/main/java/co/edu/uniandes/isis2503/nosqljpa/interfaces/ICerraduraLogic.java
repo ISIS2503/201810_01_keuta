@@ -24,7 +24,6 @@
 package co.edu.uniandes.isis2503.nosqljpa.interfaces;
 
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.CerraduraDTO;
-import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.HubDTO;
 import java.util.List;
 
 /**

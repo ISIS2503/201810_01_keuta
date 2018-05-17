@@ -5,26 +5,39 @@
  */
 package co.edu.uniandes.isis2503.nosqljpa.model.dto.model;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author sp.joven
  */
+@XmlRootElement
 public class UsuarioDTO {
     
     private String id;
     private String nombre;
     private String correo;
     private String telefono;
+    private String contrasena;
     
       public UsuarioDTO() {
     }
 
-    public UsuarioDTO(String id,String nombre, String correo, String telefono) {
+    public UsuarioDTO(String id,String nombre, String correo, String telefono, String contrasena) {
         this.id = id;
         this.nombre = nombre;
         this.correo = correo;
         this.telefono = telefono;
+        this.contrasena = contrasena;
     }
+       public String getContrasena()
+{
+    return contrasena;
+}
+public void setContrasena(String contrasena)
+{
+    this.contrasena=contrasena;
+}
     
     public String getId()
 {

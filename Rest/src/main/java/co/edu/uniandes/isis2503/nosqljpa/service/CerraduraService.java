@@ -48,7 +48,7 @@ import javax.ws.rs.core.Response;
  * @author ca.mendoza968
  */
 @Path("/cerradura")
-@Secured({Role.administrador, Role.propietario, Role.seguridad, Role.yale})
+//@Secured({Role.administrador, Role.propietario, Role.seguridad, Role.yale})
 @Produces(MediaType.APPLICATION_JSON)
 public class CerraduraService {
     private final ICerraduraLogic sensorLogic;
@@ -64,6 +64,55 @@ public class CerraduraService {
     
     @PUT
     public CerraduraDTO update(CerraduraDTO dto) {
+        return sensorLogic.update(dto);
+    }
+   
+    @PUT
+    @Path("/{id}/clave_nueva")
+    public CerraduraDTO updateAddClave(@PathParam("id") String id,  String clave) {
+        
+        CerraduraDTO dto = sensorLogic.find(id);
+        String con = (clave.substring(12, clave.length()-5)).replaceAll("\"", "");
+        if(dto.getClave1()==null){
+        dto.setClave1(con);}
+        else if(dto.getClave2()==null){
+        dto.setClave2(con);}
+        else if(dto.getClave3()==null){
+        dto.setClave3(con);}
+        else{
+        dto.setClave4(con);}
+        return sensorLogic.update(dto);
+    }
+      @PUT
+    @Path("/{id}/eliminar_clave/{id_clave}")
+    public CerraduraDTO updateDeleteClave(@PathParam("id") String id, @PathParam("id_clave") Integer idClave) {
+        
+        CerraduraDTO dto = sensorLogic.find(id);
+        if(idClave==1){
+        dto.setClave1(null);}
+        else if(idClave==2){
+        dto.setClave2(null);}
+        else if(idClave==3){
+        dto.setClave3(null);}
+        else{
+        dto.setClave4(null);}
+        return sensorLogic.update(dto);
+    }
+
+      @PUT
+    @Path("/{id}/cambiar_clave/{id_clave}")
+    public CerraduraDTO updateCambiarClave(@PathParam("id") String id, @PathParam("id_clave") Integer idClave, String claveNueva) {
+        
+        CerraduraDTO dto = sensorLogic.find(id);
+        String con = (claveNueva.substring(12, claveNueva.length()-3)).replaceAll("\"", "");
+        if(idClave==1){
+        dto.setClave1(con);}
+        else if(idClave==2){
+        dto.setClave2(con);}
+        else if(idClave==3){
+        dto.setClave3(con);}
+        else{
+        dto.setClave4(con);}
         return sensorLogic.update(dto);
     }
 
@@ -92,13 +141,9 @@ public class CerraduraService {
     
     @DELETE
     @Path("/{id}")
-    public Response delete(@PathParam("id") String id) {
-        try {
+    public void delete(@PathParam("id") String id) {
+      
             sensorLogic.delete(id);
-            return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("Sucessful: Sensor was deleted").build();
-        } catch (Exception e) {
-            Logger.getLogger(CerraduraService.class.getName()).log(Level.WARNING, e.getMessage());
-            return Response.status(500).header("Access-Control-Allow-Origin", "*").entity("We found errors in your query, please contact the Web Admin.").build();
-        }
-    }
+    }    
+    
 }

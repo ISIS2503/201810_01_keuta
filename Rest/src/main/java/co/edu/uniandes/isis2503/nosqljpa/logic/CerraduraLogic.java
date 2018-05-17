@@ -81,4 +81,9 @@ public class CerraduraLogic implements ICerraduraLogic {
     public List<CerraduraDTO> findUnidad(String unidad) {
         return CONVERTER.listEntitiesToListDTOs(persistence.darUnidad(unidad));
     }
+
+   
+
+    
+   
 }

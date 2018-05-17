@@ -39,7 +39,6 @@ import javax.persistence.Table;
 public class AlarmaEntity implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMensaje;
     private String mensaje;
     private String prioridad;
@@ -47,13 +46,15 @@ public class AlarmaEntity implements Serializable {
     private String inmueble;
     private String dispositivo;
     private String fecha;
+    private String barrio;
+    private String mes;
 
     public AlarmaEntity()
     {
         
     }
     
-    public AlarmaEntity(String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo,String fecha) {
+    public AlarmaEntity(String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo,String fecha, String barrio) {
         
         this.mensaje = mensaje;
         this.prioridad = prioridad;
@@ -61,6 +62,25 @@ public class AlarmaEntity implements Serializable {
         this.inmueble = inmueble;
         this.dispositivo = dispositivo;
         this.fecha= fecha;
+        System.out.println("messsssssssSSSSSSsss:" + fecha);
+        this.mes=fecha.substring(3, 4);
+         System.out.println("messsssssssSSSSSSsss2:" + mes);
+
+        this.barrio = barrio;
+    }
+      public String getMes() {
+        return mes;
+    }
+
+    public void setMes(String mes) {
+        this.mes = mes;
+    }
+     public String getBarrio() {
+        return barrio;
+    }
+
+    public void setBarrio(String barrio) {
+        this.barrio = barrio;
     }
  public String getFecha() {
         return fecha;

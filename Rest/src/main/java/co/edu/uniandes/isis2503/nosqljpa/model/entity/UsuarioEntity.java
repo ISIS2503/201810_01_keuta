@@ -7,6 +7,8 @@ package co.edu.uniandes.isis2503.nosqljpa.model.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 /**
@@ -18,22 +20,33 @@ import javax.persistence.Table;
 public class UsuarioEntity  implements Serializable{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private String nombre;
     private String correo;
     private String telefono;
+    private String contrasena;
   
-    public UsuarioEntity() {
+    public UsuarioEntity(){
         
     }
 
-    public UsuarioEntity(String nombre, String correo, String telefono, String id) {
+    public UsuarioEntity(String nombre, String correo, String telefono, String id, String contrasena) {
         this.id=id;
         this.nombre = nombre;
         this.correo = correo;
         this.telefono = telefono;
+        this.contrasena = contrasena;
  
     }
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
 public String getId() {
         return id;
     }

@@ -45,8 +45,12 @@ public class AlarmaConverter implements IAlarmaConverter {
         dto.setDispositivo(entity.getDispositivo());
         dto.setInmueble(entity.getInmueble());
         dto.setMensaje(entity.getMensaje());
+        dto.setIdMensaje(entity.getIdMensaje());
         dto.setPrioridad(entity.getPrioridad());
         dto.setUnidadResidencial(entity.getUnidadResidencial());
+        dto.setFecha(entity.getFecha());
+        dto.setBarrio(entity.getBarrio());
+        dto.setMes((entity.getFecha()).substring(3,5));
         return dto;
     }
 
@@ -55,10 +59,15 @@ public class AlarmaConverter implements IAlarmaConverter {
         AlarmaEntity entity = new AlarmaEntity();
         entity.setDispositivo(dto.getDispositivo());
         entity.setInmueble(dto.getInmueble());
+        entity.setIdMensaje(dto.getIdMensaje());
         entity.setMensaje(dto.getMensaje());
         entity.setPrioridad(dto.getPrioridad());
         entity.setUnidadResidencial(dto.getUnidadResidencial());
         entity.setFecha(dto.getFecha());
+        entity.setBarrio(dto.getBarrio());
+       
+        entity.setMes(dto.getFecha().substring(3, 5));
+       
         return entity;
     }
 
