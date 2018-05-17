@@ -339,7 +339,7 @@ void loop() {
   if((millis()-timeHearth1)>intervalHearth)
   {
   Serial.println("HearthBeat");
-      
+      Serial.println("hearthbeat/"+CONJUNTO+"/"+RESIDENCIA+"/"+ID);
       timeHearth1=millis();
   }
   
