@@ -76,5 +76,4 @@ public class InmuebleLogic implements IInmuebleLogic {
     public List<InmuebleDTO> findUnidad(String idUnidad) {
         return CONVERTER.listEntitiesToListDTOs(persistence.darUnidad(idUnidad));
     }
-    
 }

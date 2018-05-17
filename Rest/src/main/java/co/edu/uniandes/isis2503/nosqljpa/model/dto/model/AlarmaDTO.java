@@ -36,19 +36,17 @@ public class AlarmaDTO {
     private String unidadResidencial;
     private String inmueble;
     private String dispositivo;
-    private String fecha;
 
     public AlarmaDTO() {
         
     }
 
-    public AlarmaDTO(String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo, String fecha) {
+    public AlarmaDTO(String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo) {
         this.mensaje = mensaje;
         this.prioridad = prioridad;
         this.unidadResidencial = unidadResidencial;
         this.inmueble = inmueble;
         this.dispositivo = dispositivo;
-        this.fecha= fecha;
     }
 
     public String getMensaje() {
@@ -57,13 +55,6 @@ public class AlarmaDTO {
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
-    }
-     public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
     }
 
     public String getPrioridad() {

@@ -15,13 +15,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class UpdateCuentaDTO {
     
     private boolean email_verified;
-  
 
     public UpdateCuentaDTO() {
         
     }
-   
-   
+
     public UpdateCuentaDTO(boolean email_verified) {
         this.email_verified = email_verified;
     }

@@ -58,7 +58,6 @@ public class AlarmaConverter implements IAlarmaConverter {
         entity.setMensaje(dto.getMensaje());
         entity.setPrioridad(dto.getPrioridad());
         entity.setUnidadResidencial(dto.getUnidadResidencial());
-        entity.setFecha(dto.getFecha());
         return entity;
     }
 

@@ -37,8 +37,6 @@ public interface IAlarmaLogic {
     public AlarmaDTO find(String id);
     public List<AlarmaDTO> findUnidadYResidencia(String unidad, String inmueble);
     public List<AlarmaDTO> findUnidad(String unidad);
-    public List<AlarmaDTO> getAlarmasInmueble(Integer fecha);
-    public List<AlarmaDTO> getAlarmasUnidad(Integer fecha);
     public List<AlarmaDTO> all();
     public Boolean delete(String id);
     
