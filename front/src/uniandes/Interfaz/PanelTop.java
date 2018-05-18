@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import javax.swing.Box;
@@ -72,13 +74,20 @@ public class PanelTop extends JPanel implements ActionListener{
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void actionPerformed(ActionEvent e){
 
 		String comando = e.getActionCommand();
 		
 		if(comando.equals("historial"))
 		{
-			ArrayList<AptoHistorial> historial = padre.darHistorial();
+			ArrayList<AptoHistorial> historial = new ArrayList<>();
+			try {
+				historial = padre.darHistorial();
+			} catch (MalformedURLException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 			JFrame temp = new JFrame("historial");
 			temp.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 			temp.setSize( 500, 300 );

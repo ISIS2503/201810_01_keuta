@@ -4,12 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
+import controllerPackage.Controlador;
 
 public class InterfazPrincipal extends JFrame implements ActionListener{
 
@@ -124,14 +128,19 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 		panelMapa.filtroHubFueraDeLinea();
 	}
 	
-	public ArrayList<String> pedirInfoApto(int apto)
+	public DetailedApto pedirInfoApto(int apto)
 	{
-		controlador.darApto(apto);
+		try {
+			return controlador.darApto(apto);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
-	public ArrayList<AptoHistorial> darHistorial()
+	public ArrayList<AptoHistorial> darHistorial() throws MalformedURLException, IOException
 	{
-		controlador.darHistorial();
+		return controlador.darHistorial();
 	}
 	
 	public static void main( String[] args ) 
@@ -150,7 +159,16 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 		String comando = e.getActionCommand();
 		if(e.equals("enviar"))
 		{
-			String numero = controlador.enviar(usuariotext.getText(), contraseñatext.getText());
+			String numero = "";
+			try {
+				numero = controlador.enviar(usuariotext.getText(), contraseñatext.getText());
+			} catch (MalformedURLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 			if(numero.equals("200"))
 			{

@@ -16,6 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import static jdk.nashorn.internal.objects.NativeString.substring;
 import uniandes.Interfaz.AptoHistorial;
+import uniandes.Interfaz.DetailedApto;
 
 /**
  *
@@ -25,9 +26,9 @@ public class Controlador {
 
     public String tokenAutorizacion;
 
-    public ArrayList<String> darApto() throws ProtocolException, IOException {
+    public DetailedApto darApto(int numero) throws ProtocolException, IOException {
 
-        URL url = new URL("http://localhost:9090/correo");
+        URL url = new URL("http://localhost:8080/inmueble");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         con.setRequestProperty("Authorization", tokenAutorizacion);

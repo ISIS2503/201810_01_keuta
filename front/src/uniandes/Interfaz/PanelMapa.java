@@ -323,14 +323,11 @@ public class PanelMapa extends JPanel implements ActionListener{
 		
 		String comando = e.getActionCommand();
 		
-		ArrayList<String> arreglo = padre.pedirInfoApto(Integer.parseInt(comando));
+		DetailedApto detailed = padre.pedirInfoApto(Integer.parseInt(comando));
 		
 		
-		String mensaje = "propietarios del apartamento "+ e + ":";
-		for(String nombre: arreglo)
-		{
-			mensaje += "/n" + nombre;
-		}
+		String mensaje = "propietario del apartamento "+ e + ":" + detailed.nombrePropietario + "\n" + " unidad residencial: " + detailed.unidadResidencial + "\n" + " id del apartamento" + detailed.id;
+		
 		
 		JOptionPane.showMessageDialog(null, mensaje, "propietarios", JOptionPane.INFORMATION_MESSAGE);
 	}
