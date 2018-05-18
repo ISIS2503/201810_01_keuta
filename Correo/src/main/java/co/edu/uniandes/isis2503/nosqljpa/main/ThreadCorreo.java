@@ -17,7 +17,7 @@ public class ThreadCorreo implements Runnable{
     public void run() {
 
         while (true) {
-
+//            System.out.println("ThreadCorreo"); //Sin esto no imprime la alerta de hub fuera de línea.
             if (Main.TIEMPO > 3) {
                 
                 System.out.println("HUB FUERA DE LINEA");

@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>co.edu.uniandes.isis2503.nosqljpa</groupId>
-    <artifactId>JPANoSQLThermalComfortApp</artifactId>
+    <artifactId>Correo</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 

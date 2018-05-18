@@ -17,12 +17,14 @@ public class ThreadSumador implements Runnable{
     @Override
     public void run() {
         
-        int s = 60;
+//        int s = 60;
+        int s = 3;
         try {
 
             while (true) {
                 Thread.sleep(1000 * s);
                 Main.TIEMPO += 1;
+                System.out.println("Main.TIEMPO += 1 Main.TIEMPO = " + Main.TIEMPO);
             }
 
         } catch (InterruptedException ex) {

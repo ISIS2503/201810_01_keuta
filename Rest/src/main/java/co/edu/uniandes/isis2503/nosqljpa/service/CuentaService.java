@@ -5,25 +5,29 @@
  */
 package co.edu.uniandes.isis2503.nosqljpa.service;
 
+import co.edu.uniandes.isis2503.nosqljpa.auth.AuthorizationFilter;
+import co.edu.uniandes.isis2503.nosqljpa.auth.Secured;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.CuentaDTO;
+import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.LoginDTO;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.UpdateCuentaDTO;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
+import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.auth0.jwt.JWT;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
@@ -31,6 +35,8 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
+import sun.rmi.runtime.Log;
 
 /**
  *
@@ -40,7 +46,7 @@ import org.apache.http.message.BasicNameValuePair;
 @Produces(MediaType.APPLICATION_JSON)
 public class CuentaService {
 
-    public static final String TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJpc3MiOiJodHRwczovL2lzaXMyNTAzLWRhcmFtaXJlenYuYXV0aDAuY29tLyIsInN1YiI6Imh3bWcybERnaUQzQTJqZUpHeEh1TmtwcUxFVFVkT2pSQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2lzaXMyNTAzLWRhcmFtaXJlenYuYXV0aDAuY29tL2FwaS92Mi8iLCJpYXQiOjE1MjQ0MTIxNTYsImV4cCI6MTUyNDQ5ODU1NiwiYXpwIjoiaHdtZzJsRGdpRDNBMmplSkd4SHVOa3BxTEVUVWRPalIiLCJzY29wZSI6InJlYWQ6Y2xpZW50X2dyYW50cyBjcmVhdGU6Y2xpZW50X2dyYW50cyBkZWxldGU6Y2xpZW50X2dyYW50cyB1cGRhdGU6Y2xpZW50X2dyYW50cyByZWFkOnVzZXJzIHVwZGF0ZTp1c2VycyBkZWxldGU6dXNlcnMgY3JlYXRlOnVzZXJzIHJlYWQ6dXNlcnNfYXBwX21ldGFkYXRhIHVwZGF0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgZGVsZXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGNyZWF0ZTp1c2VyX3RpY2tldHMgcmVhZDpjbGllbnRzIHVwZGF0ZTpjbGllbnRzIGRlbGV0ZTpjbGllbnRzIGNyZWF0ZTpjbGllbnRzIHJlYWQ6Y2xpZW50X2tleXMgdXBkYXRlOmNsaWVudF9rZXlzIGRlbGV0ZTpjbGllbnRfa2V5cyBjcmVhdGU6Y2xpZW50X2tleXMgcmVhZDpjb25uZWN0aW9ucyB1cGRhdGU6Y29ubmVjdGlvbnMgZGVsZXRlOmNvbm5lY3Rpb25zIGNyZWF0ZTpjb25uZWN0aW9ucyByZWFkOnJlc291cmNlX3NlcnZlcnMgdXBkYXRlOnJlc291cmNlX3NlcnZlcnMgZGVsZXRlOnJlc291cmNlX3NlcnZlcnMgY3JlYXRlOnJlc291cmNlX3NlcnZlcnMgcmVhZDpkZXZpY2VfY3JlZGVudGlhbHMgdXBkYXRlOmRldmljZV9jcmVkZW50aWFscyBkZWxldGU6ZGV2aWNlX2NyZWRlbnRpYWxzIGNyZWF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgcmVhZDpydWxlcyB1cGRhdGU6cnVsZXMgZGVsZXRlOnJ1bGVzIGNyZWF0ZTpydWxlcyByZWFkOnJ1bGVzX2NvbmZpZ3MgdXBkYXRlOnJ1bGVzX2NvbmZpZ3MgZGVsZXRlOnJ1bGVzX2NvbmZpZ3MgcmVhZDplbWFpbF9wcm92aWRlciB1cGRhdGU6ZW1haWxfcHJvdmlkZXIgZGVsZXRlOmVtYWlsX3Byb3ZpZGVyIGNyZWF0ZTplbWFpbF9wcm92aWRlciBibGFja2xpc3Q6dG9rZW5zIHJlYWQ6c3RhdHMgcmVhZDp0ZW5hbnRfc2V0dGluZ3MgdXBkYXRlOnRlbmFudF9zZXR0aW5ncyByZWFkOmxvZ3MgcmVhZDpzaGllbGRzIGNyZWF0ZTpzaGllbGRzIGRlbGV0ZTpzaGllbGRzIHVwZGF0ZTp0cmlnZ2VycyByZWFkOnRyaWdnZXJzIHJlYWQ6Z3JhbnRzIGRlbGV0ZTpncmFudHMgcmVhZDpndWFyZGlhbl9mYWN0b3JzIHVwZGF0ZTpndWFyZGlhbl9mYWN0b3JzIHJlYWQ6Z3VhcmRpYW5fZW5yb2xsbWVudHMgZGVsZXRlOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGNyZWF0ZTpndWFyZGlhbl9lbnJvbGxtZW50X3RpY2tldHMgcmVhZDp1c2VyX2lkcF90b2tlbnMgY3JlYXRlOnBhc3N3b3Jkc19jaGVja2luZ19qb2IgZGVsZXRlOnBhc3N3b3Jkc19jaGVja2luZ19qb2IgcmVhZDpjdXN0b21fZG9tYWlucyBkZWxldGU6Y3VzdG9tX2RvbWFpbnMgY3JlYXRlOmN1c3RvbV9kb21haW5zIHJlYWQ6ZW1haWxfdGVtcGxhdGVzIGNyZWF0ZTplbWFpbF90ZW1wbGF0ZXMgdXBkYXRlOmVtYWlsX3RlbXBsYXRlcyIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.TVri9WSYGWspRsdg8d618IyEhcdYSb1gV_GoYU8BEVgoZCCY2YY53Ksa2Fs9_cbdANHuRIsB5o2NpMeCE41Mzd64SEeoDIG-5UU7JVkHjX5lCgpqyDkPKH6D0TldYk5cDws7CTk8keOuKGMOqt2GkUqll7IRwNPMC2WzeFffSnyYGVkCCqJ9WYQufDo32vcRO2jh8tOqZ_Bs_NRIvTMRWkbdcY_BEo7yhpz23vXZg_sidehVC3UHJTxtagvzv5eTG71YB4sV9kYEx0nIMDoKK_qqhuVj8T-CoYyoJTGoI_NC92VFxL_4qmYoORkWJKUICHPHdO6CpWaq9kYHLSMKWA";
+    public static final String TOKEN = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Ik5FWTRNMFE1TlRZMU1UTkVPVEkyUmpkRE1FSXlNVGxCTnpRNVJqQkRPVGREUVRjMlEwRTFOZyJ9.eyJpc3MiOiJodHRwczovL2lzaXMyNTAzLWRhcmFtaXJlenYuYXV0aDAuY29tLyIsInN1YiI6Imh3bWcybERnaUQzQTJqZUpHeEh1TmtwcUxFVFVkT2pSQGNsaWVudHMiLCJhdWQiOiJodHRwczovL2lzaXMyNTAzLWRhcmFtaXJlenYuYXV0aDAuY29tL2FwaS92Mi8iLCJpYXQiOjE1MjY1OTIzODUsImV4cCI6bnVsbCwiYXpwIjoiaHdtZzJsRGdpRDNBMmplSkd4SHVOa3BxTEVUVWRPalIiLCJzY29wZSI6InJlYWQ6Y2xpZW50X2dyYW50cyBjcmVhdGU6Y2xpZW50X2dyYW50cyBkZWxldGU6Y2xpZW50X2dyYW50cyB1cGRhdGU6Y2xpZW50X2dyYW50cyByZWFkOnVzZXJzIHVwZGF0ZTp1c2VycyBkZWxldGU6dXNlcnMgY3JlYXRlOnVzZXJzIHJlYWQ6dXNlcnNfYXBwX21ldGFkYXRhIHVwZGF0ZTp1c2Vyc19hcHBfbWV0YWRhdGEgZGVsZXRlOnVzZXJzX2FwcF9tZXRhZGF0YSBjcmVhdGU6dXNlcnNfYXBwX21ldGFkYXRhIGNyZWF0ZTp1c2VyX3RpY2tldHMgcmVhZDpjbGllbnRzIHVwZGF0ZTpjbGllbnRzIGRlbGV0ZTpjbGllbnRzIGNyZWF0ZTpjbGllbnRzIHJlYWQ6Y2xpZW50X2tleXMgdXBkYXRlOmNsaWVudF9rZXlzIGRlbGV0ZTpjbGllbnRfa2V5cyBjcmVhdGU6Y2xpZW50X2tleXMgcmVhZDpjb25uZWN0aW9ucyB1cGRhdGU6Y29ubmVjdGlvbnMgZGVsZXRlOmNvbm5lY3Rpb25zIGNyZWF0ZTpjb25uZWN0aW9ucyByZWFkOnJlc291cmNlX3NlcnZlcnMgdXBkYXRlOnJlc291cmNlX3NlcnZlcnMgZGVsZXRlOnJlc291cmNlX3NlcnZlcnMgY3JlYXRlOnJlc291cmNlX3NlcnZlcnMgcmVhZDpkZXZpY2VfY3JlZGVudGlhbHMgdXBkYXRlOmRldmljZV9jcmVkZW50aWFscyBkZWxldGU6ZGV2aWNlX2NyZWRlbnRpYWxzIGNyZWF0ZTpkZXZpY2VfY3JlZGVudGlhbHMgcmVhZDpydWxlcyB1cGRhdGU6cnVsZXMgZGVsZXRlOnJ1bGVzIGNyZWF0ZTpydWxlcyByZWFkOnJ1bGVzX2NvbmZpZ3MgdXBkYXRlOnJ1bGVzX2NvbmZpZ3MgZGVsZXRlOnJ1bGVzX2NvbmZpZ3MgcmVhZDplbWFpbF9wcm92aWRlciB1cGRhdGU6ZW1haWxfcHJvdmlkZXIgZGVsZXRlOmVtYWlsX3Byb3ZpZGVyIGNyZWF0ZTplbWFpbF9wcm92aWRlciBibGFja2xpc3Q6dG9rZW5zIHJlYWQ6c3RhdHMgcmVhZDp0ZW5hbnRfc2V0dGluZ3MgdXBkYXRlOnRlbmFudF9zZXR0aW5ncyByZWFkOmxvZ3MgcmVhZDpzaGllbGRzIGNyZWF0ZTpzaGllbGRzIGRlbGV0ZTpzaGllbGRzIHVwZGF0ZTp0cmlnZ2VycyByZWFkOnRyaWdnZXJzIHJlYWQ6Z3JhbnRzIGRlbGV0ZTpncmFudHMgcmVhZDpndWFyZGlhbl9mYWN0b3JzIHVwZGF0ZTpndWFyZGlhbl9mYWN0b3JzIHJlYWQ6Z3VhcmRpYW5fZW5yb2xsbWVudHMgZGVsZXRlOmd1YXJkaWFuX2Vucm9sbG1lbnRzIGNyZWF0ZTpndWFyZGlhbl9lbnJvbGxtZW50X3RpY2tldHMgcmVhZDp1c2VyX2lkcF90b2tlbnMgY3JlYXRlOnBhc3N3b3Jkc19jaGVja2luZ19qb2IgZGVsZXRlOnBhc3N3b3Jkc19jaGVja2luZ19qb2IgcmVhZDpjdXN0b21fZG9tYWlucyBkZWxldGU6Y3VzdG9tX2RvbWFpbnMgY3JlYXRlOmN1c3RvbV9kb21haW5zIHJlYWQ6ZW1haWxfdGVtcGxhdGVzIGNyZWF0ZTplbWFpbF90ZW1wbGF0ZXMgdXBkYXRlOmVtYWlsX3RlbXBsYXRlcyIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.fohFRy9Esf9Jzlwk96SNYcioHJ5A8BZpwyC4A5pucOF2MqTqOWXC_tHckjqNJPLEV8xxdaZJ-kDSx9WRsNxUDDUoHpRybQThV5dFgED1zinKhyr5jN7fk-3qFDJ50F5bkxyD-8tDM15VN4Z_RK_OY95ozKfmR0mnEZR0lCR8fKQA0F4nbYGz7Je9_nkTSMJ-pksKETd6OVuT1fl3x8Yo-Th3Vna3kXoB6-lmAhVQdlKbzQlRUZUX-JdJee_kuF_vDBBmfOyOorxFjnqnIfsuwdejWWPoLUvnvfxZUGpt0g4aoU0q8txeuR_EpaFOpjiQpNB0pFhtNvUSmkJwURcmCg";
 
     @POST
     public String agregarCuenta(CuentaDTO dto) throws Exception {
@@ -227,6 +233,84 @@ public class CuentaService {
         } finally {
 
         }
+    }
+
+    @POST
+    @Path("/login")
+    public LoginDTO logIn(CuentaDTO cuentaDTO, @Context HttpServletResponse httpServletResponse ) throws WebApplicationException{
+        try {
+            String url = "https://isis2503-daramirezv.auth0.com/oauth/token";
+            HttpURLConnection con;
+            URL myurl = new URL(url);
+            con = (HttpURLConnection) myurl.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("Content-Type", "application/json");
+            con.setDoOutput(true);
+            DataOutputStream out = new DataOutputStream(con.getOutputStream());
+
+            JSONObject tomJsonObj = new JSONObject();
+            tomJsonObj.put("grant_type", "http://auth0.com/oauth/grant-type/password-realm");
+            tomJsonObj.put("username", cuentaDTO.getEmail());
+            tomJsonObj.put("password", cuentaDTO.getPassword());
+            tomJsonObj.put("audience", "uniandes.edu.co/thermalcomfort");
+            tomJsonObj.put("scope", "openid");
+            tomJsonObj.put("client_id", "6SGnWSj-Us9t63VJHwgJC-S223qCvqSM");
+            tomJsonObj.put("client_secret", "m8sfjctqF-w8Y6i7543c6X2yokMRjopiVARfbUNg5C97Zwi1TIjKxJeLgGoRJ61Y");
+            tomJsonObj.put("realm", "Username-Password-Authentication");
+            System.out.println(tomJsonObj);
+
+            out.writeBytes(tomJsonObj.toString());
+            out.flush();
+            out.close();
+
+            int status = con.getResponseCode();
+            System.out.println("Status is: " + status);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(con.getInputStream()));
+            String inputLine;
+            StringBuffer content = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                content.append(inputLine);
+            }
+            System.out.println("Response is: " + content);
+            in.close();
+
+            LoginDTO loginDTO = new LoginDTO();
+
+            if (status != 200) {
+                throw new WebApplicationException(content.toString(), status);
+            } else {
+                JSONObject contentJSON = new JSONObject(content.toString());
+                String token = contentJSON.getString("id_token");
+
+                List<String> roles = new ArrayList();
+                roles = JWT.decode(token).getClaim("http://thermalcomfort/roles").asList(String.class);
+                if (!roles.contains(AuthorizationFilter.Role.seguridad.toString())){
+                    throw new WebApplicationException("No es usuario de seguridad.", 403);
+                } else {
+                    String tokenType = contentJSON.getString("token_type");
+                    httpServletResponse.addHeader(HttpHeaders.AUTHORIZATION,tokenType + " " + token);
+                }
+                loginDTO.setRoles(roles.toArray(new String[0]));
+            }
+
+            con.disconnect();
+
+            return loginDTO;
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        throw new WebApplicationException("Error", 500);
+    }
+
+    @POST
+    @Path("/logout")
+    public void logout(@Context HttpServletResponse httpServletResponse){
+//        httpServletResponse.setHeader(HttpHeaders.AUTHORIZATION,null);
     }
 
 }
