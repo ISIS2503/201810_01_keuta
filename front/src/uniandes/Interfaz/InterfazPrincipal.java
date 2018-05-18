@@ -15,12 +15,8 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 
     private Controlador controlador;
     private PanelBotones panelBotones;
-    private FrameHistorial frameHistorial;
     private PanelTop panelTop;
     private PanelMapa panelMapa;
-	
-    public String usuario;
-    public String contrseña;
 
     JTextField usuariotext;
 	JTextField contraseñatext;
@@ -39,12 +35,10 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
         }
 
 		panelBotones = new PanelBotones(this);
-		frameHistorial = new FrameHistorial(this);
 		panelTop = new PanelTop(this);
 		panelMapa = new PanelMapa (this);
 		
 		panelBotones.setVisible(false);
-		frameHistorial.setVisible(false);
 		panelTop.setVisible(true);
 		panelMapa.setVisible(false);
 
@@ -93,7 +87,6 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 	{
 		panelBotones.setVisible(false);
 		panelMapa.setVisible(false);
-		frameHistorial.dispose();
 	}
 	
 	public void quitarFiltros() 
@@ -145,7 +138,11 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
     {
         new InterfazPrincipal();
     }
-
+	
+	public void Actualizar(ArrayList<Apto> lista)
+	{
+		panelMapa.Actualizar(lista);
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -158,7 +155,6 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 			if(numero.equals("200"))
 			{
 				panelBotones.setVisible(true);
-				frameHistorial.setVisible(true);
 				panelTop.setVisible(true);
 				panelMapa.setVisible(true);
 				log.dispose();
@@ -166,6 +162,7 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 			else
 			{
 				log.dispose();
+			    JOptionPane.showMessageDialog(null, "Ingrese bien su cuenta por favor", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		}
 	}

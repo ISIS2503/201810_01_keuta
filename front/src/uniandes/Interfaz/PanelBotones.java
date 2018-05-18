@@ -10,7 +10,6 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
 public class PanelBotones extends JPanel implements ActionListener{
@@ -25,7 +24,14 @@ public class PanelBotones extends JPanel implements ActionListener{
 	
 	private JPanel botones;
 
-	
+	public static final String NORMAL = "normal";
+	public static final String PUERTA_ABIERTA = "puerta abierta";
+	public static final String APERTURA_NO_PERMITIDA = "apertura no permitida";
+	public static final String APERTURA_SOSPECHOSA = "apertura sospechosa";
+	public static final String BATERIA_CRITICA = "bateria critica";
+	public static final String CERRADURA_FUERA_DE_LINEA = "cerradura fuera de linea";
+	public static final String HUB_FUERA_DE_LINEA = "hub fuera de linea";
+
 	public PanelBotones(InterfazPrincipal ppadre)
 	{
 		padre = ppadre;
@@ -35,36 +41,34 @@ public class PanelBotones extends JPanel implements ActionListener{
         setLayout(new BorderLayout());
         setPreferredSize( new Dimension(200,500) );
         
-
-        
-        puertaAbierta = new JButton("Puerta Abierta");
+        puertaAbierta = new JButton(PUERTA_ABIERTA);
         puertaAbierta.setPreferredSize( new Dimension(175,26) );
-        puertaAbierta.setActionCommand( "abierta" );
+        puertaAbierta.setActionCommand(PUERTA_ABIERTA);
         puertaAbierta.addActionListener( this );
 		
-        aperturaNoPermitida = new JButton("Apertura No Permitida");
+        aperturaNoPermitida = new JButton(APERTURA_NO_PERMITIDA);
         aperturaNoPermitida.setPreferredSize( new Dimension(175,26) );
-        aperturaNoPermitida.setActionCommand( "noPermitida" );
+        aperturaNoPermitida.setActionCommand(APERTURA_NO_PERMITIDA);
         aperturaNoPermitida.addActionListener( this );
 		
-        aperturaSospechosa = new JButton("Apertura Sospechosa");
+        aperturaSospechosa = new JButton(APERTURA_SOSPECHOSA);
         aperturaSospechosa.setPreferredSize( new Dimension(175,26) );
-        aperturaSospechosa.setActionCommand( "sospechosa" );
+        aperturaSospechosa.setActionCommand(APERTURA_SOSPECHOSA);
         aperturaSospechosa.addActionListener( this );
 		
-        bateriaCritico = new JButton("Bateria Critica");
+        bateriaCritico = new JButton(BATERIA_CRITICA);
         bateriaCritico.setPreferredSize( new Dimension(175,26) );
-        bateriaCritico.setActionCommand( "bateria" );
+        bateriaCritico.setActionCommand( BATERIA_CRITICA );
         bateriaCritico.addActionListener( this );
 		
-        cerraduraFueraDeLinea = new JButton("Cerradura Fuera de Linea");
+        cerraduraFueraDeLinea = new JButton(CERRADURA_FUERA_DE_LINEA);
         cerraduraFueraDeLinea.setPreferredSize( new Dimension(175,26) );
-        cerraduraFueraDeLinea.setActionCommand( "cerLinea" );
+        cerraduraFueraDeLinea.setActionCommand( CERRADURA_FUERA_DE_LINEA );
         cerraduraFueraDeLinea.addActionListener( this );
 		
-        hubFueraDeLinea = new JButton("Hub Fuera de Linea");
+        hubFueraDeLinea = new JButton(HUB_FUERA_DE_LINEA);
         hubFueraDeLinea.setPreferredSize( new Dimension(175,26) );
-        hubFueraDeLinea.setActionCommand( "hubLinea" );
+        hubFueraDeLinea.setActionCommand(HUB_FUERA_DE_LINEA);
         hubFueraDeLinea.addActionListener( this );
         
         botones = new JPanel();
@@ -91,27 +95,27 @@ public class PanelBotones extends JPanel implements ActionListener{
 		
 		String comando = e.getActionCommand();
 		
-		if(comando.equals("abierta"))
+		if(comando.equals(PUERTA_ABIERTA))
 		{
 			padre.filtroAbierta();
 		}
-		else if(comando.equals("noPermitida"))
+		else if(comando.equals(APERTURA_NO_PERMITIDA))
 		{
 			padre.filtroAperturaNoPermitida();
 		}
-		else if(comando.equals("sospechosa"))
+		else if(comando.equals(APERTURA_SOSPECHOSA))
 		{
 			padre.filtroAperturaSospechosa();
 		}
-		else if(comando.equals("bateria"))
+		else if(comando.equals(BATERIA_CRITICA))
 		{
 			padre.filtroBateria();
 		}
-		else if(comando.equals("cerLinea"))
+		else if(comando.equals(CERRADURA_FUERA_DE_LINEA))
 		{
 			padre.filtroCerradura();
 		}
-		else if(comando.equals("hubLinea"))
+		else if(comando.equals(HUB_FUERA_DE_LINEA))
 		{
 			padre.filtroHub();
 		}

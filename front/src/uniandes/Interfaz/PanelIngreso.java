@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
@@ -19,14 +18,18 @@ public class PanelIngreso extends JPanel implements ActionListener{
 	private InterfazPrincipal main;
 
 	public PanelIngreso(InterfazPrincipal pmain) {
+		
 		TitledBorder border = BorderFactory.createTitledBorder( "Ingreso" );
+		main = pmain;
+
         setBorder( border );
 		panel = new JPanel();
+		
 		boton = new JButton("login");
 		boton.setPreferredSize( new Dimension(175,26) );
 		boton.setActionCommand( "boton" );
 		boton.addActionListener( this );
-		main = pmain;
+		
 		setPreferredSize(new Dimension(50, 65));
         setLayout(new BorderLayout());
 		panel.setLayout(new FlowLayout());

@@ -100,7 +100,6 @@ public class PanelTop extends JPanel implements ActionListener{
 			}
 			
 			temp.setVisible( true );
-
 		}
 		else if(comando.equals("filtros"))
 		{

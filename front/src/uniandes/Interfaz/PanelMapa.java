@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -19,7 +18,14 @@ public class PanelMapa extends JPanel implements ActionListener{
 	private InterfazPrincipal padre;
 	private JButton[][] botones;
 	private String[][] estados;
-
+	
+	public static final String IMAGEN3 = "./data/imagenes/3.jpg";
+	public static final String IMAGEN3ABIERTA = "./data/imagenes/3abierta.jpg";
+	public static final String IMAGEN3APERTURA = "./data/imagenes/3apertura.jpg";
+	public static final String IMAGEN3CERRADURA = "./data/imagenes/3cerradura.jpg";
+	public static final String IMAGEN3CRITICA = "./data/imagenes/3critica.jpg";
+	public static final String IMAGEN3HUB = "./data/imagenes/3hub.jpg";
+	public static final String IMAGEN3SOSPECHOSA = "./data/imagenes/3sospechosa.jpg";
 
 	public PanelMapa(InterfazPrincipal ppadre)
 	{
@@ -42,7 +48,7 @@ public class PanelMapa extends JPanel implements ActionListener{
 				botones[pos][g].setPreferredSize( new Dimension(200, 30) );
 				estados[pos][g] = "normal";
 
-				ImageIcon hola = new ImageIcon("./data/imagenes/3.jpg");
+				ImageIcon hola = new ImageIcon(IMAGEN3);
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
@@ -61,36 +67,36 @@ public class PanelMapa extends JPanel implements ActionListener{
 		{
 			String numeroApartamento = "" + apt.numero;
 
-			if(apt.error.equals("puerta abierta"))
+			if(apt.error.equals(PanelBotones.PUERTA_ABIERTA))
 			{
-				ImageIcon hola = new ImageIcon("./data/imagenes/3abierta.jpg");
+				ImageIcon hola = new ImageIcon(IMAGEN3ABIERTA);
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
 				botones[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)].setIcon( hola );
 				estados[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)] = "puerta abierta";
 			}
-			else if(apt.error.equals("apertura no permitida"))
+			else if(apt.error.equals(PanelBotones.APERTURA_NO_PERMITIDA))
 			{
-				ImageIcon hola = new ImageIcon("./data/imagenes/3apertura.jpg");
+				ImageIcon hola = new ImageIcon(IMAGEN3APERTURA);
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
 				botones[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)].setIcon( hola );
 				estados[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)] = "apertura no permitida";
 			}
-			else if(apt.error.equals("apertura sospechosa"))
+			else if(apt.error.equals(PanelBotones.APERTURA_SOSPECHOSA))
 			{
-				ImageIcon hola = new ImageIcon("./data/imagenes/3sospechosa.jpg");
+				ImageIcon hola = new ImageIcon(IMAGEN3SOSPECHOSA);
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
 				botones[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)].setIcon( hola );
 				estados[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)] = "apertura sospechosa";
 			}
-			else if(apt.error.equals("bateria critica"))
+			else if(apt.error.equals(PanelBotones.BATERIA_CRITICA))
 			{
-				ImageIcon hola = new ImageIcon("./data/imagenes/3critica.jpg");
+				ImageIcon hola = new ImageIcon(IMAGEN3CRITICA);
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
@@ -98,9 +104,9 @@ public class PanelMapa extends JPanel implements ActionListener{
 				estados[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)] = "bateria critica";
 
 			}
-			else if(apt.error.equals("cerradura fuera de linea"))
+			else if(apt.error.equals(PanelBotones.CERRADURA_FUERA_DE_LINEA))
 			{
-				ImageIcon hola = new ImageIcon("./data/imagenes/3cerradura.jpg");
+				ImageIcon hola = new ImageIcon(IMAGEN3CERRADURA);
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
@@ -108,9 +114,9 @@ public class PanelMapa extends JPanel implements ActionListener{
 				estados[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)] = "cerradura fuera de linea";
 
 			}
-			else if(apt.error.equals("hub fuera de linea"))
+			else if(apt.error.equals(PanelBotones.HUB_FUERA_DE_LINEA))
 			{
-				ImageIcon hola = new ImageIcon("./data/imagenes/3hub.jpg");
+				ImageIcon hola = new ImageIcon(IMAGEN3HUB);
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
@@ -127,9 +133,9 @@ public class PanelMapa extends JPanel implements ActionListener{
 		{    
 			for(int g = 0; g < 3; g++)
 			{
-				if(!estados[pos][g].equals("puerta abierta"))
+				if(!estados[pos][g].equals(PanelBotones.PUERTA_ABIERTA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
@@ -146,9 +152,9 @@ public class PanelMapa extends JPanel implements ActionListener{
 		{    
 			for(int g = 0; g < 3; g++)
 			{
-				if(!estados[pos][g].equals("apertura no permitida"))
+				if(!estados[pos][g].equals(PanelBotones.APERTURA_NO_PERMITIDA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
@@ -164,9 +170,9 @@ public class PanelMapa extends JPanel implements ActionListener{
 		{    
 			for(int g = 0; g < 3; g++)
 			{
-				if(!estados[pos][g].equals("apertura sospechosa"))
+				if(!estados[pos][g].equals(PanelBotones.APERTURA_SOSPECHOSA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
@@ -182,9 +188,9 @@ public class PanelMapa extends JPanel implements ActionListener{
 		{    
 			for(int g = 0; g < 3; g++)
 			{
-				if(!estados[pos][g].equals("bateria critica"))
+				if(!estados[pos][g].equals(PanelBotones.BATERIA_CRITICA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
@@ -200,9 +206,9 @@ public class PanelMapa extends JPanel implements ActionListener{
 		{    
 			for(int g = 0; g < 3; g++)
 			{
-				if(!estados[pos][g].equals("cerradura fuera de linea"))
+				if(!estados[pos][g].equals(PanelBotones.CERRADURA_FUERA_DE_LINEA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
@@ -218,9 +224,9 @@ public class PanelMapa extends JPanel implements ActionListener{
 		{    
 			for(int g = 0; g < 3; g++)
 			{
-				if(!estados[pos][g].equals("hub fuera de linea"))
+				if(!estados[pos][g].equals(PanelBotones.HUB_FUERA_DE_LINEA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
@@ -236,57 +242,57 @@ public class PanelMapa extends JPanel implements ActionListener{
 		{    
 			for(int g = 0; g < 3; g++)
 			{
-				if(estados[pos][g].equals("normal"))
+				if(estados[pos][g].equals(PanelBotones.NORMAL))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
 					botones[pos][g].setIcon( hola );
 				}
-				else if(estados[pos][g].equals("puerta abierta"))
+				else if(estados[pos][g].equals(PanelBotones.PUERTA_ABIERTA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3abierta.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3ABIERTA);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
 					botones[pos][g].setIcon( hola );
 				}
-				if(estados[pos][g].equals("apertura no permitida"))
+				if(estados[pos][g].equals(PanelBotones.APERTURA_NO_PERMITIDA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3apertura.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3APERTURA);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
 					botones[pos][g].setIcon( hola );
 				}
-				if(estados[pos][g].equals("apertura sospechosa"))
+				if(estados[pos][g].equals(PanelBotones.APERTURA_SOSPECHOSA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3sospechosa.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3SOSPECHOSA);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
 					botones[pos][g].setIcon( hola );
 				}
-				if(estados[pos][g].equals("bateria critica"))
+				if(estados[pos][g].equals(PanelBotones.BATERIA_CRITICA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3critica.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3CRITICA);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
 					botones[pos][g].setIcon( hola );
 				}
-				if(estados[pos][g].equals("cerradura fuera de linea"))
+				if(estados[pos][g].equals(PanelBotones.CERRADURA_FUERA_DE_LINEA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3cerradura.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3CERRADURA);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
 					botones[pos][g].setIcon( hola );
 				}
-				if(estados[pos][g].equals("hub fuera de linea"))
+				if(estados[pos][g].equals(PanelBotones.HUB_FUERA_DE_LINEA))
 				{
-					ImageIcon hola = new ImageIcon("./data/imagenes/3hub.jpg");
+					ImageIcon hola = new ImageIcon(IMAGEN3HUB);
 					Image holo = hola.getImage( );
 					Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 					hola = new ImageIcon(newimg);
@@ -302,12 +308,12 @@ public class PanelMapa extends JPanel implements ActionListener{
 		{    
 			for(int g = 0; g < 3; g++)
 			{
-				ImageIcon hola = new ImageIcon("./data/imagenes/3.jpg");
+				ImageIcon hola = new ImageIcon(IMAGEN3);
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
 				botones[pos][g].setIcon( hola );
-				estados[pos][g] = "normal";
+				estados[pos][g] = PanelBotones.NORMAL;
 			}
 		}
 	}
@@ -326,6 +332,6 @@ public class PanelMapa extends JPanel implements ActionListener{
 			mensaje += "/n" + nombre;
 		}
 		
-		JOptionPane.showMessageDialog(null, mensaje);
+		JOptionPane.showMessageDialog(null, mensaje, "propietarios", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
