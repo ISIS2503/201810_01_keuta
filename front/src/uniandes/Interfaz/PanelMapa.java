@@ -348,15 +348,9 @@ public class PanelMapa extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
 		String comando = e.getActionCommand();
-		
 		DetailedApto detailed = padre.pedirInfoApto(Integer.parseInt(comando));
-		
-		
 		String mensaje = "propietario del apartamento "+ comando + ":" + detailed.nombrePropietario + "\n" + " unidad residencial: " + detailed.unidadResidencial + "\n" + " id del apartamento" + detailed.id;
-		
-		
 		JOptionPane.showMessageDialog(null, mensaje, "propietarios", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

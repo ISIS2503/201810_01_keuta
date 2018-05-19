@@ -62,7 +62,7 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 	
 	public void hizoLogin()
 	{
-		
+
 		log = new JFrame("iniciar sesión");
 		
 		log.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );

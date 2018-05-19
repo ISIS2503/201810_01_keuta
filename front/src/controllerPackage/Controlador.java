@@ -147,7 +147,6 @@ public class Controlador {
         con.disconnect();
         
         return actualizar;
-        
     }
 
     public String enviar(String usuario, String contrasena) throws MalformedURLException, IOException {
@@ -178,5 +177,9 @@ public class Controlador {
             content.append(inputLine);
         }
         return String.valueOf(status);
+    }
+
+    public void logout() {
+        tokenAutorizacion = "...";
     }
 }
