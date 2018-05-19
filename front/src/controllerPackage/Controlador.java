@@ -26,40 +26,40 @@ public class Controlador {
 
     public String tokenAutorizacion;
 
-    public DetailedApto darApto(int numero) throws ProtocolException, IOException {
-
-        URL url = new URL("http://localhost:8080/inmueble");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("Authorization", tokenAutorizacion);
-        con.setDoOutput(true);
-        DataOutputStream out = new DataOutputStream(con.getOutputStream());
-
-        out.flush();
-        out.close();
-
-        int status = con.getResponseCode();
-        System.out.println("Status is: " + status);
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer content = new StringBuffer();
-        while ((inputLine = in.readLine()) != null) {
-            content.append(inputLine);
-        }
-        System.out.println("Response is: " + content);
-
-        //aqui proceso el content me llega un json y debo extraer el atributo que tiene el propietario nombrePropietario le hago return a esa cosa 
-        //que es solo un string
-        ArrayList<String> propietarios = new ArrayList<>();
-        //obtengo el nombre de los propietarios siguendo el ejemplo "nombrePropietario": "fernando alonso"
-        String propietariosBruto = substring(content.toString().indexOf("\"nombrePropietario\": \"") + 1, content.toString().indexOf("\""));
-        propietarios.add(propietariosBruto);
-
-        in.close();
-        con.disconnect();
-        return propietarios;
-    }
+//    public DetailedApto darApto(int numero) throws ProtocolException, IOException {
+//
+//        URL url = new URL("http://localhost:8080/inmueble");
+//        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+//        con.setRequestMethod("GET");
+//        con.setRequestProperty("Authorization", tokenAutorizacion);
+//        con.setDoOutput(true);
+//        DataOutputStream out = new DataOutputStream(con.getOutputStream());
+//
+//        out.flush();
+//        out.close();
+//
+//        int status = con.getResponseCode();
+//        System.out.println("Status is: " + status);
+//        BufferedReader in = new BufferedReader(
+//                new InputStreamReader(con.getInputStream()));
+//        String inputLine;
+//        StringBuffer content = new StringBuffer();
+//        while ((inputLine = in.readLine()) != null) {
+//            content.append(inputLine);
+//        }
+//        System.out.println("Response is: " + content);
+//
+//        //aqui proceso el content me llega un json y debo extraer el atributo que tiene el propietario nombrePropietario le hago return a esa cosa 
+//        //que es solo un string
+//        ArrayList<String> propietarios = new ArrayList<>();
+//        //obtengo el nombre de los propietarios siguendo el ejemplo "nombrePropietario": "fernando alonso"
+//        String propietariosBruto = substring(content.toString().indexOf("\"nombrePropietario\": \"") + 1, content.toString().indexOf("\""));
+//        propietarios.add(propietariosBruto);
+//
+//        in.close();
+//        con.disconnect();
+//        return propietarios;
+//    }
 
     public ArrayList<AptoHistorial> darHistorial() throws MalformedURLException, IOException {
         URL url = new URL("http://localhost:9090/correo");

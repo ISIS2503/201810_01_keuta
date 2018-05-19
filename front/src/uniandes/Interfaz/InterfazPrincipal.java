@@ -23,7 +23,7 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
     private PanelMapa panelMapa;
 
     JTextField usuariotext;
-	JTextField contraseñatext;
+	JTextField contrasenatext;
 	
 	JFrame log;
 	
@@ -64,7 +64,7 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 	public void hizoLogin()
 	{
 		
-		log = new JFrame("iniciar sesión");
+		log = new JFrame("iniciar sesiï¿½n");
 		
 		log.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		log.setSize( 915, 700 );
@@ -73,14 +73,14 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 		log.setLayout(new FlowLayout());
 		
 		usuariotext = new JTextField();
-		contraseñatext = new JTextField();
+		contrasenatext = new JTextField();
 		JButton aceptar = new JButton("enviar");
 		
 		aceptar.setActionCommand( "enviar" );
 		aceptar.addActionListener( this );
 		
 		log.add(usuariotext);
-		log.add(contraseñatext);
+		log.add(contrasenatext);
 		log.add(aceptar);
 		
 		log.setVisible( true );
@@ -128,15 +128,15 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 		panelMapa.filtroHubFueraDeLinea();
 	}
 	
-	public DetailedApto pedirInfoApto(int apto)
-	{
-		try {
-			return controlador.darApto(apto);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+//	public DetailedApto pedirInfoApto(int apto)
+//	{
+//		try {
+//			return controlador.darApto(apto);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 	
 	public ArrayList<AptoHistorial> darHistorial() throws MalformedURLException, IOException
 	{
@@ -161,7 +161,7 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 		{
 			String numero = "";
 			try {
-				numero = controlador.enviar(usuariotext.getText(), contraseñatext.getText());
+				numero = controlador.enviar(usuariotext.getText(), contrasenatext.getText());
 			} catch (MalformedURLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
