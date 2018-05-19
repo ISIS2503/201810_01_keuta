@@ -1,7 +1,6 @@
 package uniandes.Interfaz;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
     private PanelMapa panelMapa;
 
     JTextField usuariotext;
-	JTextField contraseñatext;
+	JTextField contrasenatext;
 	
 	JFrame log;
 	
@@ -31,7 +30,7 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 	{
 		try
         {
-			controlador = new Controlador();
+			controlador = new Controlador(this);
         }
         catch( Exception e )
         {
@@ -64,7 +63,7 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 	public void hizoLogin()
 	{
 		
-		log = new JFrame("iniciar sesión");
+		log = new JFrame("iniciar sesiÃ³n");
 		
 		log.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 		log.setSize( 915, 700 );
@@ -73,14 +72,18 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 		log.setLayout(new FlowLayout());
 		
 		usuariotext = new JTextField();
-		contraseñatext = new JTextField();
+		usuariotext.setPreferredSize(new Dimension(175, 26));
+		usuariotext.setText("seguridad@seguridad.edu.co");
+		contrasenatext = new JTextField();
+		contrasenatext.setPreferredSize(new Dimension(175, 26));
+		contrasenatext.setText("HolaArquisoft123");
 		JButton aceptar = new JButton("enviar");
 		
 		aceptar.setActionCommand( "enviar" );
 		aceptar.addActionListener( this );
 		
 		log.add(usuariotext);
-		log.add(contraseñatext);
+		log.add(contrasenatext);
 		log.add(aceptar);
 		
 		log.setVisible( true );
@@ -157,11 +160,11 @@ public class InterfazPrincipal extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		
 		String comando = e.getActionCommand();
-		if(e.equals("enviar"))
+		if(comando.equals("enviar"))
 		{
 			String numero = "";
 			try {
-				numero = controlador.enviar(usuariotext.getText(), contraseñatext.getText());
+				numero = controlador.enviar(usuariotext.getText(), contrasenatext.getText());
 			} catch (MalformedURLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

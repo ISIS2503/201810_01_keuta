@@ -32,6 +32,8 @@ public class PanelBotones extends JPanel implements ActionListener{
 	public static final String CERRADURA_FUERA_DE_LINEA = "cerradura fuera de linea";
 	public static final String HUB_FUERA_DE_LINEA = "hub fuera de linea";
 
+	public static String ESTADO_FILTRO = NORMAL;
+
 	public PanelBotones(InterfazPrincipal ppadre)
 	{
 		padre = ppadre;
@@ -97,26 +99,32 @@ public class PanelBotones extends JPanel implements ActionListener{
 		
 		if(comando.equals(PUERTA_ABIERTA))
 		{
+			ESTADO_FILTRO = PUERTA_ABIERTA;
 			padre.filtroAbierta();
 		}
 		else if(comando.equals(APERTURA_NO_PERMITIDA))
 		{
+			ESTADO_FILTRO = APERTURA_NO_PERMITIDA;
 			padre.filtroAperturaNoPermitida();
 		}
 		else if(comando.equals(APERTURA_SOSPECHOSA))
 		{
+			ESTADO_FILTRO = APERTURA_SOSPECHOSA;
 			padre.filtroAperturaSospechosa();
 		}
 		else if(comando.equals(BATERIA_CRITICA))
 		{
+			ESTADO_FILTRO = BATERIA_CRITICA;
 			padre.filtroBateria();
 		}
 		else if(comando.equals(CERRADURA_FUERA_DE_LINEA))
 		{
+			ESTADO_FILTRO = CERRADURA_FUERA_DE_LINEA;
 			padre.filtroCerradura();
 		}
 		else if(comando.equals(HUB_FUERA_DE_LINEA))
 		{
+			ESTADO_FILTRO = HUB_FUERA_DE_LINEA;
 			padre.filtroHub();
 		}
 	}

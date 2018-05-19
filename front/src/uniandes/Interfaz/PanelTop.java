@@ -28,6 +28,7 @@ public class PanelTop extends JPanel implements ActionListener{
 
 	public PanelTop(InterfazPrincipal ppadre)
 	{
+		padre = ppadre;
 		ingreso = new PanelIngreso(padre);
 		
 		quitarFiltros = new JButton("quitar filtros");
@@ -89,7 +90,7 @@ public class PanelTop extends JPanel implements ActionListener{
 				e1.printStackTrace();
 			}
 			JFrame temp = new JFrame("historial");
-			temp.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+//			temp.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
 			temp.setSize( 500, 300 );
 			temp.setResizable( false );
 			temp.setLocationRelativeTo(null);

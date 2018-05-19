@@ -1,8 +1,6 @@
 package uniandes.Interfaz;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -54,10 +52,10 @@ public class PanelIngreso extends JPanel implements ActionListener{
 
 		if(comando.equals( "boton" ) && boton.getText().equals("login"))
 		{
-			this.hizoLogin();
 			main.hizoLogin();
+			this.hizoLogin();
 		}
-		if(comando.equals( "boton" ) && boton.getText().equals("logout"))
+		else if(comando.equals( "boton" ) && boton.getText().equals("logout"))
 		{
 			this.hizoLogout();
 			main.hizoLogout();

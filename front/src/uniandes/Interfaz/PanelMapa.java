@@ -1,5 +1,7 @@
 package uniandes.Interfaz;
 
+import javafx.scene.layout.Pane;
+
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -73,8 +75,8 @@ public class PanelMapa extends JPanel implements ActionListener{
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
-				botones[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)].setIcon( hola );
-				estados[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)] = "puerta abierta";
+				botones[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48].setIcon( hola );
+				estados[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48] = "puerta abierta";
 			}
 			else if(apt.error.equals(PanelBotones.APERTURA_NO_PERMITIDA))
 			{
@@ -82,8 +84,8 @@ public class PanelMapa extends JPanel implements ActionListener{
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
-				botones[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)].setIcon( hola );
-				estados[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)] = "apertura no permitida";
+				botones[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48].setIcon( hola );
+				estados[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48] = "apertura no permitida";
 			}
 			else if(apt.error.equals(PanelBotones.APERTURA_SOSPECHOSA))
 			{
@@ -91,8 +93,8 @@ public class PanelMapa extends JPanel implements ActionListener{
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
-				botones[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)].setIcon( hola );
-				estados[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)] = "apertura sospechosa";
+				botones[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48].setIcon( hola );
+				estados[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48] = "apertura sospechosa";
 			}
 			else if(apt.error.equals(PanelBotones.BATERIA_CRITICA))
 			{
@@ -100,8 +102,8 @@ public class PanelMapa extends JPanel implements ActionListener{
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
-				botones[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)].setIcon( hola );
-				estados[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)] = "bateria critica";
+				botones[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48].setIcon( hola );
+				estados[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48] = "bateria critica";
 
 			}
 			else if(apt.error.equals(PanelBotones.CERRADURA_FUERA_DE_LINEA))
@@ -110,8 +112,8 @@ public class PanelMapa extends JPanel implements ActionListener{
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
-				botones[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)].setIcon( hola );
-				estados[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)] = "cerradura fuera de linea";
+				botones[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48].setIcon( hola );
+				estados[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48] = "cerradura fuera de linea";
 
 			}
 			else if(apt.error.equals(PanelBotones.HUB_FUERA_DE_LINEA))
@@ -120,10 +122,35 @@ public class PanelMapa extends JPanel implements ActionListener{
 				Image holo = hola.getImage( );
 				Image newimg = holo.getScaledInstance(200, 100,java.awt.Image.SCALE_SMOOTH);
 				hola = new ImageIcon(newimg);
-				botones[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)].setIcon( hola );
-				estados[numeroApartamento.charAt(0)][numeroApartamento.charAt(1)] = "hub fuera de linea";
+				botones[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48].setIcon( hola );
+				estados[numeroApartamento.charAt(0)-48][numeroApartamento.charAt(1)-48] = "hub fuera de linea";
 
 			}
+		}
+
+//		if(PanelBotones.ESTADO_FILTRO.equals(PanelBotones.APERTURA_NO_PERMITIDA))
+//		{
+//			filtro
+//		}
+		switch (PanelBotones.ESTADO_FILTRO){
+			case PanelBotones.APERTURA_NO_PERMITIDA:
+				filtroAperturaNoPermitida();
+				break;
+			case PanelBotones.PUERTA_ABIERTA:
+				filtroPuertaAbierta();
+				break;
+			case PanelBotones.APERTURA_SOSPECHOSA:
+				filtroAperturaSospechosa();
+				break;
+			case PanelBotones.BATERIA_CRITICA:
+				filtroBateriaCritica();
+				break;
+			case PanelBotones.CERRADURA_FUERA_DE_LINEA:
+				filtroCerraduraFueraDeLinea();
+				break;
+			case PanelBotones.HUB_FUERA_DE_LINEA:
+				filtroHubFueraDeLinea();
+				break;
 		}
 	}
 
@@ -238,6 +265,7 @@ public class PanelMapa extends JPanel implements ActionListener{
 	
 	public void quitarFiltros()
 	{
+		PanelBotones.ESTADO_FILTRO = "Chocolate";
 		for(int pos = 0; pos < 5; pos++)
 		{    
 			for(int g = 0; g < 3; g++)
@@ -326,7 +354,7 @@ public class PanelMapa extends JPanel implements ActionListener{
 		DetailedApto detailed = padre.pedirInfoApto(Integer.parseInt(comando));
 		
 		
-		String mensaje = "propietario del apartamento "+ e + ":" + detailed.nombrePropietario + "\n" + " unidad residencial: " + detailed.unidadResidencial + "\n" + " id del apartamento" + detailed.id;
+		String mensaje = "propietario del apartamento "+ comando + ":" + detailed.nombrePropietario + "\n" + " unidad residencial: " + detailed.unidadResidencial + "\n" + " id del apartamento" + detailed.id;
 		
 		
 		JOptionPane.showMessageDialog(null, mensaje, "propietarios", JOptionPane.INFORMATION_MESSAGE);
