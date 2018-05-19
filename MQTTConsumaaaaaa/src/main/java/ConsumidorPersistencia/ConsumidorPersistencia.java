@@ -12,6 +12,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class ConsumidorPersistencia implements MqttCallback{
 
@@ -224,11 +225,13 @@ public class ConsumidorPersistencia implements MqttCallback{
             DataOutputStream out = new DataOutputStream(con.getOutputStream());
 
             JSONObject tomJsonObj = new JSONObject();
+            tomJsonObj.put("idMensaje", new Double(Math.random()*1000).intValue());
             tomJsonObj.put("mensaje", mensaje);
             tomJsonObj.put("prioridad", prioridad);
             tomJsonObj.put("unidadResidencial", unidadResidencial);
             tomJsonObj.put("inmueble", inmueble);
             tomJsonObj.put("dispositivo", dispositivo);
+            tomJsonObj.put("fecha", LocalDateTime.now());
 
             out.writeBytes(tomJsonObj.toString());
             out.flush();

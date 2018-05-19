@@ -24,11 +24,10 @@
 package co.edu.uniandes.isis2503.nosqljpa.model.entity;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
+import javax.persistence.*;
 
 /**
  *
@@ -39,26 +38,28 @@ import javax.persistence.Table;
 public class AlarmaEntity implements Serializable {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMensaje;
     private String mensaje;
     private String prioridad;
     private String unidadResidencial;
     private String inmueble;
     private String dispositivo;
+    private Timestamp fecha;
 
     public AlarmaEntity()
     {
         
     }
     
-    public AlarmaEntity(String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo) {
+    public AlarmaEntity(String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo
+    ,Timestamp fecha) {
         
         this.mensaje = mensaje;
         this.prioridad = prioridad;
         this.unidadResidencial = unidadResidencial;
         this.inmueble = inmueble;
         this.dispositivo = dispositivo;
+        this.fecha = fecha;
     }
 
     public String getMensaje() {
@@ -107,5 +108,13 @@ public class AlarmaEntity implements Serializable {
 
     public void setIdMensaje(Long idMensaje) {
         this.idMensaje = idMensaje;
+    }
+
+    public Timestamp getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Timestamp fecha) {
+        this.fecha = fecha;
     }
 }

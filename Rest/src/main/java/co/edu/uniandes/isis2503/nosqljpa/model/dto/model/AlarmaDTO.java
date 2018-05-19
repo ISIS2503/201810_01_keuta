@@ -24,6 +24,9 @@
 package co.edu.uniandes.isis2503.nosqljpa.model.dto.model;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.Date;
 
 /**
  *
@@ -31,22 +34,27 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class AlarmaDTO {
+    private Long idMensaje;
     private String mensaje;
     private String prioridad;
     private String unidadResidencial;
     private String inmueble;
     private String dispositivo;
+    private String fecha;
 
     public AlarmaDTO() {
         
     }
 
-    public AlarmaDTO(String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo) {
+    public AlarmaDTO(String mensaje, String prioridad, String unidadResidencial, String inmueble, String dispositivo
+    , String fecha) {
+
         this.mensaje = mensaje;
         this.prioridad = prioridad;
         this.unidadResidencial = unidadResidencial;
         this.inmueble = inmueble;
         this.dispositivo = dispositivo;
+        this.fecha = fecha;
     }
 
     public String getMensaje() {
@@ -87,5 +95,21 @@ public class AlarmaDTO {
 
     public void setDispositivo(String dispositivo) {
         this.dispositivo = dispositivo;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public Long getIdMensaje() {
+        return idMensaje;
+    }
+
+    public void setIdMensaje(Long idMensaje) {
+        this.idMensaje = idMensaje;
     }
 }

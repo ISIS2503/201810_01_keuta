@@ -26,6 +26,14 @@ package co.edu.uniandes.isis2503.nosqljpa.model.dto.converter;
 import co.edu.uniandes.isis2503.nosqljpa.interfaces.IAlarmaConverter;
 import co.edu.uniandes.isis2503.nosqljpa.model.dto.model.AlarmaDTO;
 import co.edu.uniandes.isis2503.nosqljpa.model.entity.AlarmaEntity;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +55,8 @@ public class AlarmaConverter implements IAlarmaConverter {
         dto.setMensaje(entity.getMensaje());
         dto.setPrioridad(entity.getPrioridad());
         dto.setUnidadResidencial(entity.getUnidadResidencial());
+        dto.setFecha(entity.getFecha().toString());
+        dto.setIdMensaje(entity.getIdMensaje());
         return dto;
     }
 
@@ -58,6 +68,13 @@ public class AlarmaConverter implements IAlarmaConverter {
         entity.setMensaje(dto.getMensaje());
         entity.setPrioridad(dto.getPrioridad());
         entity.setUnidadResidencial(dto.getUnidadResidencial());
+        try {
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
+            entity.setFecha(new Timestamp(format.parse(dto.getFecha()).getTime()));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        entity.setIdMensaje(dto.getIdMensaje());
         return entity;
     }
 

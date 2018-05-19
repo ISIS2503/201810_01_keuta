@@ -39,5 +39,7 @@ public interface IAlarmaLogic {
     public List<AlarmaDTO> findUnidad(String unidad);
     public List<AlarmaDTO> all();
     public Boolean delete(String id);
-    
+    public List<AlarmaDTO> findAlarmasMesInmueble(int anio, int mes, String idInmueble);
+    public List<AlarmaDTO> findAlarmasMesUnidadResidencial(int anio, int mes, String idUnidadResidencial);
+    public List<AlarmaDTO> findAlarmasTiempoReal();
 }

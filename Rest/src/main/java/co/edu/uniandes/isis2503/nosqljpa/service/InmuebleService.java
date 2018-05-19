@@ -48,7 +48,7 @@ import javax.ws.rs.core.Response;
  * @author ca.mendoza968
  */
 @Path("/inmueble")
-@Secured({Role.administrador, Role.seguridad, Role.yale})
+//@Secured({Role.administrador, Role.seguridad, Role.yale})
 @Produces(MediaType.APPLICATION_JSON)
 public class InmuebleService {
     private final IInmuebleLogic sensorLogic;

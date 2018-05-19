@@ -23,7 +23,6 @@
  */
 package co.edu.uniandes.isis2503.nosqljpa.service;
 
-import co.edu.uniandes.isis2503.nosqljpa.auth.AuthorizationFilter.Role;
 import co.edu.uniandes.isis2503.nosqljpa.auth.Secured;
 import co.edu.uniandes.isis2503.nosqljpa.interfaces.IAlarmaLogic;
 import co.edu.uniandes.isis2503.nosqljpa.logic.AlarmaLogic;
@@ -48,58 +47,79 @@ import javax.ws.rs.core.Response;
  * @author ca.mendoza968
  */
 @Path("/alarma")
-@Secured
+//@Secured
 @Produces(MediaType.APPLICATION_JSON)
 public class AlarmaService {
-    private final IAlarmaLogic sensorLogic;
+    private final IAlarmaLogic alarmaLogic;
 
     public AlarmaService() {
-        this.sensorLogic = new AlarmaLogic();
+        this.alarmaLogic = new AlarmaLogic();
     }
 
     @POST
     public AlarmaDTO add(AlarmaDTO dto) {
-        return sensorLogic.add(dto);
+        return alarmaLogic.add(dto);
     }
     
     @PUT
     public AlarmaDTO update(AlarmaDTO dto) {
-        return sensorLogic.update(dto);
+        return alarmaLogic.update(dto);
     }
 
     @GET
     @Path("/{id}")
     public AlarmaDTO find(@PathParam("id") String id) {
-        return sensorLogic.find(id);
+        return alarmaLogic.find(id);
     }
 
     @GET
     public List<AlarmaDTO> all() {
-        return sensorLogic.all();
+        return alarmaLogic.all();
     }
     
     @POST
     @Path("/unidad")
     public List<AlarmaDTO> unidad(UnidadDTO dto) {
-        return sensorLogic.findUnidad(dto.getUnidadResidencial());
+        return alarmaLogic.findUnidad(dto.getUnidadResidencial());
     }
     
     @POST
     @Path("/inmuebleyunidad")
     public List<AlarmaDTO> unidad(InmuebleYUnidadDTO dto) {
-        return sensorLogic.findUnidadYResidencia(dto.getUnidadResidencial(), dto.getNumeroInmueble());
+        return alarmaLogic.findUnidadYResidencia(dto.getUnidadResidencial(), dto.getNumeroInmueble());
     }
     
     @DELETE
     @Path("/{id}")
     public Response delete(@PathParam("id") String id) {
         try {
-            sensorLogic.delete(id);
+            alarmaLogic.delete(id);
             return Response.status(200).header("Access-Control-Allow-Origin", "*").entity("Sucessful: Sensor was deleted").build();
         } catch (Exception e) {
             Logger.getLogger(CerraduraService.class.getName()).log(Level.WARNING, e.getMessage());
             return Response.status(500).header("Access-Control-Allow-Origin", "*").entity("We found errors in your query, please contact the Web Admin.").build();
         }
+    }
+
+    @GET
+    @Path("/historicoInmueble/{idInmueble}/{anio: \\d+}/{mes: \\d+}")
+    public List<AlarmaDTO> alarmasMesInmueble(@PathParam("idInmueble") String idInmueble, @PathParam("anio") int anio,
+                                              @PathParam("mes") int mes){
+        return alarmaLogic.findAlarmasMesInmueble(anio, mes, idInmueble);
+    }
+
+    @GET
+    @Path("/historicoUnidadResidencial/{idUnidadResidencial}/{anio: \\d+}/{mes: \\d+}")
+    public List<AlarmaDTO> alarmasMesUnidadResidencial(@PathParam("idUnidadResidencial") String idUnidadResidencial,
+                                                       @PathParam("anio") int anio,
+                                              @PathParam("mes") int mes){
+        return alarmaLogic.findAlarmasMesUnidadResidencial(anio, mes, idUnidadResidencial);
+    }
+
+    @GET
+    @Path("/tiempoReal")
+    public List<AlarmaDTO> alarmasTiempoReal(){
+        return alarmaLogic.findAlarmasTiempoReal();
     }
 }
 
