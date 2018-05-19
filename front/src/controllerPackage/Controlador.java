@@ -16,7 +16,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import static jdk.nashorn.internal.objects.NativeString.substring;
 import uniandes.Interfaz.AptoHistorial;
-import uniandes.Interfaz.DetailedApto;
 
 /**
  *
@@ -26,40 +25,49 @@ public class Controlador {
 
     public String tokenAutorizacion;
 
-//    public DetailedApto darApto(int numero) throws ProtocolException, IOException {
-//
-//        URL url = new URL("http://localhost:8080/inmueble");
-//        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-//        con.setRequestMethod("GET");
-//        con.setRequestProperty("Authorization", tokenAutorizacion);
-//        con.setDoOutput(true);
-//        DataOutputStream out = new DataOutputStream(con.getOutputStream());
-//
-//        out.flush();
-//        out.close();
-//
-//        int status = con.getResponseCode();
-//        System.out.println("Status is: " + status);
-//        BufferedReader in = new BufferedReader(
-//                new InputStreamReader(con.getInputStream()));
-//        String inputLine;
-//        StringBuffer content = new StringBuffer();
-//        while ((inputLine = in.readLine()) != null) {
-//            content.append(inputLine);
-//        }
-//        System.out.println("Response is: " + content);
-//
-//        //aqui proceso el content me llega un json y debo extraer el atributo que tiene el propietario nombrePropietario le hago return a esa cosa 
-//        //que es solo un string
-//        ArrayList<String> propietarios = new ArrayList<>();
-//        //obtengo el nombre de los propietarios siguendo el ejemplo "nombrePropietario": "fernando alonso"
-//        String propietariosBruto = substring(content.toString().indexOf("\"nombrePropietario\": \"") + 1, content.toString().indexOf("\""));
-//        propietarios.add(propietariosBruto);
-//
-//        in.close();
-//        con.disconnect();
-//        return propietarios;
-//    }
+    public ArrayList<String> darApto(int apto) throws ProtocolException, IOException {
+
+        URL url = new URL("http://localhost8080/inmueble" + apto);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("Authorization", tokenAutorizacion);
+        con.setDoOutput(true);
+        DataOutputStream out = new DataOutputStream(con.getOutputStream());
+
+        out.flush();
+        out.close();
+
+        int status = con.getResponseCode();
+        System.out.println("Status is: " + status);
+        BufferedReader in = new BufferedReader(
+                new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer content = new StringBuffer();
+        while ((inputLine = in.readLine()) != null) {
+            content.append(inputLine);
+        }
+        System.out.println("Response is: " + content);
+
+        //aqui proceso el content me llega un json y debo extraer el atributo que tiene el propietario nombrePropietario le hago return a esa cosa 
+        //que es solo un string
+        ArrayList<String> infoApto = new ArrayList<>();
+        //obtengo el nombre de los propietarios siguendo el ejemplo "nombrePropietario": "fernando alonso"
+        String id = substring(content.toString().indexOf("\"id\" : \"") + 1, content.toString().indexOf("\""));
+        infoApto.add(id);
+
+        String numeroInmueble = substring(content.toString().indexOf("\"numeroInmueble\" : \"") + 1, content.toString().indexOf("\""));
+        infoApto.add(numeroInmueble);
+
+        String unidadResidencial = substring(content.toString().indexOf("\"unidadResidencial \" : \"") + 1, content.toString().indexOf("\""));
+        infoApto.add(unidadResidencial);
+
+        String nombrePropietario = substring(content.toString().indexOf("\"nombrePropietario \" : \"") + 1, content.toString().indexOf("\""));
+        infoApto.add(nombrePropietario);
+
+        in.close();
+        con.disconnect();
+        return infoApto;
+    }
 
     public ArrayList<AptoHistorial> darHistorial() throws MalformedURLException, IOException {
         URL url = new URL("http://localhost:9090/correo");
@@ -95,19 +103,19 @@ public class Controlador {
 
         for (String stringBrutoIndividual : historialArregloBruto) {
             AptoHistorial historialActual = new AptoHistorial();
-            
-            historialActual.numero= Integer.parseInt(stringBrutoIndividual.substring(stringBrutoIndividual.indexOf("\"unidadResidencial\" : \"") + 1, stringBrutoIndividual.indexOf("\"")));
-            historialActual.error= stringBrutoIndividual.substring(stringBrutoIndividual.indexOf("\"mensaje\" : \"") + 1, stringBrutoIndividual.indexOf("\""));
-            historialActual.fecha= stringBrutoIndividual.substring(stringBrutoIndividual.indexOf("\"fecha\" : \"") + 1, stringBrutoIndividual.indexOf("\""));
-           
+
+            historialActual.numero = Integer.parseInt(stringBrutoIndividual.substring(stringBrutoIndividual.indexOf("\"unidadResidencial\" : \"") + 1, stringBrutoIndividual.indexOf("\"")));
+            historialActual.error = stringBrutoIndividual.substring(stringBrutoIndividual.indexOf("\"mensaje\" : \"") + 1, stringBrutoIndividual.indexOf("\""));
+            historialActual.fecha = stringBrutoIndividual.substring(stringBrutoIndividual.indexOf("\"fecha\" : \"") + 1, stringBrutoIndividual.indexOf("\""));
+
             arraylistAptoHistorial.add(historialActual);
         }
-        
+
         in.close();
         con.disconnect();
-        
+
         return arraylistAptoHistorial;
-        
+
     }
 
     public String enviar(String usuario, String contrasena) throws MalformedURLException, IOException {
@@ -134,5 +142,9 @@ public class Controlador {
             content.append(inputLine);
         }
         return String.valueOf(status);
+    }
+
+    public void logout() {
+        tokenAutorizacion = "...";
     }
 }
